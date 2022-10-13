@@ -68,7 +68,7 @@ class LoginPage extends StatelessWidget {
       return;
     }
 
-    API.auth(_usernameController.text, _passwordController.text).then((value) {
+    API.auth(username, password).then((value) {
       if (value.success) {
         ScaffoldMessenger.of(context).showSnackBar(SuccessSnackBar(
           message: "Logged in successfully!",
