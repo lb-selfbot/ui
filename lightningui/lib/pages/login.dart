@@ -68,17 +68,16 @@ class LoginPage extends StatelessWidget {
       return;
     }
 
-    API.auth(username, password).then((value) {
-      if (value.success) {
+    API.auth(username, password).then((result) {
+      if (result.success) {
         ScaffoldMessenger.of(context).showSnackBar(SuccessSnackBar(
           message: "Logged in successfully!",
           theme: Theme.of(context),
           size: MediaQuery.of(context).size,
         ));
         onLogin();
-      }
-      if (!value.success) {
-        final message = value.json["message"] as String? ?? "Unknown error";
+      } else {
+        final message = result.json["message"] as String? ?? "Unknown error";
 
         final snackBar = ErrorSnackBar(
           message: message,
