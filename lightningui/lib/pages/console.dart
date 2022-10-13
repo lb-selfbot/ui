@@ -38,18 +38,28 @@ class ConsolePage extends StatefulWidget {
 }
 
 class _ConsolePageState extends State<ConsolePage> {
+  String changeListenerName = "";
+
+  void changeListener() {
+    if (mounted) {
+      // Update Console
+      setState(() {});
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    void listener() {
-      if (mounted) {
-        setState(() {});
-      } else {
-        IPC.removeChangeListener("consolePage");
-      }
-    }
 
-    IPC.addChangeListener("consolePage", listener);
+    changeListenerName = "consolePage-${DateTime.now().millisecondsSinceEpoch}";
+
+    IPC.addChangeListener(changeListenerName, changeListener);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    IPC.removeChangeListener(changeListenerName);
   }
 
   @override

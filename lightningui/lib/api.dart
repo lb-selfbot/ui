@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:lightningui/utils.dart';
 
@@ -76,6 +77,10 @@ class API {
   }
 
   static Future<APIResult> auth(String username, String password) async {
+    return Future.delayed(
+      Duration(seconds: 1),
+      () => APIResult(success: true, response: null, json: {}),
+    );
     http.Response response;
     try {
       response = await postJson(
@@ -108,8 +113,10 @@ class API {
         dateJoined: DateTime.parse(result.json["date_joined"] as String),
         loginTime: DateTime.parse(result.json["login_time"] as String),
         key: result.json["key"] as String,
-        freeTrialExpiry: DateTime.parse(result.json["free_trial_expiry"] as String),
-        lastSelfbotLogin: DateTime.parse(result.json["last_selfbot_login"] as String),
+        freeTrialExpiry:
+            DateTime.parse(result.json["free_trial_expiry"] as String),
+        lastSelfbotLogin:
+            DateTime.parse(result.json["last_selfbot_login"] as String),
       );
     }
 

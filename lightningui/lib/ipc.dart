@@ -38,8 +38,12 @@ class IPC {
   static Map<String, Function()> onConfigChangeListeners = {};
 
   static void callListeners(Map<String, Function()> listeners) {
-    for (var listener in listeners.values) {
-      listener();
+    try {
+      listeners.forEach((_, listener) {
+        listener();
+      });
+    } catch (e) {
+      log("Error calling listeners: $e");
     }
   }
 
@@ -101,7 +105,7 @@ class IPC {
     } catch (e) {
       return;
     }
-    log("ipc: $op $data");
+    log("ipc: $op");
     switch (op) {
       case OP.connected:
         getApplicationDocumentsDirectory().then((value) {
