@@ -194,7 +194,7 @@ class _AppBodyState extends ConsumerState<AppBody> {
                   ref.read(currentRouteProvider.notifier).state = '/';
                   setState(() {});
                 },
-                tryingToAuth: tryingToAuth,
+                tryingToAuth: tryingToAuth && !shouldLogin,
               ),
             ],
           ),
