@@ -66,18 +66,24 @@ class IPC {
         onDone: () {
           channel = null;
           websocketConnected = false;
-          callListeners(onChangeListeners);
           tryConnect();
+          onDisconnect();
+          callListeners(onChangeListeners);
         },
         onError: (Object error) {
           channel = null;
           websocketConnected = false;
+          onDisconnect();
           callListeners(onChangeListeners);
         },
       );
     } catch (e) {
       return;
     }
+  }
+
+  static void onDisconnect() {
+    consoleString = defaultConsoleString;
   }
 
   static void tryConnect() {
