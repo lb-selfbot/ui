@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lightningui/api.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 
 import '../widgets/infocard.dart';
@@ -13,44 +14,44 @@ class HomePage extends StatelessWidget {
       child: ResponsiveGridRow(
         children: [
           InfoCardCol(
-            card: const InfoCard(
+            card: InfoCard(
               title: 'Auth',
-              subtitle: 'Online',
+              subtitle: API.stats?.auth ?? 'Unknown',
               icon: Icons.computer,
             ),
           ),
           InfoCardCol(
-            card: const InfoCard(
+            card: InfoCard(
               title: 'Version',
-              subtitle: '4.0.0',
+              subtitle: API.stats?.version ?? 'Unknown',
               icon: Icons.device_hub,
             ),
           ),
           InfoCardCol(
-            card: const InfoCard(
+            card: InfoCard(
               title: 'Global Logins',
-              subtitle: '6493',
+              subtitle: API.stats?.globalLogins.toString() ?? 'Unknown',
               icon: Icons.login,
             ),
           ),
           InfoCardCol(
-            card: const InfoCard(
+            card: InfoCard(
               title: 'Username',
-              subtitle: 'Lightning',
+              subtitle: API.userData?.username ?? 'Unknown',
               icon: Icons.account_circle,
             ),
           ),
           InfoCardCol(
-            card: const InfoCard(
+            card: InfoCard(
               title: 'Key',
-              subtitle: 'LB-u52x-IRhb-qK3M',
+              subtitle: API.userData?.key ?? 'Unknown',
               icon: Icons.key,
             ),
           ),
           InfoCardCol(
-            card: const InfoCard(
+            card: InfoCard(
               title: 'Logins',
-              subtitle: '1195',
+              subtitle: API.userData?.logins.toString() ?? 'Unknown',
               icon: Icons.login,
             ),
           ),

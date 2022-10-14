@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lightningui/api.dart';
 import 'package:lightningui/config.dart';
 import 'package:lightningui/ipc.dart';
 import 'package:lightningui/utils.dart';
@@ -127,17 +128,17 @@ class _ConsolePageState extends State<ConsolePage> {
                 cardAmount: 3,
               ),
               InfoCardCol(
-                card: const InfoCard(
+                card: InfoCard(
                   title: 'Version',
-                  subtitle: '4.0.0',
+                  subtitle: API.stats?.version ?? 'Unknown',
                   icon: Icons.device_hub,
                 ),
                 cardAmount: 3,
               ),
               InfoCardCol(
-                card: const InfoCard(
+                card: InfoCard(
                   title: 'Login Time',
-                  subtitle: '154h, 48m, 54s',
+                  subtitle: API.userData?.loginTime.toString() ?? 'Unknown',
                   icon: Icons.access_time,
                 ),
                 cardAmount: 3,

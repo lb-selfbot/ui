@@ -44,10 +44,23 @@ class UserData {
   final DateTime lastSelfbotLogin;
 }
 
+class Stats {
+  Stats({
+    required this.auth,
+    required this.version,
+    required this.globalLogins,
+  });
+
+  final String auth;
+  final String version;
+  final int globalLogins;
+}
+
 class API {
   static const String baseUrl = "http://localhost:8000";
 
   static UserData? userData;
+  static Stats? stats;
 
   static Future<Map<String, dynamic>> getJson(String path) async {
     final response = await http.get(Uri.parse("$baseUrl$path"));
@@ -78,7 +91,28 @@ class API {
   static Future<APIResult> auth(String username, String password) async {
     return Future.delayed(
       const Duration(seconds: 1),
-      () => APIResult(success: true, response: null, json: {}),
+      () {
+        userData = UserData(
+          id: 5,
+          username: "Lightning",
+          email: "Email",
+          isStaff: true,
+          isTester: true,
+          accountType: "Lifetime",
+          logins: 8742,
+          dateJoined: DateTime.parse("2020-02-27"),
+          loginTime: DateTime.parse("2020-02-27"),
+          key: "LB-ABCD-EFGH-IJKL",
+          freeTrialExpiry: DateTime.parse("2020-02-27"),
+          lastSelfbotLogin: DateTime.parse("2020-02-27"),
+        );
+        stats = Stats(
+          auth: "Online",
+          version: "4.0.0",
+          globalLogins: 98711,
+        );
+        return APIResult(success: true, response: null, json: {});
+      },
     );
     http.Response response;
     try {
