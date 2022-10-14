@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../widgets/configeditor.dart';
+import 'package:lightningui/widgets/configeditor.dart';
 
 class WebhooksConfigPage extends StatelessWidget {
   const WebhooksConfigPage({Key? key}) : super(key: key);

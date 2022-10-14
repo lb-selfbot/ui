@@ -11,8 +11,7 @@ import 'package:lightningui/pages/config/sharing.dart';
 import 'package:lightningui/pages/config/snipers.dart';
 import 'package:lightningui/pages/config/ui.dart';
 import 'package:lightningui/pages/config/webhooks.dart';
-
-import '../ipc.dart';
+import 'package:lightningui/ipc.dart';
 
 const tabs = [
   Tab(text: "Account"),

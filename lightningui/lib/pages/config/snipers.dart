@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../widgets/configeditor.dart';
+import 'package:lightningui/widgets/configeditor.dart';
 
 class SnipersConfigPage extends StatelessWidget {
   const SnipersConfigPage({Key? key}) : super(key: key);
