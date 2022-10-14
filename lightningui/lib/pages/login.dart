@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lightningui/api.dart';
+import 'package:lightningui/launching.dart';
 import 'package:lightningui/widgets/snackbar.dart';
 
 class LoginContainer extends StatelessWidget {
@@ -75,6 +76,7 @@ class LoginPage extends StatelessWidget {
           theme: Theme.of(context),
           size: MediaQuery.of(context).size,
         ));
+        Launching.onLogin(username, password);
         onLogin();
       } else {
         final message = result.json["message"] as String? ?? "Unknown error";
@@ -107,12 +109,12 @@ class LoginPage extends StatelessWidget {
 
   List<Widget> loadingWidgets() {
     return [
-      CircularProgressIndicator(),
-      SizedBox(height: 20),
+      const CircularProgressIndicator(),
+      const SizedBox(height: 20),
       Text(
         "Logging in...",
         style: GoogleFonts.montserrat(
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w200,
           ),

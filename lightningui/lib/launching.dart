@@ -53,6 +53,13 @@ class Launching {
     }
   }
 
+  static void onLogin(String username, String password) {
+    final config = Config.config;
+    config["Account"]["LightningBot"]["Username"] = username;
+    config["Account"]["LightningBot"]["Password"] = password;
+    Config.config = config;
+  }
+
   static bool shouldLogin() {
     if (isFirstLaunch) {
       return true;

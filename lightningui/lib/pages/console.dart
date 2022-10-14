@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lightningui/config.dart';
 import 'package:lightningui/ipc.dart';
 import 'package:lightningui/utils.dart';
 import 'package:lightningui/launching.dart';
@@ -166,8 +167,29 @@ class _ConsolePageState extends State<ConsolePage> {
       ];
     } else {
       return [
-        const ConsoleButton(
-          onPressed: Launching.launch,
+        ConsoleButton(
+          onPressed: () {
+            // Check if Discord token has been set in config
+            final token = Config.config["Account"]["Discord"]["Token"];
+            if (token == "") {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text("Error"),
+                  content: const Text(
+                      "You haven't set your Discord token yet! Please set it in the config tab before launching LightningBot."),
+                  actions: [
+                    TextButton(
+                      child: const Text('Close'),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ],
+                ),
+              );
+            } else {
+              Launching.launch();
+            }
+          },
           text: "Launch",
         ),
       ];

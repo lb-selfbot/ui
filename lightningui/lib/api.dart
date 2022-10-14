@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:lightningui/utils.dart';
 
@@ -78,7 +77,7 @@ class API {
 
   static Future<APIResult> auth(String username, String password) async {
     return Future.delayed(
-      Duration(seconds: 1),
+      const Duration(seconds: 1),
       () => APIResult(success: true, response: null, json: {}),
     );
     http.Response response;
