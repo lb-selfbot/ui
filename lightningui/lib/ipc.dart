@@ -26,8 +26,9 @@ class IPC {
 
   static bool websocketConnected = false;
 
-  static String consoleString =
-      '<image Source="assets/Logo.150.png" Width="650" Height="150" Centered />\n<text Color="#3CA5FF" Centered>Logged in to Lightning#0420</text>';
+  static String defaultConsoleString =
+      '<image Source="assets/Banner.png" Width="650" Height="150" Centered />\n<text Color="#3CA5FF" Centered>Waiting for launch...</text>';
+  static String consoleString = defaultConsoleString;
 
   // loaded in the main function
   // TODO: deprecate
