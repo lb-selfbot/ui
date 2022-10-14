@@ -190,6 +190,7 @@ class _AppBodyState extends ConsumerState<AppBody> {
               const WindowTitleBar(dark: true, fullWidth: true),
               LoginPage(
                 onLogin: () {
+                  shouldLogin = false;
                   widget.navigatorKey.currentState?.popAndPushNamed('/');
                   ref.read(currentRouteProvider.notifier).state = '/';
                   setState(() {});
