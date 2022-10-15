@@ -21,13 +21,13 @@ class Launching {
     pathSeperator = Platform.pathSeparator;
     documentsDirectory = (await getApplicationDocumentsDirectory()).path;
     applicationDirectory = (await getApplicationSupportDirectory()).path;
-    assetsDirectory =
-        "${Directory.current.path}${pathSeperator}data${pathSeperator}flutter_assets${pathSeperator}assets";
 
-    if (!await Directory(assetsDirectory).exists()) {
-      assetsDirectory =
-          "${Directory.current.path}${pathSeperator}build${pathSeperator}windows${pathSeperator}runner${pathSeperator}Debug${pathSeperator}data${pathSeperator}flutter_assets${pathSeperator}assets";
+    if (Platform.environment['FLUTTER_ROOT'] != null) {
+      assetsDirectory = "${Directory.current.path}${pathSeperator}assets";
+    } else {
+      assetsDirectory = "${Directory.current.path}${pathSeperator}data${pathSeperator}flutter_assets${pathSeperator}assets";
     }
+    
     executableDirectory = "$assetsDirectory${pathSeperator}main.exe";
 
     Paths.init(pathSeperator, documentsDirectory, applicationDirectory);
