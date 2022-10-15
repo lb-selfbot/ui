@@ -38,9 +38,9 @@ class UserData {
   final String accountType;
   final int logins;
   final DateTime dateJoined;
-  final DateTime loginTime;
+  final int loginTime;
   final String key;
-  final DateTime freeTrialExpiry;
+  final int freeTrialExpiry;
   final DateTime lastSelfbotLogin;
 }
 
@@ -48,12 +48,14 @@ class Stats {
   Stats({
     required this.auth,
     required this.version,
-    required this.globalLogins,
+    required this.users,
+    required this.logins,
   });
 
   final String auth;
   final String version;
-  final int globalLogins;
+  final int users;
+  final int logins;
 }
 
 class API {
@@ -89,31 +91,31 @@ class API {
   }
 
   static Future<APIResult> auth(String username, String password) async {
-    return Future.delayed(
-      const Duration(seconds: 1),
-      () {
-        userData = UserData(
-          id: 5,
-          username: "Lightning",
-          email: "Email",
-          isStaff: true,
-          isTester: true,
-          accountType: "Lifetime",
-          logins: 8742,
-          dateJoined: DateTime.parse("2020-02-27"),
-          loginTime: DateTime.parse("2020-02-27"),
-          key: "LB-ABCD-EFGH-IJKL",
-          freeTrialExpiry: DateTime.parse("2020-02-27"),
-          lastSelfbotLogin: DateTime.parse("2020-02-27"),
-        );
-        stats = Stats(
-          auth: "Online",
-          version: "4.0.0",
-          globalLogins: 98711,
-        );
-        return APIResult(success: true, response: null, json: {});
-      },
-    );
+    // return Future.delayed(
+    //   const Duration(seconds: 1),
+    //   () {
+    //     userData = UserData(
+    //       id: 5,
+    //       username: "Lightning",
+    //       email: "Email",
+    //       isStaff: true,
+    //       isTester: true,
+    //       accountType: "Lifetime",
+    //       logins: 8742,
+    //       dateJoined: DateTime.parse("2020-02-27"),
+    //       loginTime: DateTime.parse("2020-02-27"),
+    //       key: "LB-ABCD-EFGH-IJKL",
+    //       freeTrialExpiry: DateTime.parse("2020-02-27"),
+    //       lastSelfbotLogin: DateTime.parse("2020-02-27"),
+    //     );
+    //     stats = Stats(
+    //       auth: "Online",
+    //       version: "4.0.0",
+    //       globalLogins: 98711,
+    //     );
+    //     return APIResult(success: true, response: null, json: {});
+    //   },
+    // );
     http.Response response;
     try {
       response = await postJson(
@@ -135,21 +137,31 @@ class API {
     );
 
     if (result.success) {
+      final user = result.json["user"];
+
       userData = UserData(
-        id: result.json["id"] as int,
-        username: result.json["username"] as String,
-        email: result.json["email"] as String,
-        isStaff: result.json["is_staff"] as bool,
-        isTester: result.json["is_tester"] as bool,
-        accountType: result.json["account_type"] as String,
-        logins: result.json["logins"] as int,
-        dateJoined: DateTime.parse(result.json["date_joined"] as String),
-        loginTime: DateTime.parse(result.json["login_time"] as String),
-        key: result.json["key"] as String,
-        freeTrialExpiry:
-            DateTime.parse(result.json["free_trial_expiry"] as String),
+        id: user["id"] as int,
+        username: user["username"] as String,
+        email: user["email"] as String,
+        isStaff: user["is_staff"] as bool,
+        isTester: user["is_tester"] as bool,
+        accountType: user["account_type"] as String,
+        logins: user["logins"] as int,
+        dateJoined: DateTime.parse(user["date_joined"] as String),
+        loginTime: user["login_time"] as int,
+        key: user["key"] as String,
+        freeTrialExpiry: user["free_trial_expiry"] as int,
         lastSelfbotLogin:
-            DateTime.parse(result.json["last_selfbot_login"] as String),
+            DateTime.parse(user["last_selfbot_login"] ?? "1970-01-01"),
+      );
+
+      final statsJson = result.json["stats"];
+
+      stats = Stats(
+        auth: statsJson["auth"] as String,
+        version: statsJson["version"] as String,
+        users: statsJson["users"] as int,
+        logins: statsJson["logins"] as int,
       );
     }
 

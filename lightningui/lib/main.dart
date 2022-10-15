@@ -148,7 +148,8 @@ class AppBody extends ConsumerStatefulWidget {
 
 class _AppBodyState extends ConsumerState<AppBody> {
   bool shouldLogin = true;
-  bool tryingToAuth = true;
+  bool passedFirstLogin = false;
+  bool tryingToAuth = false;
   APIResult? authResult;
 
   @override
@@ -161,12 +162,14 @@ class _AppBodyState extends ConsumerState<AppBody> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    if (!shouldLogin) {
+    if (!shouldLogin && !passedFirstLogin && !tryingToAuth) {
+      tryingToAuth = true;
       final account = Config.config["Account"]["LightningBot"];
       API.auth(account["Username"], account["Password"]).then((result) {
         setState(() {
           authResult = result;
           tryingToAuth = false;
+          passedFirstLogin = true;
         });
       });
     }

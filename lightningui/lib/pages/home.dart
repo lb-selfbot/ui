@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
           InfoCardCol(
             card: InfoCard(
               title: 'Global Logins',
-              subtitle: API.stats?.globalLogins.toString() ?? 'Unknown',
+              subtitle: API.stats?.logins.toString() ?? 'Unknown',
               icon: Icons.login,
             ),
           ),
