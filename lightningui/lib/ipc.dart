@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:lightningui/launching.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:path_provider/path_provider.dart';
@@ -138,6 +139,12 @@ class IPC {
         break;
       case OP.configEdit:
         callListeners(onConfigChangeListeners);
+        break;
+      case OP.restart:
+        // Sleep for 1 second to allow the selfbot to exit
+        Future.delayed(const Duration(seconds: 1), () {
+          Launching.launch(force: true);
+        });
         break;
     }
   }

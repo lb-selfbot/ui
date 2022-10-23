@@ -100,9 +100,11 @@ class _ConsolePageState extends State<ConsolePage> {
                       borderRadius: BorderRadius.circular(12),
                       color: const Color(0x33000000),
                     ),
-                    child: ListView(
-                      controller: controller,
-                      children: console,
+                    child: SelectionArea(
+                      child: ListView(
+                        controller: controller,
+                        children: console,
+                      ),
                     ),
                   ),
                   Row(
