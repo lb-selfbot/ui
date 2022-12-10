@@ -65,12 +65,12 @@ jobs:
       
       - name: Create folder structure
         run: |
-          mkdir -Path ${{ github.workspace }}/executables
-          mkdir -Path ${{ github.workspace }}/executables/linux
-          mkdir -Path ${{ github.workspace }}/executables/linux/386
-          mkdir -Path ${{ github.workspace }}/executables/linux/amd64
-          mkdir -Path ${{ github.workspace }}/executables/linux/arm
-          mkdir -Path ${{ github.workspace }}/executables/linux/arm64
+          mkdir ${{ github.workspace }}/executables
+          mkdir ${{ github.workspace }}/executables/linux
+          mkdir ${{ github.workspace }}/executables/linux/386
+          mkdir ${{ github.workspace }}/executables/linux/amd64
+          mkdir ${{ github.workspace }}/executables/linux/arm
+          mkdir ${{ github.workspace }}/executables/linux/arm64
 
           cp -a ${{ github.workspace }}/lightningui/build/linux/x64/release/bundle/. ${{ github.workspace }}/executables/linux/amd64
  
