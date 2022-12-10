@@ -5,7 +5,7 @@ Name "LightningBot"
 Icon "LightningBot.ico"
 
 ; The setup filename
-OutFile "LightningBot_Setup.exe"
+OutFile "ui.exe"
 
 ; The default installation directory
 InstallDir $PROGRAMFILES\LightningBot
