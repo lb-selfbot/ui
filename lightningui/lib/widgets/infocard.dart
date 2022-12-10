@@ -17,10 +17,12 @@ class InfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
+        color: Colors.transparent,
         alignment: Alignment.center,
         child: ListTile(
+          tileColor: Colors.transparent,
           leading: Icon(icon),
-          title: Text(title),
+          title: Text(title, style: const TextStyle(fontSize: 16)),
           subtitle: Text(subtitle),
         ),
       ),
