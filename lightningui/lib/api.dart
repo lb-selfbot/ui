@@ -7,11 +7,13 @@ class APIResult {
     required this.success,
     required this.response,
     required this.json,
+    this.error,
   });
 
   final bool success;
   final http.Response? response;
   final Map<String, dynamic> json;
+  final Exception? error;
 }
 
 class UserData {
@@ -154,7 +156,7 @@ class API {
         },
       );
     } catch (e) {
-      return APIResult(success: false, response: null, json: {});
+      return APIResult(success: false, response: null, json: {}, error: e as Exception);
     }
 
     return APIResult(

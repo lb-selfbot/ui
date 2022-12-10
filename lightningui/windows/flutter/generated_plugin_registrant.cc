@@ -8,6 +8,7 @@
 
 #include <bitsdojo_window_windows/bitsdojo_window_plugin.h>
 #include <flutter_acrylic/flutter_acrylic_plugin.h>
+#include <flutter_platform_alert/flutter_platform_alert_plugin.h>
 #include <screen_retriever/screen_retriever_plugin.h>
 #include <window_manager/window_manager_plugin.h>
 #include <window_size/window_size_plugin.h>
@@ -17,6 +18,8 @@ void RegisterPlugins(flutter::PluginRegistry* registry) {
       registry->GetRegistrarForPlugin("BitsdojoWindowPlugin"));
   FlutterAcrylicPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("FlutterAcrylicPlugin"));
+  FlutterPlatformAlertPluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("FlutterPlatformAlertPlugin"));
   ScreenRetrieverPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("ScreenRetrieverPlugin"));
   WindowManagerPluginRegisterWithRegistrar(

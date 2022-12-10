@@ -1,9 +1,14 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:lightningui/paths.dart';
+import 'package:lightningui/utils.dart';
 
-import 'package:bitsdojo_window/bitsdojo_window.dart';
+import 'package:flutter_platform_alert/flutter_platform_alert.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:path/path.dart' as path;
 import 'package:lightningui/api.dart';
 import 'package:lightningui/config.dart';
 import 'package:lightningui/ipc.dart';
@@ -19,6 +24,8 @@ import 'widgets/leftnav.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await checkVersion();
+
   await Launching.init();
   IPC.tryConnect();
 
@@ -33,6 +40,75 @@ Future<void> main() async {
         ..show();
     });
   }
+}
+
+Future<void> checkVersion() async {
+  final packageInfo = await PackageInfo.fromPlatform();
+
+  final apiResponse = await API.checkVersion("ui", packageInfo.version);
+
+  if (!apiResponse.success) {
+    await FlutterPlatformAlert.showAlert(
+      windowTitle: "LightningBot - Error",
+      text: "An error occurred while checking for updates. "
+          "Please check your internet connection and try again. "
+          "Check the status on our Discord server if the problem persists."
+          "\n\nError data:"
+          "\n\n  Status code: ${apiResponse.response?.statusCode} ${apiResponse.response?.reasonPhrase}"
+          "\n\n  Response: ${apiResponse.response?.body}"
+          "\n\n  Exception: ${apiResponse.error}",
+      iconStyle: IconStyle.information,
+    );
+    exit(0);
+  }
+
+  final isLatest = apiResponse.json["is_latest"];
+
+  if (isLatest) {
+    return;
+  }
+
+  await FlutterPlatformAlert.showAlert(
+    windowTitle: "LightningBot - New Version Available",
+    text: "This version of LightningBot is outdated. "
+        "The new version will download when you close this dialog. "
+        "Please wait for the download to complete, you will be notified when it is ready.",
+    iconStyle: IconStyle.information,
+  );
+
+  String downloadUrl = "${API.baseUrl}/static/executables/"
+      "${Platform.operatingSystem}/${Launching.architecture}/selfbot";
+
+  if (Platform.isMacOS) {
+    downloadUrl = "${API.baseUrl}/static/executables/macos/ui";
+  }
+  if (Platform.isWindows) {
+    downloadUrl += ".exe";
+  }
+
+  final installerPath = path.join(Paths.mainFolder, "installer.exe");
+
+  final success = await Utils.downloadFile(downloadUrl, installerPath);
+
+  if (success) {
+    await FlutterPlatformAlert.showAlert(
+      windowTitle: "LightningBot - New Version Available",
+      text: "The installer will open when you close this dialog. "
+          "Please follow the instructions to update to the new version.",
+      iconStyle: IconStyle.information,
+    );
+
+    Process.start(installerPath, [], mode: ProcessStartMode.detached);
+  } else {
+    await FlutterPlatformAlert.showAlert(
+      windowTitle: "LightningBot - New Version Available",
+      text: "The download has failed. Please try again later "
+          "or download the new version manually.",
+      iconStyle: IconStyle.error,
+    );
+  }
+
+  exit(0);
 }
 
 final currentRouteProvider = StateProvider<String>((ref) => '/');

@@ -244,7 +244,7 @@ class Utils {
     }
   }
 
-  static Future<void> downloadFile(
+  static Future<bool> downloadFile(
     String uri,
     String path, {
     void Function(int, int)? onProgress,
@@ -252,8 +252,10 @@ class Utils {
     final dio = Dio();
     try {
       await dio.download(uri, path, onReceiveProgress: onProgress);
+      return true;
     } on DioError catch (e) {
-      print("dio error ${e.response}");
+      //print(e);
+      return false;
     }
   }
 
