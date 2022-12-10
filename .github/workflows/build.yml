@@ -21,6 +21,13 @@ jobs:
           flutter pub get
           flutter config --enable-windows-desktop
           flutter build windows --release
+      
+      - name: Package into installer
+        run: |
+          cp -a ../installer/. lightningui/build/windows/runner/Release/
+          cd lightningui/build/windows/runner/Release
+          makensis -V2 installer.nsi
+
           
           
       - name: Upload builds

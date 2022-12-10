@@ -68,6 +68,17 @@ Future<void> checkVersion() async {
     return;
   }
 
+  // No auto update on Linux
+  if (Platform.isLinux) {
+    await FlutterPlatformAlert.showAlert(
+      windowTitle: "LightningBot - New Version Available",
+      text: "A new version of LightningBot is available. "
+          "Please download the latest version from our website.",
+      iconStyle: IconStyle.information,
+    );
+    exit(0);
+  }
+
   await FlutterPlatformAlert.showAlert(
     windowTitle: "LightningBot - New Version Available",
     text: "This version of LightningBot is outdated. "
