@@ -15,7 +15,7 @@ abstract class OP {
   static const int notification = 102;
   static const int invalidToken = 103;
   static const int error = 104;
-  static const int configEdit = 105;
+  static const int configUpdate = 105;
   static const int newToken = 106;
   static const int consoleAppend = 107;
   static const int consoleClear = 108;
@@ -30,11 +30,6 @@ class IPC {
   static String defaultConsoleString =
       '<image Source="assets/Banner.png" Width="650" Height="150" Centered />\n<text Color="#3CA5FF" Centered>Waiting for launch...</text>';
   static String consoleString = defaultConsoleString;
-
-  // loaded in the main function
-  // TODO: deprecate
-  static String documentsDirectory = "";
-  static String applicationDirectory = "";
 
   static Map<String, Function()> onChangeListeners = {};
   static Map<String, Function()> onConfigChangeListeners = {};
@@ -137,13 +132,13 @@ class IPC {
         consoleString = data['text'];
         callListeners(onChangeListeners);
         break;
-      case OP.configEdit:
+      case OP.configUpdate:
         callListeners(onConfigChangeListeners);
         break;
       case OP.restart:
         // Sleep for 1 second to allow the selfbot to exit
-        Future.delayed(const Duration(seconds: 1), () {
-          Launching.launch(force: true);
+        Future.delayed(const Duration(seconds: 1), () async {
+          await Launching.launch(force: true);
         });
         break;
     }

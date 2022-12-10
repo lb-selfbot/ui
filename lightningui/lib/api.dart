@@ -59,7 +59,7 @@ class Stats {
 }
 
 class API {
-  static const String baseUrl = "http://localhost:8000";
+  static const String baseUrl = "https://api.lightning-bot.com";
 
   static UserData? userData;
   static Stats? stats;
@@ -91,31 +91,6 @@ class API {
   }
 
   static Future<APIResult> auth(String username, String password) async {
-    // return Future.delayed(
-    //   const Duration(seconds: 1),
-    //   () {
-    //     userData = UserData(
-    //       id: 5,
-    //       username: "Lightning",
-    //       email: "Email",
-    //       isStaff: true,
-    //       isTester: true,
-    //       accountType: "Lifetime",
-    //       logins: 8742,
-    //       dateJoined: DateTime.parse("2020-02-27"),
-    //       loginTime: DateTime.parse("2020-02-27"),
-    //       key: "LB-ABCD-EFGH-IJKL",
-    //       freeTrialExpiry: DateTime.parse("2020-02-27"),
-    //       lastSelfbotLogin: DateTime.parse("2020-02-27"),
-    //     );
-    //     stats = Stats(
-    //       auth: "Online",
-    //       version: "4.0.0",
-    //       globalLogins: 98711,
-    //     );
-    //     return APIResult(success: true, response: null, json: {});
-    //   },
-    // );
     http.Response response;
     try {
       response = await postJson(
@@ -166,5 +141,26 @@ class API {
     }
 
     return result;
+  }
+
+  static Future<APIResult> checkVersion(String branch, String version) async {
+    http.Response response;
+    try {
+      response = await postJson(
+        "/api/v3/selfbot/check-version",
+        body: {
+          "branch": branch,
+          "version": version,
+        },
+      );
+    } catch (e) {
+      return APIResult(success: false, response: null, json: {});
+    }
+
+    return APIResult(
+      success: response.statusCode == 200,
+      response: response,
+      json: Utils.tryDecode(response.body),
+    );
   }
 }

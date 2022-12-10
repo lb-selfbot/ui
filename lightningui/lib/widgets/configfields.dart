@@ -59,11 +59,6 @@ class TextFieldConfigCol extends StatelessWidget {
         labelText: name,
         suffix: InfoIconButton(info: info),
       ),
-      toolbarOptions: const ToolbarOptions(
-        copy: true,
-        cut: true,
-        paste: true,
-      ),
       keyboardType: numeric ? TextInputType.number : TextInputType.text,
       inputFormatters: numeric ? [FilteringTextInputFormatter.digitsOnly] : [],
       obscureText: obscure,
@@ -103,16 +98,19 @@ class _SwitchConfigColState extends State<SwitchConfigCol> {
       decoration: const InputDecoration(),
       child: Row(
         children: [
-          Switch(
-            value: isSwitched,
-            activeColor: Theme.of(context).primaryColorLight,
-            activeTrackColor: Theme.of(context).primaryColorDark,
-            onChanged: (value) {
-              setState(() {
-                isSwitched = value;
-              });
-              widget.onChanged(value);
-            },
+          Transform.scale(
+            scale: 0.75,
+            child: Switch(
+              value: isSwitched,
+              activeColor: Theme.of(context).primaryColorLight,
+              activeTrackColor: Theme.of(context).primaryColorDark,
+              onChanged: (value) {
+                setState(() {
+                  isSwitched = value;
+                });
+                widget.onChanged(value);
+              },
+            ),
           ),
           Text(widget.name),
           Expanded(child: Container()),

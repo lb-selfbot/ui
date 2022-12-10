@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lightningui/api.dart';
@@ -21,7 +23,7 @@ class LoginContainer extends StatelessWidget {
     return Center(
       child: Container(
         width: 400,
-        margin: EdgeInsets.only(top: size.height / 3 - 50),
+        margin: EdgeInsets.only(top: max(size.height / 3 - 50, 0)),
         child: Card(
           color: color,
           child: Padding(
@@ -138,22 +140,12 @@ class LoginPage extends StatelessWidget {
         decoration: const InputDecoration(
           labelText: 'Username',
         ),
-        toolbarOptions: const ToolbarOptions(
-          copy: true,
-          cut: true,
-          paste: true,
-        ),
         controller: _usernameController,
       ),
       const SizedBox(height: 20),
       TextField(
         decoration: const InputDecoration(
           labelText: 'Password',
-        ),
-        toolbarOptions: const ToolbarOptions(
-          copy: true,
-          cut: true,
-          paste: true,
         ),
         controller: _passwordController,
         obscureText: true,

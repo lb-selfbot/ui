@@ -28,6 +28,6 @@ class Config {
         .writeAsStringSync(const JsonEncoder.withIndent("  ").convert(value));
     _config = value;
     lastConfigUpdate = DateTime.now();
-    IPC.send({'op': OP.configEdit, 'data': value});
+    IPC.send({'op': OP.configUpdate, 'data': value});
   }
 }

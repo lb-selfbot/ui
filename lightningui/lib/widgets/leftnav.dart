@@ -13,13 +13,13 @@ class LeftNavImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.only(top: 0),
       child: Center(
         heightFactor: 1,
         child: Image.asset(
           'assets/Logo.150.png',
-          height: 60,
-          width: 60,
+          height: 110,
+          width: 110,
         ),
       ),
     );
@@ -138,7 +138,7 @@ class LeftNav extends StatelessWidget {
           ),
           Column(
             children: [
-              const SizedBox(height: 80),
+              const SizedBox(height: 110),
               LeftNavButtons(navigatorKey: navigatorKey),
               Expanded(
                 child: Align(

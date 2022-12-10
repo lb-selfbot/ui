@@ -2,36 +2,37 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:lightningui/api.dart';
 import 'package:lightningui/config.dart';
 import 'package:lightningui/ipc.dart';
 import 'package:lightningui/paths.dart';
+import 'package:lightningui/utils.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:system_info2/system_info2.dart';
 
 class Launching {
   static String pathSeperator = "";
 
   static String documentsDirectory = "";
   static String applicationDirectory = "";
-  static String assetsDirectory = "";
-  static String executableDirectory = "";
+  static String executableVersion = "";
+
+  static String architecture = SysInfo.kernelArchitecture.toLowerCase();
 
   static bool isFirstLaunch = false;
+  static bool isDownloading = false;
 
   static Future<void> init() async {
     pathSeperator = Platform.pathSeparator;
     documentsDirectory = (await getApplicationDocumentsDirectory()).path;
     applicationDirectory = (await getApplicationSupportDirectory()).path;
 
-    if (Platform.environment['FLUTTER_ROOT'] != null) {
-      assetsDirectory = "${Directory.current.path}${pathSeperator}assets";
-    } else {
-      assetsDirectory = "${Directory.current.path}${pathSeperator}data${pathSeperator}flutter_assets${pathSeperator}assets";
-    }
-    
-    executableDirectory = "$assetsDirectory${pathSeperator}main.exe";
-
-    Paths.init(pathSeperator, documentsDirectory, applicationDirectory);
+    Paths.init();
     Paths.createDirectories();
+
+    executableVersion = await getExecutableVersion();
+
+    await ensureLatestSelfbotVersion();
 
     isFirstLaunch = await checkIsFirstLaunch();
 
@@ -47,9 +48,50 @@ class Launching {
     return !configFileExists;
   }
 
-  static void launch({bool force = false}) async {
+  static Future<void> launch({bool force = false}) async {
     if (!IPC.websocketConnected || force) {
-      await Process.start(executableDirectory, ["-l"]);
+      await Process.start(Paths.executablePath, ["-l"]);
+    }
+  }
+
+  static Future<String> getExecutableVersion() async {
+    try {
+      final result = await Process.run(Paths.executablePath, ["-v"]);
+      final version = result.stdout.toString().trim();
+      return version;
+    } catch (e) {
+      return "";
+    }
+  }
+
+  static String getFilename() {
+    final filename = Platform.isWindows ? "selfbot.exe" : "selfbot";
+    return filename;
+  }
+
+  static Future<void> ensureLatestSelfbotVersion() async {
+    final apiResponse = await API.checkVersion("selfbot", executableVersion);
+
+    if (apiResponse.success) {
+      final isLatest = apiResponse.json["is_latest"];
+
+      if (!isLatest) {
+        String downloadUrl = "${API.baseUrl}/static/executables/"
+            "${Platform.operatingSystem}/$architecture/${getFilename()}";
+
+        if (Platform.isMacOS) {
+          downloadUrl = "${API.baseUrl}/static/executables/macos/selfbot";
+        }
+
+        // Don't await this, we don't want to block the UI
+        isDownloading = true;
+        Utils.downloadFile(downloadUrl, Paths.executablePath).then((_) async {
+          isDownloading = false;
+          executableVersion = await getExecutableVersion();
+        }).onError((error, stackTrace) {
+          isDownloading = false;
+        });
+      }
     }
   }
 

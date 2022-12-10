@@ -40,6 +40,7 @@ class ConsolePage extends StatefulWidget {
 
 class _ConsolePageState extends State<ConsolePage> {
   String changeListenerName = "";
+  bool firstBuild = true;
 
   void changeListener() {
     if (mounted) {
@@ -72,11 +73,12 @@ class _ConsolePageState extends State<ConsolePage> {
     final consoleCached = Utils.isConsoleCached();
     final console = Utils.renderConsole();
 
-    if (!consoleCached) {
+    if (!consoleCached || firstBuild) {
       // Scroll all the way down
       WidgetsBinding.instance.addPostFrameCallback((_) {
         controller.jumpTo(controller.position.maxScrollExtent);
       });
+      firstBuild = false;
     }
 
     return Container(

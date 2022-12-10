@@ -64,7 +64,13 @@ dependencies:
 
   http:
 
+  dio: ^4.0.6
+
   awesome_snackbar_content:
+
+  path: ^1.8.2
+
+  system_info2: ^2.0.4
 
 dev_dependencies:
   flutter_test:

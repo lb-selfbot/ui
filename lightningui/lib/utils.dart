@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as path;
 import 'package:crypto/crypto.dart' as crypto;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lightningui/ipc.dart';
@@ -239,5 +242,49 @@ class Utils {
     } catch (e) {
       return <String, dynamic>{};
     }
+  }
+
+  static Future<void> downloadFile(
+    String uri,
+    String path, {
+    void Function(int, int)? onProgress,
+  }) async {
+    final dio = Dio();
+    try {
+      await dio.download(uri, path, onReceiveProgress: onProgress);
+    } on DioError catch (e) {
+      print("dio error ${e.response}");
+    }
+  }
+
+  static String getUserConfigDir() {
+    // Replicate os.UserConfigDir in Golang
+
+    if (Platform.isWindows) {
+      // If Windows, return %AppData%
+      final appData = Platform.environment["AppData"] ?? "";
+      return appData;
+    } else if (Platform.isMacOS || Platform.isIOS) {
+      // If macOS or iOS, return ~/Library/Application Support
+      final home = Platform.environment["HOME"] ?? "";
+      return path.join(home, "Library", "Application Support");
+    } else {
+      // If Unix, return %XDG_CONFIG_HOME% or ~/.config
+      final xdgConfigHome = Platform.environment["XDG_CONFIG_HOME"] ?? "";
+      if (xdgConfigHome.isNotEmpty) {
+        return xdgConfigHome;
+      }
+      final home = Platform.environment["HOME"] ?? "";
+      if (home.isNotEmpty) {
+        return path.join(home, ".config");
+      }
+      return "";
+    }
+  }
+
+  static Directory getMainFolder() {
+    return Directory(
+      path.join(getUserConfigDir(), 'LightningBot'),
+    );
   }
 }

@@ -1,33 +1,63 @@
 import 'dart:io';
 
+import 'package:lightningui/launching.dart';
+import 'package:path/path.dart' as path;
+
+import 'package:lightningui/utils.dart';
+
 class Paths {
-  static String _pathSeperator = "";
-  static String _documentsDirectory = "";
-  static String _applicationDirectory = "";
+  static String mainFolder = "";
+  static String assetsFolder = "";
+  static String executableFolder = "";
 
-  static void init(
-    String pathSeperator,
-    String documentsDirectory,
-    String applicationDirectory,
-  ) {
-    _pathSeperator = pathSeperator;
-    _documentsDirectory = documentsDirectory;
-    _applicationDirectory = applicationDirectory;
-  }
+  static String executablePath = "";
 
-  static String get mainFolder {
-    return "$_documentsDirectory${_pathSeperator}LightningBot";
+  static void init() {
+
+    mainFolder = Utils.getMainFolder().path;
+
+    if (Platform.environment['FLUTTER_ROOT'] != null) {
+      // Debugging assets path
+      assetsFolder = path.join(Directory.current.path, "assets");
+    } else {
+      // Release assets path
+      assetsFolder = path.join(
+        Directory.current.path,
+        "data",
+        "flutter_assets",
+        "assets",
+      );
+    }
+
+    // Ex: assets/executables/windows/amd64
+    executableFolder = path.join(
+      assetsFolder,
+      "executables",
+      Platform.operatingSystem,
+    );
+    if (!Platform.isMacOS) {
+      executableFolder = path.join(executableFolder, Launching.architecture);
+    }
+
+    final executableDirectory = Directory(executableFolder);
+
+    if (!executableDirectory.existsSync()) {
+      // TODO: error, unsupported os/architecture
+      return;
+    }
+
+    executablePath = path.join(executableFolder, Launching.getFilename());
   }
 
   static String get configFile {
-    return "$mainFolder${_pathSeperator}Config${_pathSeperator}config.json";
+    return path.join(mainFolder, "Config", "config.json");
   }
 
   static Set<String> get folders {
     return {
-      "$mainFolder${_pathSeperator}Config",
-      "$mainFolder${_pathSeperator}Animations",
-      "$mainFolder${_pathSeperator}Dumping",
+      path.join(mainFolder, "Config"),
+      path.join(mainFolder, "Animations"),
+      path.join(mainFolder, "Dumping"),
     };
   }
 

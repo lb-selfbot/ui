@@ -90,7 +90,7 @@ class ErrorSnackBar extends SnackBar {
           content: SnackBarContent(
             title: "Error",
             message: message,
-            color: theme.errorColor,
+            color: theme.colorScheme.error,
             icon: Icons.error_outline_rounded,
             size: size,
           ),

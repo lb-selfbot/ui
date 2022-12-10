@@ -30,7 +30,6 @@ Future<void> main() async {
         ..minSize = const Size(720, 540)
         ..size = const Size(900, 640)
         ..alignment = Alignment.center
-        ..startDragging()
         ..show();
     });
   }
@@ -77,10 +76,12 @@ class App extends StatelessWidget {
         ),
         darkTheme: ThemeData.dark().copyWith(
           splashFactory: InkRipple.splashFactory,
+          // colorScheme: const ColorScheme.dark(
+          //   error: Color(0xFFb00020),
+          // ),
           primaryColor: const Color(0xFF1B2D48),
           primaryColorDark: const Color(0xFF2c4975),
           primaryColorLight: const Color(0xFF2e73db),
-          errorColor: const Color(0xFFb00020),
           useMaterial3: true,
           cardTheme: const CardTheme(
             color: Color(0xFF1B2D48),
