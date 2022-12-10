@@ -24,7 +24,7 @@ jobs:
       
       - name: Package into installer
         run: |
-          cp -a ../installer/. lightningui/build/windows/runner/Release/
+          cp -r ../installer/. lightningui/build/windows/runner/Release/
           cd lightningui/build/windows/runner/Release
           makensis -V2 installer.nsi
 
