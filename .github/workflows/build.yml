@@ -1,0 +1,30 @@
+name: Build UI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'master'
+
+      - name: Build for Windows
+        run: |
+          cd lightningui
+          flutter pub get
+          flutter config --enable-windows-desktop
+          flutter build windows --release
+          
+          
+      - name: Upload builds
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          path: ${{ github.workspace }}/lightningui/build/windows/runner/Release/*
