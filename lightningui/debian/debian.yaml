@@ -1,13 +1,14 @@
 flutter_app:
   command: lightningui
   arch: x64
+  nonInteractive: true
 
 control:
   Package: LightningBot
-  Version: 1.0.0
+  Version: 4.0.0
   Architecture: amd64
   Essential: no
   Priority: optional
   Depends:
-  Maintainer:
+  Maintainer: LightningBot
   Description: A Discord Selfbot
