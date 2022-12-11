@@ -27,12 +27,22 @@ class Launching {
     documentsDirectory = (await getApplicationDocumentsDirectory()).path;
     applicationDirectory = (await getApplicationSupportDirectory()).path;
 
+    if (architecture == "x86_64") {
+      architecture = "amd64";
+    } else if (architecture == "x86") {
+      architecture = "386";
+    }
+
     Paths.init();
     Paths.createDirectories();
+
+    print(Paths.executablePath);
 
     executableVersion = await getExecutableVersion();
 
     await ensureLatestSelfbotVersion();
+
+    print("BBBB");
 
     isFirstLaunch = await checkIsFirstLaunch();
 
@@ -72,6 +82,8 @@ class Launching {
   static Future<void> ensureLatestSelfbotVersion() async {
     final apiResponse = await API.checkVersion("selfbot", executableVersion);
 
+    print(apiResponse.json);
+
     if (apiResponse.success) {
       final isLatest = apiResponse.json["is_latest"];
 
@@ -87,6 +99,8 @@ class Launching {
         isDownloading = true;
         Utils.downloadFile(downloadUrl, Paths.executablePath).then((_) async {
           isDownloading = false;
+          // add executable permission
+
           executableVersion = await getExecutableVersion();
         }).onError((error, stackTrace) {
           isDownloading = false;
