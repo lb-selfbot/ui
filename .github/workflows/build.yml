@@ -60,9 +60,9 @@ jobs:
 
       - name: Build for Linux
         env:
-          PATH: ${{ env.PATH }}:${{ github.workspace }}/.pub-cache/bin:${{ env.HOME }}/.pub-cache/bin
+          PATH: ${{ env.PATH }}:${{ env.PUB_CACHE }}/bin
         run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          export PATH="$PATH":"$PUB_CACHE/.pub-cache/bin"
           cd lightningui
           flutter pub get
           flutter config --enable-linux-desktop
