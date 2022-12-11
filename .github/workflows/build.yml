@@ -61,7 +61,8 @@ jobs:
           cd lightningui
           flutter pub get
           flutter config --enable-linux-desktop
-          flutter build linux --release --target-platform=linux-x64,linux-arm64
+          flutter build linux --release --target-platform=linux-x64
+          flutter build linux --release --target-platform=linux-arm64
       
       - name: Create folder structure
         run: |
