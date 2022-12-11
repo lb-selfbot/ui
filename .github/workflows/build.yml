@@ -58,10 +58,7 @@ jobs:
 
           dart pub global activate https://github.com/jeffrey0606/flutter_to_debian.git --source git
 
-      - name: Build for Linux
-        env:
-          PATH: ${{ env.PATH }}:${{ env.PUB_CACHE }}/bin
-        run: |
+      - name: Build for Linuxrun: |
           export PATH="$PATH":"$PUB_CACHE/.pub-cache/bin"
           cd lightningui
           flutter pub get
