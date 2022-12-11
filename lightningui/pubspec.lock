@@ -150,14 +150,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_acrylic:
-    dependency: "direct main"
-    description:
-      name: flutter_acrylic
-      sha256: "646200d98e8dd2bd4ab931d4ba4f6b4cb899475d6401414017ba5d71b0fac42b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0+2"
   flutter_lints:
     dependency: "direct dev"
     description:
