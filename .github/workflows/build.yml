@@ -59,6 +59,8 @@ jobs:
           dart pub global activate https://github.com/jeffrey0606/flutter_to_debian.git --source git
 
       - name: Build for Linux
+        env:
+          PATH: ${{ env.PATH }}:${{ github.workspace }}/.pub-cache/bin:${{ env.HOME }}/.pub-cache/bin
         run: |
           export PATH="$PATH":"$HOME/.pub-cache/bin"
           cd lightningui
@@ -66,7 +68,7 @@ jobs:
           flutter config --enable-linux-desktop
           flutter build linux --release --target-platform=linux-x64
 
-          dart pub global run flutter_to_debian
+          sudo flutter_to_debian
 
       - name: Create folder structure
         run: |
