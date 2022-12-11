@@ -3,9 +3,9 @@ version: 4.0.0
 summary: LightningBot
 description: A Discord selfbot
 
-confinement: devmode
+confinement: classic
 base: core18
-#grade: stable
+grade: stable
 
 parts:
   lightningbot:
