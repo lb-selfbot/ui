@@ -91,7 +91,6 @@ Section "Uninstall"
   ; USER CHOOSES A STUPID INSTALL DIRECTORY,
   ; YOU'LL WIPE OUT OTHER FILES TOO
   Delete $INSTDIR\lightningui.exe
-  Delete $INSTDIR\flutter_acrylic_plugin.dll
   Delete $INSTDIR\flutter_windows.dll
   Delete $INSTDIR\screen_retriever_plugin.dll
   Delete $INSTDIR\window_manager_plugin.dll
