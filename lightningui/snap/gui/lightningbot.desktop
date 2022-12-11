@@ -2,6 +2,6 @@
 Version=1.0
 Type=Application
 Icon=${SNAP}/meta/gui/lightningbot.png
-Exec=lightningui
+Exec=lightningbot
 Name=LightningBot
 Terminal=false
