@@ -60,7 +60,7 @@ static void my_application_activate(GApplication *application)
   g_autoptr(FlDartProject) project = fl_dart_project_new();
   fl_dart_project_set_dart_entrypoint_arguments(project, self->dart_entrypoint_arguments);
 
-  gtk_window_set_icon_from_file(GTK_WINDOW(window), "assets/Logo.150.png", NULL);
+  gtk_window_set_icon_from_file(GTK_WINDOW(window), "data/flutter_assets/assets/Logo.150.png", NULL);
 
   FlView *view = fl_view_new(project);
   gtk_widget_show(GTK_WIDGET(view));
