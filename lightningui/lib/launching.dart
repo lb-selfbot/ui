@@ -98,10 +98,17 @@ class Launching {
         // Don't await this, we don't want to block the UI
         isDownloading = true;
         Utils.downloadFile(downloadUrl, Paths.executablePath).then((_) async {
-          isDownloading = false;
-          // add executable permission
+          // Add executable permissions
+          try {
+            await Process.run("chmod", ["+x", Paths.executablePath]);
+          } catch (e) {
+            // TODO: Handle error
+            print(e);
+          }
 
           executableVersion = await getExecutableVersion();
+
+          isDownloading = false;
         }).onError((error, stackTrace) {
           isDownloading = false;
         });
