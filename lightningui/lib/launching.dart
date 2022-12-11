@@ -36,13 +36,9 @@ class Launching {
     Paths.init();
     Paths.createDirectories();
 
-    print(Paths.executablePath);
-
     executableVersion = await getExecutableVersion();
 
     await ensureLatestSelfbotVersion();
-
-    print("BBBB");
 
     isFirstLaunch = await checkIsFirstLaunch();
 
@@ -81,8 +77,6 @@ class Launching {
 
   static Future<void> ensureLatestSelfbotVersion() async {
     final apiResponse = await API.checkVersion("selfbot", executableVersion);
-
-    print(apiResponse.json);
 
     if (apiResponse.success) {
       final isLatest = apiResponse.json["is_latest"];

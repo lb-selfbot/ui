@@ -61,7 +61,7 @@ Section "LightningBot (required)"
 SectionEnd
 
 ; Optional section (can be disabled by the user)
-Section "Start Menu Shortcuts"
+Section "Add to Start Menu"
 
   CreateDirectory "$SMPROGRAMS\LightningBot"
   CreateShortcut "$SMPROGRAMS\LightningBot\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
@@ -70,8 +70,7 @@ Section "Start Menu Shortcuts"
 SectionEnd
 
 ; Desktop shortcuts
-Section "Desktop Shortcuts"
-
+Section "Add to Desktop"
 
   CreateShortcut "$DESKTOP\LightningBot.lnk" "$INSTDIR\lightningui.exe" "" "$INSTDIR\lightningui.exe" 0
   

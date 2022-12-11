@@ -254,7 +254,7 @@ class Utils {
       await dio.download(uri, path, onReceiveProgress: onProgress);
       return true;
     } on DioError catch (e) {
-      //print(e);
+      print(e);
       return false;
     }
   }

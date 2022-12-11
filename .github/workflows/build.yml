@@ -61,7 +61,7 @@ jobs:
           cd lightningui
           flutter pub get
           flutter config --enable-linux-desktop
-          flutter build linux --release
+          flutter build linux --release --target-platform=linux-x64,linux-arm64
       
       - name: Create folder structure
         run: |
@@ -73,6 +73,7 @@ jobs:
           mkdir ${{ github.workspace }}/executables/linux/arm64
 
           cp -a ${{ github.workspace }}/lightningui/build/linux/x64/release/bundle/. ${{ github.workspace }}/executables/linux/amd64
+          cp -a ${{ github.workspace }}/lightningui/build/linux/arm64/release/bundle/. ${{ github.workspace }}/executables/linux/arm64
  
       - name: Upload builds
         uses: actions/upload-artifact@v3.1.0
