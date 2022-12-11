@@ -1,7 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Type=Application
-Icon=${SNAP}/meta/gui/lightningbot.png
-Exec=/snap/bin/lightningbot
-Name=LightningBot
-Terminal=false
