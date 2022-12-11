@@ -1,0 +1,21 @@
+name: lightningbot
+version: 4.0.0
+summary: LightningBot
+description: A Discord selfbot
+
+confinement: devmode
+base: core18
+#grade: stable
+
+parts:
+  lightningbot:
+    plugin: flutter
+    source: .
+    flutter-target: lib/main.dart
+    
+apps:
+  lightningbot:
+    command: lightningui
+    extensions: [flutter-master]
+    plugs:
+    - network
