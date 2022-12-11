@@ -115,12 +115,14 @@ class Launching {
 
     isDownloading = true;
     Utils.downloadFile(downloadUrl, Paths.executablePath).then((_) async {
-      // Add executable permissions
-      try {
-        await Process.run("chmod", ["+x", Paths.executablePath]);
-      } catch (e) {
-        // TODO: Handle error
-        print(e);
+      if (!Platform.isWindows) {
+        // Add executable permissions
+        try {
+          await Process.run("chmod", ["+x", Paths.executablePath]);
+        } catch (e) {
+          // TODO: Handle error
+          print(e);
+        }
       }
 
       executableVersion = await getExecutableVersion();
