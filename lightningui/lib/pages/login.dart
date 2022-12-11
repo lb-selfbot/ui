@@ -94,21 +94,6 @@ class LoginPage extends StatelessWidget {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final primaryColor = Theme.of(context).primaryColor;
-
-    return LoginContainer(
-      size: size,
-      color: primaryColor,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: tryingToAuth ? loadingWidgets() : loginWidgets(context),
-      ),
-    );
-  }
-
   List<Widget> loadingWidgets() {
     return [
       const CircularProgressIndicator(),
@@ -156,5 +141,20 @@ class LoginPage extends StatelessWidget {
         child: const Text('Login'),
       ),
     ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final primaryColor = Theme.of(context).primaryColor;
+
+    return LoginContainer(
+      size: size,
+      color: primaryColor,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: tryingToAuth ? loadingWidgets() : loginWidgets(context),
+      ),
+    );
   }
 }

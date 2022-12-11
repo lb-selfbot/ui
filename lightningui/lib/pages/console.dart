@@ -64,6 +64,62 @@ class _ConsolePageState extends State<ConsolePage> {
     IPC.removeChangeListener(changeListenerName);
   }
 
+  void onLaunchPress() async {
+    // Check if Discord token has been set in config
+    final token = Config.config["Account"]["Discord"]["Token"];
+    if (token == "") {
+      Utils.showErrorDialog(
+        context,
+        "You haven't set your Discord token yet! Please set it in the config tab before launching LightningBot.",
+      );
+    } else {
+      final error = await Launching.launch();
+
+      // Check if the page is still mounted before showing the error dialog
+      if (error.isNotEmpty && mounted) {
+        Utils.showErrorDialog(context, error);
+      }
+    }
+  }
+
+  void onExitPress() {
+    IPC.send({"op": OP.exit, "data": {}});
+  }
+
+  void onRestartPress() async {
+    IPC.send({"op": OP.exit, "data": {}});
+
+    final error = await Launching.launch(force: true);
+
+    // Check if the page is still mounted before showing the error dialog
+    if (error.isNotEmpty && mounted) {
+      Utils.showErrorDialog(context, error);
+    }
+  }
+
+  List<Widget> _getConsoleButtons() {
+    final connectedButtons = [
+      ConsoleButton(
+        onPressed: onExitPress,
+        text: "Exit",
+      ),
+      const SizedBox(width: 5),
+      ConsoleButton(
+        onPressed: onRestartPress,
+        text: "Restart",
+      ),
+    ];
+
+    final disconnectedButtons = [
+      ConsoleButton(
+        onPressed: onLaunchPress,
+        text: "Launch",
+      ),
+    ];
+
+    return IPC.websocketConnected ? connectedButtons : disconnectedButtons;
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -151,52 +207,5 @@ class _ConsolePageState extends State<ConsolePage> {
         ],
       ),
     );
-  }
-
-  List<Widget> _getConsoleButtons() {
-    if (IPC.websocketConnected) {
-      return [
-        ConsoleButton(
-          onPressed: () => IPC.send({"op": OP.exit, "data": {}}),
-          text: "Exit",
-        ),
-        const SizedBox(width: 5),
-        ConsoleButton(
-          onPressed: () {
-            IPC.send({"op": OP.exit, "data": {}});
-            Launching.launch(force: true);
-          },
-          text: "Restart",
-        ),
-      ];
-    } else {
-      return [
-        ConsoleButton(
-          onPressed: () {
-            // Check if Discord token has been set in config
-            final token = Config.config["Account"]["Discord"]["Token"];
-            if (token == "") {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text("Error"),
-                  content: const Text(
-                      "You haven't set your Discord token yet! Please set it in the config tab before launching LightningBot."),
-                  actions: [
-                    TextButton(
-                      child: const Text('Close'),
-                      onPressed: () => Navigator.of(context).pop(),
-                    ),
-                  ],
-                ),
-              );
-            } else {
-              Launching.launch();
-            }
-          },
-          text: "Launch",
-        ),
-      ];
-    }
   }
 }

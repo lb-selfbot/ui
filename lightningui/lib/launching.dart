@@ -54,10 +54,22 @@ class Launching {
     return !configFileExists;
   }
 
-  static Future<void> launch({bool force = false}) async {
-    if (!IPC.websocketConnected || force) {
-      await Process.start(Paths.executablePath, ["-l"]);
+  static Future<String> launch({bool force = false}) async {
+    if (isDownloading) {
+      return "The selfbot is currently downloading. Please wait a few seconds and try again.";
     }
+    if (executableVersion.isEmpty) {
+      startDownload();
+      return "The selfbot executable is missing. It will be now start downloading.";
+    }
+    if (!IPC.websocketConnected || force) {
+      try {
+        await Process.start(Paths.executablePath, ["-l"]);
+      } catch (e) {
+        return "Failed to start the selfbot executable.\n\nError: $e";
+      }
+    }
+    return "";
   }
 
   static Future<String> getExecutableVersion() async {
@@ -78,36 +90,45 @@ class Launching {
   static Future<void> ensureLatestSelfbotVersion() async {
     final apiResponse = await API.checkVersion("selfbot", executableVersion);
 
-    if (apiResponse.success) {
-      final isLatest = apiResponse.json["is_latest"];
-
-      if (!isLatest) {
-        String downloadUrl = "${API.baseUrl}/static/executables/"
-            "${Platform.operatingSystem}/$architecture/${getFilename()}";
-
-        if (Platform.isMacOS) {
-          downloadUrl = "${API.baseUrl}/static/executables/macos/selfbot";
-        }
-
-        // Don't await this, we don't want to block the UI
-        isDownloading = true;
-        Utils.downloadFile(downloadUrl, Paths.executablePath).then((_) async {
-          // Add executable permissions
-          try {
-            await Process.run("chmod", ["+x", Paths.executablePath]);
-          } catch (e) {
-            // TODO: Handle error
-            print(e);
-          }
-
-          executableVersion = await getExecutableVersion();
-
-          isDownloading = false;
-        }).onError((error, stackTrace) {
-          isDownloading = false;
-        });
-      }
+    if (!apiResponse.success) {
+      return;
     }
+
+    final isLatest = apiResponse.json["is_latest"];
+
+    if (!isLatest) {
+      startDownload();
+    }
+  }
+
+  static void startDownload() {
+    if (isDownloading) {
+      return;
+    }
+
+    String downloadUrl = "${API.baseUrl}/static/executables/"
+        "${Platform.operatingSystem}/$architecture/${getFilename()}";
+
+    if (Platform.isMacOS) {
+      downloadUrl = "${API.baseUrl}/static/executables/macos/selfbot";
+    }
+
+    isDownloading = true;
+    Utils.downloadFile(downloadUrl, Paths.executablePath).then((_) async {
+      // Add executable permissions
+      try {
+        await Process.run("chmod", ["+x", Paths.executablePath]);
+      } catch (e) {
+        // TODO: Handle error
+        print(e);
+      }
+
+      executableVersion = await getExecutableVersion();
+
+      isDownloading = false;
+    }).onError((error, stackTrace) {
+      isDownloading = false;
+    });
   }
 
   static void onLogin(String username, String password) {

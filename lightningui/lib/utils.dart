@@ -289,4 +289,20 @@ class Utils {
       path.join(getUserConfigDir(), 'LightningBot'),
     );
   }
+
+  static Future<void> showErrorDialog(BuildContext context, String text) async {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Error"),
+        content: Text(text),
+        actions: [
+          TextButton(
+            child: const Text('Close'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      ),
+    );
+  }
 }
