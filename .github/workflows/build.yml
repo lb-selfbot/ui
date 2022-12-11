@@ -66,7 +66,7 @@ jobs:
           flutter config --enable-linux-desktop
           flutter build linux --release --target-platform=linux-x64
 
-          sudo flutter_to_debian
+          flutter_to_debian
 
       - name: Create folder structure
         run: |
