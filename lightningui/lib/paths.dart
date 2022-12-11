@@ -51,10 +51,10 @@ class Paths {
       path.join(mainFolder, "Executables", "windows", "amd64"),
       path.join(mainFolder, "Executables", "windows", "386"),
       path.join(mainFolder, "Executables", "linux"),
-      path.join(mainFolder, "Executables", "windows", "amd64"),
-      path.join(mainFolder, "Executables", "windows", "386"),
-      path.join(mainFolder, "Executables", "windows", "arm64"),
-      path.join(mainFolder, "Executables", "windows", "arm"),
+      path.join(mainFolder, "Executables", "linux", "amd64"),
+      path.join(mainFolder, "Executables", "linux", "386"),
+      path.join(mainFolder, "Executables", "linux", "arm64"),
+      path.join(mainFolder, "Executables", "linux", "arm"),
       path.join(mainFolder, "Executables", "macos"),
     };
   }

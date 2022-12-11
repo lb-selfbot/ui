@@ -59,7 +59,7 @@ class Launching {
     }
     if (executableVersion.isEmpty) {
       startDownload();
-      return "The selfbot executable is missing. It will be now start downloading.";
+      return "The selfbot executable is missing. It will now start downloading.";
     }
     if (!IPC.websocketConnected || force) {
       try {
