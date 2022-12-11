@@ -34,7 +34,6 @@ class Launching {
     }
 
     Paths.init();
-    Paths.createDirectories();
 
     executableVersion = await getExecutableVersion();
 

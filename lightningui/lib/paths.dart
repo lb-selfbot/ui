@@ -13,35 +13,23 @@ class Paths {
   static String executablePath = "";
 
   static void init() {
-
     mainFolder = Utils.getMainFolder().path;
 
-    if (Platform.environment['FLUTTER_ROOT'] != null) {
-      // Debugging assets path
-      assetsFolder = path.join(Directory.current.path, "assets");
-    } else {
-      // Release assets path
-      assetsFolder = path.join(
-        Directory.current.path,
-        "data",
-        "flutter_assets",
-        "assets",
-      );
-    }
+    createDirectories();
+
+    final executablesFolder = path.join(mainFolder, "Executables");
 
     // Ex: assets/executables/windows/amd64
     executableFolder = path.join(
-      assetsFolder,
-      "executables",
+      executablesFolder,
       Platform.operatingSystem,
     );
+
     if (!Platform.isMacOS) {
       executableFolder = path.join(executableFolder, Launching.architecture);
     }
 
-    final executableDirectory = Directory(executableFolder);
-
-    if (!executableDirectory.existsSync()) {
+    if (!Directory(executableFolder).existsSync()) {
       // TODO: error, unsupported os/architecture
       return;
     }
@@ -58,6 +46,16 @@ class Paths {
       path.join(mainFolder, "Config"),
       path.join(mainFolder, "Animations"),
       path.join(mainFolder, "Dumping"),
+      path.join(mainFolder, "Executables"),
+      path.join(mainFolder, "Executables", "windows"),
+      path.join(mainFolder, "Executables", "windows", "amd64"),
+      path.join(mainFolder, "Executables", "windows", "386"),
+      path.join(mainFolder, "Executables", "linux"),
+      path.join(mainFolder, "Executables", "windows", "amd64"),
+      path.join(mainFolder, "Executables", "windows", "386"),
+      path.join(mainFolder, "Executables", "windows", "arm64"),
+      path.join(mainFolder, "Executables", "windows", "arm"),
+      path.join(mainFolder, "Executables", "macos"),
     };
   }
 
