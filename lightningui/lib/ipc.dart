@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:lightningui/launching.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:web_socket_channel/io.dart';
@@ -140,6 +141,13 @@ class IPC {
         Future.delayed(const Duration(seconds: 1), () async {
           await Launching.launch(force: true);
         });
+        break;
+      case OP.error:
+        FlutterPlatformAlert.showAlert(
+          windowTitle: "LightningBot - Error",
+          text: "An error has occurred!\n\nError data: ${data['text']}",
+          iconStyle: IconStyle.error,
+        );
         break;
     }
   }

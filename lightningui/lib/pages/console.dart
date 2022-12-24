@@ -197,7 +197,7 @@ class _ConsolePageState extends State<ConsolePage> {
               InfoCardCol(
                 card: InfoCard(
                   title: 'Login Time',
-                  subtitle: API.userData?.loginTime.toString() ?? 'Unknown',
+                  subtitle: Utils.parseSeconds(API.userData?.loginTime ?? 0),
                   icon: Icons.access_time,
                 ),
                 cardAmount: 3,

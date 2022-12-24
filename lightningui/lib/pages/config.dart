@@ -55,9 +55,7 @@ class _ConfigPageState extends State<ConfigPage> {
     final height = size.height - 65;
     final width = size.width - 170;
 
-    return ListView(
-      children: [
-        DefaultTabController(
+    return DefaultTabController(
           length: 11,
           child: Column(
             children: [
@@ -96,8 +94,6 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             ],
           ),
-        ),
-      ],
-    );
+        );
   }
 }

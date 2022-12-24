@@ -305,4 +305,26 @@ class Utils {
       ),
     );
   }
+
+  static String parseSeconds(int seconds) {
+    final hours = seconds ~/ 3600;
+    final minutes = (seconds % 3600) ~/ 60;
+    final secondsLeft = seconds % 60;
+
+    String parsed = "";
+
+    if (hours > 0) {
+      parsed += "${hours}h ";
+    }
+
+    if (minutes > 0) {
+      parsed += "${minutes}m ";
+    }
+
+    if (secondsLeft > 0) {
+      parsed += "${secondsLeft}s";
+    }
+
+    return parsed;
+  }
 }

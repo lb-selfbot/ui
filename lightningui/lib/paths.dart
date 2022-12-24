@@ -46,6 +46,7 @@ class Paths {
       path.join(mainFolder, "Config"),
       path.join(mainFolder, "Animations"),
       path.join(mainFolder, "Dumping"),
+      path.join(mainFolder, "Downloads"),
       path.join(mainFolder, "Executables"),
       path.join(mainFolder, "Executables", "windows"),
       path.join(mainFolder, "Executables", "windows", "amd64"),
