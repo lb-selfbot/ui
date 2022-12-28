@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:lightningui/paths.dart';
+import 'package:lightningui/systemtray.dart';
 import 'package:lightningui/utils.dart';
 
 import 'package:flutter_platform_alert/flutter_platform_alert.dart';
@@ -28,6 +29,8 @@ Future<void> main() async {
 
   await Launching.init();
   IPC.tryConnect();
+
+  await SystemTray.init();
 
   runApp(App());
 

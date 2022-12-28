@@ -71,6 +71,8 @@ dependencies:
 
   flutter_platform_alert: ^0.3.0
 
+  system_tray: ^2.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

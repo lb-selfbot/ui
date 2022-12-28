@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   bitsdojo_window_windows
   flutter_platform_alert
   screen_retriever
+  system_tray
   window_manager
   window_size
 )
