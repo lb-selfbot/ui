@@ -34,15 +34,13 @@ Future<void> main() async {
 
   runApp(App());
 
-  if (Platform.isWindows) {
-    doWhenWindowReady(() {
-      appWindow
-        ..minSize = const Size(720, 540)
-        ..size = const Size(900, 640)
-        ..alignment = Alignment.center
-        ..show();
-    });
-  }
+  doWhenWindowReady(() {
+    appWindow
+      ..minSize = const Size(720, 540)
+      ..size = const Size(900, 640)
+      ..alignment = Alignment.center
+      ..show();
+  });
 }
 
 Future<void> checkVersion() async {
