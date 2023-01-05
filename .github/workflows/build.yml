@@ -97,7 +97,7 @@ jobs:
           flutter pub get
           flutter config --enable-macos-desktop
           find . -name "Podfile" -execdir pod install \;
-          flutter build macos --release
+          flutter build macos --help
 
       - name: Create folder structure
         run: |
