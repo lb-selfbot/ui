@@ -39,6 +39,7 @@ Future<void> main() async {
       ..minSize = const Size(720, 540)
       ..size = const Size(900, 640)
       ..alignment = Alignment.center
+      ..title = "LightningBot"
       ..show();
   });
 }
