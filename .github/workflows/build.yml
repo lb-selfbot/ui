@@ -113,7 +113,7 @@ jobs:
       
       - name: Create ICNS
         run: |
-          cd ${{ github.workspace }}/lightningui/installer
+          cd ${{ github.workspace }}/installer
           
           mkdir icons.iconset
           sips -z 16 16     LightningBot.png --out icons.iconset/icon_16x16.png
@@ -135,7 +135,7 @@ jobs:
         run: |
           npm install -g appdmg
 
-          npx appdmg ${{ github.workspace }}/lightningui/installer/dmg/config.json  ${{ github.workspace }}/executables/macos/amd64/ui.dmg
+          npx appdmg ${{ github.workspace }}/installer/dmg/config.json  ${{ github.workspace }}/executables/macos/amd64/ui.dmg
 
       - name: Upload builds
         uses: actions/upload-artifact@v3.1.0
