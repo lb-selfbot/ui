@@ -96,6 +96,7 @@ jobs:
           cd lightningui
           flutter pub get
           flutter config --enable-macos-desktop
+          flutter create .
           find . -name "Podfile" -execdir pod install \;
           flutter build macos --release
 
