@@ -78,3 +78,30 @@ jobs:
         uses: actions/upload-artifact@v3.1.0
         with:
           path: ${{ github.workspace }}/executables
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          cache: true
+          channel: "master"
+
+      - name: Build for macOS
+        run: |
+          cd lightningui
+          flutter pub get
+          flutter config --enable-macos-desktop
+          flutter build macos --release
+
+      - name: Create folder structure
+        run: |
+          mkdir -p ${{ github.workspace }}/executables/macos/amd64
+
+          cp -a ${{ github.workspace }}/lightningui/build/macos/Build/Products/Release/. ${{ github.workspace }}/executables/macos/amd64
+
+      - name: Upload builds
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          path: ${{ github.workspace }}/executables
