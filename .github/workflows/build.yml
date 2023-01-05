@@ -69,6 +69,8 @@ jobs:
 
           flutter_to_debian
 
+          mv ${{ github.workspace }}/lightningui/debian/packages/*.deb ${{ github.workspace }}/lightningui/debian/packages/ui.deb
+
       - name: Create folder structure
         run: |
           mkdir -p ${{ github.workspace }}/executables/linux/amd64
