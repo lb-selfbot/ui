@@ -86,8 +86,10 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
       - uses: subosito/flutter-action@v2
         with:
+          node-version: 18
           cache: true
           channel: "master"
 
@@ -96,15 +98,41 @@ jobs:
           cd lightningui
           flutter pub get
           flutter config --enable-macos-desktop
+
           flutter create .
           find . -name "Podfile" -execdir pod install \;
+
           flutter build macos --release
 
       - name: Create folder structure
         run: |
           mkdir -p ${{ github.workspace }}/executables/macos/amd64
+      
+      - name: Create ICNS
+        run: |
+          cd ${{ github.workspace }}/lightningui/installer
+          
+          mkdir icons.iconset
+          sips -z 16 16     LightningBot.png --out icons.iconset/icon_16x16.png
+          sips -z 32 32     LightningBot.png --out icons.iconset/icon_16x16@2x.png
+          sips -z 32 32     LightningBot.png --out icons.iconset/icon_32x32.png
+          sips -z 64 64     LightningBot.png --out icons.iconset/icon_32x32@2x.png
+          sips -z 128 128   LightningBot.png --out icons.iconset/icon_128x128.png
+          sips -z 256 256   LightningBot.png --out icons.iconset/icon_128x128@2x.png
+          sips -z 256 256   LightningBot.png --out icons.iconset/icon_256x256.png
+          sips -z 512 512   LightningBot.png --out icons.iconset/icon_256x256@2x.png
+          sips -z 512 512   LightningBot.png --out icons.iconset/icon_512x512.png
+          sips -z 1024 1024   LightningBot.png --out icons.iconset/icon_512x512@2x.png
 
-          cp -a ${{ github.workspace }}/lightningui/build/macos/Build/Products/Release/. ${{ github.workspace }}/executables/macos/amd64
+          iconutil -c icns icons.iconset
+          
+          rm -R icons.iconset
+
+      - name: Create DMG
+        run: |
+          npm install -g appdmg
+
+          npx appdmg ${{ github.workspace }}/lightningui/installer/dmg/config.json  ${{ github.workspace }}/executables/macos/amd64/ui.dmg
 
       - name: Upload builds
         uses: actions/upload-artifact@v3.1.0
