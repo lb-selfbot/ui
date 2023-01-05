@@ -86,10 +86,13 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
+
       - uses: actions/setup-node@v3
-      - uses: subosito/flutter-action@v2
         with:
           node-version: 18
+
+      - uses: subosito/flutter-action@v2
+        with:
           cache: true
           channel: "master"
 
