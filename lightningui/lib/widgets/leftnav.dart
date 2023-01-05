@@ -17,7 +17,7 @@ class LeftNavImage extends StatelessWidget {
       child: Center(
         heightFactor: 1,
         child: Image.asset(
-          'assets/Logo.150.png',
+          'assets/Logo.png',
           height: 110,
           width: 110,
         ),

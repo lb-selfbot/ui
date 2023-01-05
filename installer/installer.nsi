@@ -34,19 +34,14 @@ Section "LightningBot (required)"
 
   SectionIn RO
   
-  ; Set output path to the installation directory.
   SetOutPath $INSTDIR
   
-  ; Put file there (you can add more File lines too)
+  ; All the files
   File *.dll
   File *.exe
+
+  SetOutPath "$INSTDIR\data"
   File /r data\*.*
-  ; Wildcards are allowed:
-  ; File *.dll
-  ; To add a folder named MYFOLDER and all files in it recursively, use this EXACT syntax:
-  ; File /r MYFOLDER\*.*
-  ; See: https://nsis.sourceforge.io/Reference/File
-  ; MAKE SURE YOU PUT ALL THE FILES HERE IN THE UNINSTALLER TOO
   
   ; Write the installation path into the registry
   WriteRegStr HKLM SOFTWARE\LightningBot "Install_Dir" "$INSTDIR"
@@ -92,9 +87,12 @@ Section "Uninstall"
   ; YOU'LL WIPE OUT OTHER FILES TOO
   Delete $INSTDIR\lightningui.exe
   Delete $INSTDIR\flutter_windows.dll
+  Delete $INSTDIR\flutter_platform_alert_plugin.dll
   Delete $INSTDIR\screen_retriever_plugin.dll
+  Delete $INSTDIR\system_tray_plugin.dll
   Delete $INSTDIR\window_manager_plugin.dll
   Delete $INSTDIR\window_size_plugin.dll
+  Delete $INSTDIR\uninstall.exe
 
   ; Remove shortcuts, if any
   Delete "$SMPROGRAMS\LightningBot\*.*"

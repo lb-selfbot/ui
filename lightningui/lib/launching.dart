@@ -33,7 +33,7 @@ class Launching {
       architecture = "386";
     }
 
-    Paths.init();
+    await Paths.init();
 
     executableVersion = await getExecutableVersion();
 
