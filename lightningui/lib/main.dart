@@ -27,21 +27,31 @@ Future<void> main() async {
 
   await checkVersion();
 
-  await Launching.init();
-  IPC.tryConnect();
+  try {
+    await Launching.init();
+    IPC.tryConnect();
 
-  await SystemTray.init();
+    await SystemTray.init();
 
-  runApp(App());
+    runApp(App());
 
-  doWhenWindowReady(() {
-    appWindow
-      ..minSize = const Size(720, 540)
-      ..size = const Size(900, 640)
-      ..alignment = Alignment.center
-      ..title = "LightningBot"
-      ..show();
-  });
+    doWhenWindowReady(() {
+      appWindow
+        ..minSize = const Size(720, 540)
+        ..size = const Size(900, 640)
+        ..alignment = Alignment.center
+        ..title = "LightningBot"
+        ..show();
+    });
+   catch (e) {
+     await FlutterPlatformAlert.showAlert(
+      windowTitle: "LightningBot - Error",
+      text: "An error occurred. "
+          "\n\nError data:"
+          "\n\n  Exception: ${e}",
+      iconStyle: IconStyle.information,
+    );
+   }
 }
 
 Future<void> checkVersion() async {
