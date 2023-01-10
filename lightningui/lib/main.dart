@@ -28,8 +28,8 @@ Future<void> main() async {
   await checkVersion();
 
   try {
-    await Launching.init();
-    IPC.tryConnect();
+    //await Launching.init();
+    //IPC.tryConnect();
 
     //await SystemTray.init();
 
