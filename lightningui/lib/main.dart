@@ -43,6 +43,7 @@ Future<void> main() async {
         ..title = "LightningBot"
         ..show();
     });
+  }
    catch (e) {
      await FlutterPlatformAlert.showAlert(
       windowTitle: "LightningBot - Error",
