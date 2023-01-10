@@ -28,31 +28,30 @@ Future<void> main() async {
   await checkVersion();
 
   try {
-    //await Launching.init();
-    //IPC.tryConnect();
+    await Launching.init();
+    IPC.tryConnect();
 
-    //await SystemTray.init();
+    await SystemTray.init();
 
     runApp(App());
 
-    /*doWhenWindowReady(() {
+    doWhenWindowReady(() {
       appWindow
         ..minSize = const Size(720, 540)
         ..size = const Size(900, 640)
         ..alignment = Alignment.center
         ..title = "LightningBot"
         ..show();
-    });*/
-  }
-   catch (e) {
-     await FlutterPlatformAlert.showAlert(
+    });
+  } catch (e) {
+    await FlutterPlatformAlert.showAlert(
       windowTitle: "LightningBot - Error",
       text: "An error occurred. "
           "\n\nError data:"
           "\n\n  Exception: ${e}",
       iconStyle: IconStyle.information,
     );
-   }
+  }
 }
 
 Future<void> checkVersion() async {
@@ -81,8 +80,8 @@ Future<void> checkVersion() async {
     return;
   }
 
-  // No auto update on Linux
-  if (Platform.isLinux) {
+  // Only auto update on Windows
+  if (!Platform.isWindows) {
     await FlutterPlatformAlert.showAlert(
       windowTitle: "LightningBot - New Version Available",
       text: "A new version of LightningBot is available. "
@@ -101,14 +100,7 @@ Future<void> checkVersion() async {
   );
 
   String downloadUrl = "${API.baseUrl}/static/executables/"
-      "${Platform.operatingSystem}/${Launching.architecture}/selfbot";
-
-  if (Platform.isMacOS) {
-    downloadUrl = "${API.baseUrl}/static/executables/macos/ui";
-  }
-  if (Platform.isWindows) {
-    downloadUrl += ".exe";
-  }
+      "${Platform.operatingSystem}/${Launching.architecture}/selfbot.exe";
 
   final installerPath = path.join(Paths.mainFolder, "installer.exe");
 
