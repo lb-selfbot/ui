@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:lightningui/api.dart';
 import 'package:lightningui/config.dart';
 import 'package:lightningui/ipc.dart';
@@ -50,6 +51,7 @@ class Launching {
 
   static Future<bool> checkIsFirstLaunch() async {
     final configFileExists = await File(Paths.configFile).exists();
+
     return !configFileExists;
   }
 
@@ -57,33 +59,44 @@ class Launching {
     if (isDownloading) {
       return "The selfbot is currently downloading. Please wait a few seconds and try again.";
     }
-    if (executableVersion.isEmpty) {
+
+    final exists = await File(Paths.executablePath).exists();
+
+    if (!exists) {
       startDownload();
       return "The selfbot executable is missing. It will now start downloading.";
     }
-    if (!IPC.websocketConnected || force) {
-      try {
-        await Process.start(Paths.executablePath, ["-l"]);
-      } catch (e) {
-        return "Failed to start the selfbot executable.\n\nError: $e";
-      }
+
+    if (IPC.websocketConnected && !force) {
+      return "";
     }
-    return "";
+
+    try {
+      await Process.start(Paths.executablePath, ["-l"]);
+      return "";
+    } catch (e) {
+      return "Failed to start the selfbot executable.\n\nError: $e";
+    }
   }
 
   static Future<String> getExecutableVersion() async {
+    final exists = await File(Paths.executablePath).exists();
+
+    if (!exists) {
+      return "";
+    }
+
     try {
       final result = await Process.run(Paths.executablePath, ["-v"]);
-      final version = result.stdout.toString().trim();
-      return version;
+
+      return result.stdout.toString().trim();
     } catch (e) {
       return "";
     }
   }
 
   static String getFilename() {
-    final filename = Platform.isWindows ? "selfbot.exe" : "selfbot";
-    return filename;
+    return Platform.isWindows ? "selfbot.exe" : "selfbot";
   }
 
   static Future<void> ensureLatestSelfbotVersion() async {
@@ -93,7 +106,7 @@ class Launching {
       return;
     }
 
-    final isLatest = apiResponse.json["is_latest"];
+    final isLatest = apiResponse.json["is_latest"] as bool;
 
     if (!isLatest) {
       startDownload();
@@ -113,14 +126,23 @@ class Launching {
     }
 
     isDownloading = true;
+
     Utils.downloadFile(downloadUrl, Paths.executablePath).then((_) async {
       if (!Platform.isWindows) {
         // Add executable permissions
         try {
           await Process.run("chmod", ["+x", Paths.executablePath]);
         } catch (e) {
-          // TODO: Handle error
-          print(e);
+          await FlutterPlatformAlert.showAlert(
+            windowTitle: "LightningBot - Error",
+            text: "An error occurred. "
+                "\n\nError data: Failed to set -x flag on executable"
+                "\n\n  Exception: $e"
+                "\n\n Please run this command in a terminal to fix the issue:"
+                "\n\n chmod +x ${Paths.executablePath}",
+            iconStyle: IconStyle.information,
+          );
+          exit(1);
         }
       }
 
@@ -129,6 +151,13 @@ class Launching {
       isDownloading = false;
     }).onError((error, stackTrace) {
       isDownloading = false;
+
+      FlutterPlatformAlert.showAlert(
+        windowTitle: "LightningBot - Error",
+        text: "An error occurred while trying to download the executable. "
+            "\n\n  Exception: $error",
+        iconStyle: IconStyle.information,
+      );
     });
   }
 

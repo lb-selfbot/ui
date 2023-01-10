@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:lightningui/launching.dart';
 import 'package:path/path.dart' as path;
 
@@ -16,7 +17,16 @@ class Paths {
   static Future<void> init() async {
     mainFolder = Utils.getMainFolder().path;
 
-    createDirectories();
+    try {
+      await createDirectories();
+    } catch (e) {
+      await FlutterPlatformAlert.showAlert(
+        windowTitle: "LightningBot - Error",
+        text: "An error occurred.  \n\nError data: ERR_CREATE_DIRS: $e",
+        iconStyle: IconStyle.information,
+      );
+      exit(1);
+    }
 
     final executablesFolder = path.join(mainFolder, "Executables");
 
@@ -31,8 +41,13 @@ class Paths {
     }
 
     if (!Directory(executableFolder).existsSync()) {
-      // TODO: error, unsupported os/architecture
-      return;
+      await FlutterPlatformAlert.showAlert(
+        windowTitle: "LightningBot - Error",
+        text: "An error occurred. "
+            "\n\nError data: ERR_UNSUPPORTED: $executableFolder",
+        iconStyle: IconStyle.information,
+      );
+      exit(1);
     }
 
     executablePath = path.join(executableFolder, Launching.getFilename());
@@ -74,17 +89,11 @@ class Paths {
     };
   }
 
-  static bool createDirectories() {
-    try {
-      Directory(mainFolder).createSync(recursive: true);
+  static Future<void> createDirectories() async {
+    await Directory(mainFolder).create(recursive: true);
 
-      for (final folder in folders) {
-        Directory(folder).createSync(recursive: true);
-      }
-    } catch (e) {
-      // TODO: Handle error
-      return false;
+    for (final folder in folders) {
+      await Directory(folder).create(recursive: true);
     }
-    return true;
   }
 }

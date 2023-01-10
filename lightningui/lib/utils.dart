@@ -244,19 +244,14 @@ class Utils {
     }
   }
 
-  static Future<bool> downloadFile(
+  static Future<Response> downloadFile(
     String uri,
     String path, {
     void Function(int, int)? onProgress,
   }) async {
     final dio = Dio();
-    try {
-      await dio.download(uri, path, onReceiveProgress: onProgress);
-      return true;
-    } on DioError catch (e) {
-      print(e);
-      return false;
-    }
+
+    return await dio.download(uri, path, onReceiveProgress: onProgress);
   }
 
   static String getUserConfigDir() {

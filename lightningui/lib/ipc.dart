@@ -91,6 +91,7 @@ class IPC {
         } on SocketException catch (_) {
           return Future.delayed(const Duration(seconds: 1), () => true);
         }
+
         connect();
         return false;
       }, onError: (e) {

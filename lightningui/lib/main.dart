@@ -25,30 +25,53 @@ import 'widgets/leftnav.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await FlutterPlatformAlert.showAlert(windowTitle: "LightningBot", text: "2");
+
   await checkVersion();
 
+  await FlutterPlatformAlert.showAlert(windowTitle: "LightningBot", text: "3");
+
   try {
+    await FlutterPlatformAlert.showAlert(
+        windowTitle: "LightningBot", text: "4");
+
     await Launching.init();
+
+    await FlutterPlatformAlert.showAlert(
+        windowTitle: "LightningBot", text: "5");
+
     IPC.tryConnect();
+
+    await FlutterPlatformAlert.showAlert(
+        windowTitle: "LightningBot", text: "6");
 
     await SystemTray.init();
 
+    await FlutterPlatformAlert.showAlert(
+        windowTitle: "LightningBot", text: "7");
+
     runApp(App());
 
+    await FlutterPlatformAlert.showAlert(
+        windowTitle: "LightningBot", text: "8");
+
     doWhenWindowReady(() {
+      FlutterPlatformAlert.showAlert(windowTitle: "LightningBot", text: "9");
       appWindow
         ..minSize = const Size(720, 540)
         ..size = const Size(900, 640)
         ..alignment = Alignment.center
         ..title = "LightningBot"
         ..show();
+
+      FlutterPlatformAlert.showAlert(windowTitle: "LightningBot", text: "10");
     });
   } catch (e) {
     await FlutterPlatformAlert.showAlert(
       windowTitle: "LightningBot - Error",
       text: "An error occurred. "
           "\n\nError data:"
-          "\n\n  Exception: ${e}",
+          "\n\n  Exception: $e",
       iconStyle: IconStyle.information,
     );
   }
@@ -104,9 +127,9 @@ Future<void> checkVersion() async {
 
   final installerPath = path.join(Paths.mainFolder, "installer.exe");
 
-  final success = await Utils.downloadFile(downloadUrl, installerPath);
+  try {
+    await Utils.downloadFile(downloadUrl, installerPath);
 
-  if (success) {
     await FlutterPlatformAlert.showAlert(
       windowTitle: "LightningBot - New Version Available",
       text: "The installer will open when you close this dialog. "
@@ -115,16 +138,19 @@ Future<void> checkVersion() async {
     );
 
     Process.start(installerPath, [], mode: ProcessStartMode.detached);
-  } else {
+
+    exit(0);
+  } catch (e) {
     await FlutterPlatformAlert.showAlert(
       windowTitle: "LightningBot - New Version Available",
       text: "The download has failed. Please try again later "
-          "or download the new version manually.",
+          "or download the new version manually."
+          "\n\nError data: $e",
       iconStyle: IconStyle.error,
     );
-  }
 
-  exit(0);
+    exit(1);
+  }
 }
 
 final currentRouteProvider = StateProvider<String>((ref) => '/');
