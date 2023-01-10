@@ -31,18 +31,18 @@ Future<void> main() async {
     await Launching.init();
     IPC.tryConnect();
 
-    await SystemTray.init();
+    //await SystemTray.init();
 
     runApp(App());
 
-    doWhenWindowReady(() {
+    /*doWhenWindowReady(() {
       appWindow
         ..minSize = const Size(720, 540)
         ..size = const Size(900, 640)
         ..alignment = Alignment.center
         ..title = "LightningBot"
         ..show();
-    });
+    });*/
   }
    catch (e) {
      await FlutterPlatformAlert.showAlert(
