@@ -25,46 +25,24 @@ import 'widgets/leftnav.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await FlutterPlatformAlert.showAlert(windowTitle: "LightningBot", text: "2");
-
   await checkVersion();
 
-  await FlutterPlatformAlert.showAlert(windowTitle: "LightningBot", text: "3");
-
   try {
-    await FlutterPlatformAlert.showAlert(
-        windowTitle: "LightningBot", text: "4");
-
     await Launching.init();
-
-    await FlutterPlatformAlert.showAlert(
-        windowTitle: "LightningBot", text: "5");
 
     IPC.tryConnect();
 
-    await FlutterPlatformAlert.showAlert(
-        windowTitle: "LightningBot", text: "6");
-
     await SystemTray.init();
-
-    await FlutterPlatformAlert.showAlert(
-        windowTitle: "LightningBot", text: "7");
 
     runApp(App());
 
-    await FlutterPlatformAlert.showAlert(
-        windowTitle: "LightningBot", text: "8");
-
     doWhenWindowReady(() {
-      FlutterPlatformAlert.showAlert(windowTitle: "LightningBot", text: "9");
       appWindow
         ..minSize = const Size(720, 540)
         ..size = const Size(900, 640)
         ..alignment = Alignment.center
         ..title = "LightningBot"
         ..show();
-
-      FlutterPlatformAlert.showAlert(windowTitle: "LightningBot", text: "10");
     });
   } catch (e) {
     await FlutterPlatformAlert.showAlert(
