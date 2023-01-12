@@ -25,9 +25,9 @@ import 'widgets/leftnav.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await checkVersion();
-
   try {
+    await checkVersion();
+    
     await Launching.init();
 
     IPC.tryConnect();
