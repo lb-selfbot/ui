@@ -10,40 +10,6 @@ import 'package:lightningui/ipc.dart';
 
 class Utils {
   static RegExp indexPattern = RegExp(r'\[(.*?)\]');
-  static List<String> categories = [
-    "Text",
-    "Image",
-    "Video",
-    "Audio",
-    "Other",
-    "Texta",
-    "Imagea",
-    "Videoa",
-    "Audioa",
-    "Othera",
-    "Textb",
-    "Imageb",
-    "Videob",
-    "Audiob",
-    "Otherb",
-  ];
-  static List<String> commands = [
-    "Text",
-    "Image",
-    "Video",
-    "Audio",
-    "Other",
-    "Texta",
-    "Imagea",
-    "Videoa",
-    "Audioa",
-    "Othera",
-    "Textb",
-    "Imageb",
-    "Videob",
-    "Audiob",
-    "Otherb",
-  ];
 
   static dynamic getJsonElement(String jsonQuery, dynamic json) {
     final path = jsonQuery.split('/');

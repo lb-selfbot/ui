@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lightningui/commands.dart';
 import 'package:lightningui/config.dart';
 import 'package:lightningui/utils.dart';
 import 'package:lightningui/widgets/configfields.dart';
@@ -137,7 +138,7 @@ class _CommandSelectionDialogState extends State<CommandSelectionDialog> {
       ),
       splashRadius: 20,
       onPressed: () {
-        if (!Utils.commands.contains(controller.text)) return;
+        if (!commands.contains(controller.text)) return;
 
         setState(() {
           selectedCommands.add(controller.text);
@@ -177,7 +178,7 @@ class _CommandSelectionDialogState extends State<CommandSelectionDialog> {
               //height: 60,
               width: 400,
               child: SearchField<String>(
-                suggestions: Utils.commands
+                suggestions: commands
                     .where((e) => !selectedCommands.contains(e))
                     .map((e) => SearchFieldListItem<String>(e,
                         item: e, child: Text("  $e")))

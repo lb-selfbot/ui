@@ -87,7 +87,7 @@ class SelfbotConfigPage extends StatelessWidget {
       'type': 'number',
       'jsonQuery': '/Selfbot/DeleteResponsesDelay',
       'set': (Map<String, dynamic> config, int value) {
-        config['Selfbot']['DeleteResponses'] = value;
+        config['Selfbot']['DeleteResponsesDelay'] = value;
         return config;
       },
       'info':

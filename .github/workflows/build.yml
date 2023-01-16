@@ -13,7 +13,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           cache: true
-          channel: "master"
+          channel: "stable"
 
       - name: Build for Windows
         run: |
@@ -49,7 +49,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           cache: true
-          channel: "master"
+          channel: "stable"
 
       - name: Install dependencies
         run: |
@@ -94,7 +94,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           cache: true
-          channel: "master"
+          channel: "stable"
 
       - name: Build for macOS
         run: |

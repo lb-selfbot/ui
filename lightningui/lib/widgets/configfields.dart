@@ -94,12 +94,13 @@ class _SwitchConfigColState extends State<SwitchConfigCol> {
       isSwitched = widget.defaultValue;
       first = false;
     }
+
     return InputDecorator(
       decoration: const InputDecoration(),
       child: Row(
         children: [
           Transform.scale(
-            scale: 0.75,
+            scale: 1, // 0.75 for Material 3 switch
             child: Switch(
               value: isSwitched,
               activeColor: Theme.of(context).primaryColorLight,

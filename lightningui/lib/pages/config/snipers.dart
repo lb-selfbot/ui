@@ -32,7 +32,7 @@ class SnipersConfigPage extends StatelessWidget {
       'name': 'Giveaway Sniper Sleep',
       'type': 'number',
       'jsonQuery': '/Snipers/GiveawaySniper/Sleep',
-      'set': (Map<String, dynamic> config, bool value) {
+      'set': (Map<String, dynamic> config, int value) {
         config['Snipers']['GiveawaySniper']['Sleep'] = value;
         return config;
       },
