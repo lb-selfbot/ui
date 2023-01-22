@@ -109,7 +109,7 @@ jobs:
 
       - name: Create folder structure
         run: |
-          mkdir -p ${{ github.workspace }}/executables/macos/amd64
+          mkdir -p ${{ github.workspace }}/executables/macos
       
       - name: Create ICNS
         run: |
@@ -135,7 +135,7 @@ jobs:
         run: |
           npm install -g appdmg
 
-          npx appdmg ${{ github.workspace }}/installer/dmg/config.json  ${{ github.workspace }}/executables/macos/amd64/ui.dmg
+          npx appdmg ${{ github.workspace }}/installer/dmg/config.json  ${{ github.workspace }}/executables/macos/ui.dmg
 
       - name: Upload builds
         uses: actions/upload-artifact@v3.1.0
