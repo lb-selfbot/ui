@@ -106,14 +106,24 @@ class Launching {
       return;
     }
 
+    final version = apiResponse.json["latest"]["version"] as String;
     final isLatest = apiResponse.json["is_latest"] as bool;
 
+    if (!isLatest && executableVersion.isNotEmpty) {
+      FlutterPlatformAlert.showAlert(
+        windowTitle: "LightningBot - Update available",
+        text: "LightningBot version $version is now available. "
+            "It will now start downloading in the background.",
+        iconStyle: IconStyle.information,
+      );
+    }
+
     if (!isLatest) {
-      startDownload();
+      startDownload(notifyOnSuccess: true);
     }
   }
 
-  static void startDownload() {
+  static void startDownload({bool notifyOnSuccess = false}) {
     if (isDownloading) {
       return;
     }
@@ -147,6 +157,14 @@ class Launching {
       }
 
       executableVersion = await getExecutableVersion();
+
+      if (notifyOnSuccess) {
+        FlutterPlatformAlert.showAlert(
+          windowTitle: "LightningBot - Update complete",
+          text: "LightningBot version $executableVersion has been downloaded.",
+          iconStyle: IconStyle.information,
+        );
+      }
 
       isDownloading = false;
     }).onError((error, stackTrace) {
