@@ -12,20 +12,43 @@ class ConsoleButton extends StatelessWidget {
     Key? key,
     required this.onPressed,
     required this.text,
+    this.loading = false,
   }) : super(key: key);
 
   final VoidCallback onPressed;
   final String text;
+  final bool loading;
+
+  Widget loadingIcon() {
+    return Container(
+      width: 24,
+      height: 24,
+      padding: const EdgeInsets.all(2.0),
+      child: const CircularProgressIndicator(
+        strokeWidth: 3,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    final buttonStyle = ButtonStyle(
+      backgroundColor: MaterialStateProperty.all(
+        Theme.of(context).primaryColorDark,
+      ),
+    );
+
+    if (loading) {
+      return ElevatedButton.icon(
+        onPressed: null,
+        style: buttonStyle,
+        icon: loadingIcon(),
+        label: Text(text),
+      );
+    }
     return ElevatedButton(
       onPressed: onPressed,
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(
-          Theme.of(context).primaryColorDark,
-        ),
-      ),
+      style: buttonStyle,
       child: Text(text),
     );
   }
@@ -40,13 +63,18 @@ class ConsolePage extends StatefulWidget {
 
 class _ConsolePageState extends State<ConsolePage> {
   String changeListenerName = "";
+  bool isLaunching = false;
   bool firstBuild = true;
 
   void changeListener() {
-    if (mounted) {
-      // Update Console
-      setState(() {});
-    }
+    if (!mounted) return;
+
+    // Update console text and set isLaunching
+    setState(() {
+      if (!IPC.websocketConnected) return;
+
+      isLaunching = false;
+    });
   }
 
   @override
@@ -66,19 +94,27 @@ class _ConsolePageState extends State<ConsolePage> {
 
   void onLaunchPress() async {
     // Check if Discord token has been set in config
-    final token = Config.config["Account"]["Discord"]["Token"];
-    if (token == "") {
+    if (Config.config["Account"]["Discord"]["Token"] == "") {
       Utils.showErrorDialog(
         context,
         "You haven't set your Discord token yet! Please set it in the config tab before launching LightningBot.",
       );
-    } else {
-      final error = await Launching.launch();
+      return;
+    }
 
-      // Check if the page is still mounted before showing the error dialog
-      if (error.isNotEmpty && mounted) {
-        Utils.showErrorDialog(context, error);
-      }
+    setState(() {
+      isLaunching = true;
+    });
+
+    final error = await Launching.launch();
+
+    // Check if the page is still mounted before showing the error dialog
+    if (error.isNotEmpty && mounted) {
+      Utils.showErrorDialog(context, error);
+
+      setState(() {
+        isLaunching = false;
+      });
     }
   }
 
@@ -113,6 +149,7 @@ class _ConsolePageState extends State<ConsolePage> {
     final disconnectedButtons = [
       ConsoleButton(
         onPressed: onLaunchPress,
+        loading: isLaunching,
         text: "Launch",
       ),
     ];
