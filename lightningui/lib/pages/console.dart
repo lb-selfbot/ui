@@ -64,6 +64,7 @@ class ConsolePage extends StatefulWidget {
 class _ConsolePageState extends State<ConsolePage> {
   String changeListenerName = "";
   bool isLaunching = false;
+  bool isUpdating = false;
   bool firstBuild = true;
 
   void changeListener() {
@@ -102,9 +103,7 @@ class _ConsolePageState extends State<ConsolePage> {
       return;
     }
 
-    setState(() {
-      isLaunching = true;
-    });
+    setState(() => isLaunching = true);
 
     final error = await Launching.launch();
 
@@ -112,10 +111,26 @@ class _ConsolePageState extends State<ConsolePage> {
     if (error.isNotEmpty && mounted) {
       Utils.showErrorDialog(context, error);
 
-      setState(() {
-        isLaunching = false;
-      });
+      setState(() => isLaunching = false);
     }
+  }
+
+  void onCheckForUpdatesPress() async {
+    setState(() => isUpdating = true);
+
+    final result = await Launching.ensureLatestSelfbotVersion(
+      notifyOnSuccess: true,
+    );
+
+    if (result.isLatest && mounted) {
+      Utils.showAlertDialog(
+        context,
+        "No updates found",
+        "You're already on the latest version of LightningBot!",
+      );
+    }
+
+    setState(() => isUpdating = false);
   }
 
   void onExitPress() {
@@ -151,6 +166,12 @@ class _ConsolePageState extends State<ConsolePage> {
         onPressed: onLaunchPress,
         loading: isLaunching,
         text: "Launch",
+      ),
+      const SizedBox(width: 5),
+      ConsoleButton(
+        onPressed: onCheckForUpdatesPress,
+        loading: isUpdating,
+        text: "Check for updates",
       ),
     ];
 

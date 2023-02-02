@@ -251,11 +251,15 @@ class Utils {
     );
   }
 
-  static Future<void> showErrorDialog(BuildContext context, String text) async {
+  static Future<void> showAlertDialog(
+    BuildContext context,
+    String title,
+    String text,
+  ) async {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Error"),
+        title: Text(title),
         content: Text(text),
         actions: [
           TextButton(
@@ -265,6 +269,10 @@ class Utils {
         ],
       ),
     );
+  }
+
+  static Future<void> showErrorDialog(BuildContext context, String text) async {
+    return await showAlertDialog(context, "Error", text);
   }
 
   static String parseSeconds(int seconds) {

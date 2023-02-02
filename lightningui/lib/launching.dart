@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:lightningui/api.dart';
@@ -10,6 +11,15 @@ import 'package:lightningui/paths.dart';
 import 'package:lightningui/utils.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:system_info2/system_info2.dart';
+
+class UpdateResult {
+  final APIResult? apiResult;
+  final Exception? error;
+  final bool isLatest;
+  final bool success;
+
+  UpdateResult(this.apiResult, this.error, this.isLatest, this.success);
+}
 
 class Launching {
   static String pathSeperator = "";
@@ -36,9 +46,7 @@ class Launching {
 
     await Paths.init();
 
-    executableVersion = await getExecutableVersion();
-
-    await ensureLatestSelfbotVersion();
+    ensureLatestSelfbotVersion();
 
     isFirstLaunch = await checkIsFirstLaunch();
 
@@ -63,7 +71,7 @@ class Launching {
     final exists = await File(Paths.executablePath).exists();
 
     if (!exists) {
-      startDownload();
+      startDownload(notifyOnSuccess: true);
       return "The selfbot executable is missing. It will now start downloading.";
     }
 
@@ -99,33 +107,41 @@ class Launching {
     return Platform.isWindows ? "selfbot.exe" : "selfbot";
   }
 
-  static Future<void> ensureLatestSelfbotVersion() async {
-    final apiResponse = await API.checkVersion("selfbot", executableVersion);
+  static Future<UpdateResult> ensureLatestSelfbotVersion({
+    bool notifyOnSuccess = false,
+  }) async {
+    executableVersion = await getExecutableVersion();
 
-    if (!apiResponse.success) {
-      return;
+    final apiResult = await API.checkVersion("selfbot", executableVersion);
+
+    if (!apiResult.success) {
+      return UpdateResult(null, apiResult.error, false, false);
     }
 
-    final version = apiResponse.json["latest"]["version"] as String;
-    final isLatest = apiResponse.json["is_latest"] as bool;
-
-    if (!isLatest && executableVersion.isNotEmpty) {
-      FlutterPlatformAlert.showAlert(
-        windowTitle: "LightningBot - Update available",
-        text: "LightningBot version $version is now available. "
-            "It will now start downloading in the background.",
-        iconStyle: IconStyle.information,
-      );
-    }
+    final version = apiResult.json["latest"]["version"] as String;
+    final isLatest = apiResult.json["is_latest"] as bool;
 
     if (!isLatest) {
-      startDownload(notifyOnSuccess: true);
+      if (executableVersion.isNotEmpty) {
+        FlutterPlatformAlert.showAlert(
+          windowTitle: "LightningBot - Update available",
+          text:
+              "LightningBot version $version is now available. It will now start downloading in the background.",
+          iconStyle: IconStyle.information,
+        );
+      }
+
+      final response = await startDownload(notifyOnSuccess: notifyOnSuccess);
+
+      return UpdateResult(apiResult, null, isLatest, response != null);
     }
+
+    return UpdateResult(apiResult, null, isLatest, true);
   }
 
-  static void startDownload({bool notifyOnSuccess = false}) {
+  static Future<Response?> startDownload({bool notifyOnSuccess = false}) async {
     if (isDownloading) {
-      return;
+      return null;
     }
 
     String downloadUrl = "${API.baseUrl}/static/executables/"
@@ -137,46 +153,57 @@ class Launching {
 
     isDownloading = true;
 
-    Utils.downloadFile(downloadUrl, Paths.executablePath).then((_) async {
-      if (!Platform.isWindows) {
-        // Add executable permissions
-        try {
-          await Process.run("chmod", ["+x", Paths.executablePath]);
-        } catch (e) {
-          await FlutterPlatformAlert.showAlert(
-            windowTitle: "LightningBot - Error",
-            text: "An error occurred. "
-                "\n\nError data: Failed to set -x flag on executable"
-                "\n\n  Exception: $e"
-                "\n\n Please run this command in a terminal to fix the issue:"
-                "\n\n chmod +x ${Paths.executablePath}",
-            iconStyle: IconStyle.information,
-          );
-          exit(1);
-        }
-      }
+    Response? response;
 
-      executableVersion = await getExecutableVersion();
-
-      if (notifyOnSuccess) {
-        FlutterPlatformAlert.showAlert(
-          windowTitle: "LightningBot - Update complete",
-          text: "LightningBot version $executableVersion has been downloaded.",
-          iconStyle: IconStyle.information,
-        );
-      }
-
-      isDownloading = false;
-    }).onError((error, stackTrace) {
-      isDownloading = false;
-
+    try {
+      response = await Utils.downloadFile(
+        downloadUrl,
+        Paths.executablePath,
+      );
+    } catch (e) {
       FlutterPlatformAlert.showAlert(
         windowTitle: "LightningBot - Error",
         text: "An error occurred while trying to download the executable. "
-            "\n\n  Exception: $error",
+            "\n\n  Exception: $e",
         iconStyle: IconStyle.information,
       );
-    });
+
+      isDownloading = false;
+
+      return null;
+    }
+
+    isDownloading = false;
+
+    if (!Platform.isWindows) {
+      try {
+        await Process.run("chmod", ["+x", Paths.executablePath]);
+      } catch (e) {
+        await FlutterPlatformAlert.showAlert(
+          windowTitle: "LightningBot - Error",
+          text: "An error occurred. "
+              "\n\nError data: Failed to set -x flag on executable"
+              "\n\n  Exception: $e"
+              "\n\n Please run this command in a terminal to fix the issue:"
+              "\n\n chmod +x ${Paths.executablePath}",
+          iconStyle: IconStyle.information,
+        );
+
+        return null;
+      }
+    }
+
+    executableVersion = await getExecutableVersion();
+
+    if (notifyOnSuccess) {
+      FlutterPlatformAlert.showAlert(
+        windowTitle: "LightningBot - Update complete",
+        text: "LightningBot version $executableVersion has been downloaded.",
+        iconStyle: IconStyle.information,
+      );
+    }
+
+    return response;
   }
 
   static void onLogin(String username, String password) {
