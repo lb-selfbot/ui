@@ -8,7 +8,7 @@ import Foundation
 import bitsdojo_window_macos
 import flutter_platform_alert
 import package_info_plus
-import path_provider_macos
+import path_provider_foundation
 import screen_retriever
 import system_tray
 import window_manager

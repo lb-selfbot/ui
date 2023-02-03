@@ -100,7 +100,7 @@ class _SwitchConfigColState extends State<SwitchConfigCol> {
       child: Row(
         children: [
           Transform.scale(
-            scale: 1, // 0.75 for Material 3 switch
+            scale: 0.75,
             child: Switch(
               value: isSwitched,
               activeColor: Theme.of(context).primaryColorLight,
