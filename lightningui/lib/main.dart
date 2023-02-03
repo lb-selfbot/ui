@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:lightningui/paths.dart';
@@ -117,7 +118,17 @@ Future<void> checkVersion() async {
       iconStyle: IconStyle.information,
     );
 
-    Process.start(installerPath, [], mode: ProcessStartMode.detached);
+    await Process.run(
+      "powershell",
+      [
+        "-Command",
+        "Start-Process",
+        "-FilePath",
+        installerPath,
+        "-Verb",
+        "RunAs",
+      ],
+    );
 
     exit(0);
   } catch (e) {
