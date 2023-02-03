@@ -44,8 +44,6 @@ class Launching {
       architecture = "386";
     }
 
-    await Paths.init();
-
     ensureLatestSelfbotVersion();
 
     isFirstLaunch = await checkIsFirstLaunch();

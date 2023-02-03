@@ -26,8 +26,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   try {
+    await Paths.init();
+
     await checkVersion();
-    
+
     await Launching.init();
 
     IPC.tryConnect();
