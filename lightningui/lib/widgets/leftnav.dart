@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lightningui/main.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:window_manager/window_manager.dart';
 
 class LeftNavImage extends StatelessWidget {
@@ -106,10 +107,28 @@ class LeftNavButtons extends ConsumerWidget {
   }
 }
 
-class LeftNav extends StatelessWidget {
+class LeftNav extends StatefulWidget {
   const LeftNav({Key? key, required this.navigatorKey}) : super(key: key);
 
   final GlobalKey<NavigatorState> navigatorKey;
+
+  @override
+  State<LeftNav> createState() => _LeftNavState();
+}
+
+class _LeftNavState extends State<LeftNav> {
+  String version = "";
+
+  @override
+  void initState() {
+    super.initState();
+    
+    PackageInfo.fromPlatform().then((packageInfo) {
+      setState(() {
+        version = packageInfo.version;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -139,14 +158,14 @@ class LeftNav extends StatelessWidget {
           Column(
             children: [
               const SizedBox(height: 110),
-              LeftNavButtons(navigatorKey: navigatorKey),
+              LeftNavButtons(navigatorKey: widget.navigatorKey),
               Expanded(
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 5),
                     child: Text(
-                      "v4.0.0",
+                      "v$version",
                       style: GoogleFonts.montserrat(
                         textStyle: const TextStyle(
                           color: Color(0xFFEEEEEE),

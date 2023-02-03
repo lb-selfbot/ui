@@ -101,7 +101,7 @@ Future<void> checkVersion() async {
   );
 
   String downloadUrl = "${API.baseUrl}/static/executables/"
-      "${Platform.operatingSystem}/${Launching.architecture}/selfbot.exe";
+      "${Platform.operatingSystem}/${Launching.architecture}/ui.exe";
 
   final installerPath = path.join(Paths.mainFolder, "installer.exe");
 
