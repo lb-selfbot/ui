@@ -18,7 +18,7 @@ const categories = [
   "Game",
   "Activity",
   "Animation",
-  "RPC",
+  "Custom Activity",
   "Sessions",
   "NSFW",
   "Reddit",
