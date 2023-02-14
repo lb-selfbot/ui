@@ -5,7 +5,6 @@ import 'package:lightningui/pages/config/afk.dart';
 import 'package:lightningui/pages/config/events.dart';
 import 'package:lightningui/pages/config/notifications.dart';
 import 'package:lightningui/pages/config/protections.dart';
-import 'package:lightningui/pages/config/rpc.dart';
 import 'package:lightningui/pages/config/selfbot.dart';
 import 'package:lightningui/pages/config/sharing.dart';
 import 'package:lightningui/pages/config/snipers.dart';

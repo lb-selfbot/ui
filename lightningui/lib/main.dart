@@ -245,7 +245,7 @@ class AppNavigator extends ConsumerWidget {
               case '/config':
                 return const ConfigPage();
               case '/activity':
-                return ActivityPage();
+                return const ActivityPage();
               default:
                 return Container();
             }

@@ -18,8 +18,9 @@ class _ActivityPageState extends State<ActivityPage> {
   void onConfigChange() {
     if (!mounted) return;
 
-    if (activityType == getIt<Config>().config['Activity']['ActivityType'])
+    if (activityType == getIt<Config>().config['Activity']['ActivityType']) {
       return;
+    }
 
     setState(() {
       activityType = getIt<Config>().config['Activity']['ActivityType'];

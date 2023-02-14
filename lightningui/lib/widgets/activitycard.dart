@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:lightningui/config.dart';
 import 'package:lightningui/main.dart';
 import 'package:lightningui/widgets/activity.dart';
