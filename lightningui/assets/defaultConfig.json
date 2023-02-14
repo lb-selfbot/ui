@@ -85,6 +85,7 @@
   },
   "Snipers": {
     "Blacklist": [],
+    "ServerBlacklist": [],
     "GiveawaySniper": {
       "CustomBots": [],
       "Sleep": 600,
