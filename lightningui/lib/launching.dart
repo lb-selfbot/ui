@@ -126,7 +126,7 @@ class Launching {
     }
 
     String downloadUrl = "${API.baseUrl}/static/executables/"
-        "${Platform.operatingSystem}/$Paths.architecture/${getFilename()}";
+        "${Platform.operatingSystem}/${Paths.architecture}/${getFilename()}";
 
     if (Platform.isMacOS) {
       downloadUrl = "${API.baseUrl}/static/executables/macos/selfbot";
