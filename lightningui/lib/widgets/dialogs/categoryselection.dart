@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lightningui/categories.dart';
 import 'package:lightningui/config.dart';
+import 'package:lightningui/main.dart';
 import 'package:lightningui/widgets/configfields.dart';
 import 'package:searchfield/searchfield.dart';
 
@@ -121,7 +122,10 @@ class _CategorySelectionDialogState extends State<CategorySelectionDialog> {
       onDeleted: () {
         setState(() {
           selectedCategories.remove(category);
-          Config.config = widget.setConfig(Config.config, selectedCategories);
+          getIt<Config>().config = widget.setConfig(
+            getIt<Config>().config,
+            selectedCategories,
+          );
         });
       },
     );
@@ -144,7 +148,8 @@ class _CategorySelectionDialogState extends State<CategorySelectionDialog> {
 
         setState(() {
           selectedCategories.add(controller.text);
-          Config.config = widget.setConfig(Config.config, selectedCategories);
+          getIt<Config>().config =
+              widget.setConfig(getIt<Config>().config, selectedCategories);
         });
         controller.clear();
       },

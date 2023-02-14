@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lightningui/config.dart';
+import 'package:lightningui/main.dart';
 import 'package:lightningui/widgets/configfields.dart';
 
 class UserSelectionConfig extends StatefulWidget {
@@ -115,7 +116,10 @@ class _UserSelectionDialogState extends State<UserSelectionDialog> {
       onDeleted: () {
         setState(() {
           selectedUsers.remove(user);
-          Config.config = widget.setConfig(Config.config, selectedUsers);
+          getIt<Config>().config = widget.setConfig(
+            getIt<Config>().config,
+            selectedUsers,
+          );
         });
       },
     );
@@ -137,7 +141,8 @@ class _UserSelectionDialogState extends State<UserSelectionDialog> {
 
         setState(() {
           selectedUsers.add(controller.text);
-          Config.config = widget.setConfig(Config.config, selectedUsers);
+          getIt<Config>().config =
+              widget.setConfig(getIt<Config>().config, selectedUsers);
         });
         controller.clear();
       },

@@ -41,10 +41,9 @@ class SelfbotConfigPage extends StatelessWidget {
           'icon': 'text',
         },
         {
-          'label': 'URL Embed',
-          'value': 'URLEmbed',
-          'info':
-              'The bot will respond to commands with a hidden URL that will have a Discord embed.',
+          'label': 'Indent',
+          'value': 'Indent',
+          'info': 'The bot will respond to commands with indented text.',
           'icon': 'link',
         },
       ],

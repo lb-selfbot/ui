@@ -62,6 +62,17 @@ class SnipersConfigPage extends StatelessWidget {
           'The giveaway sniper will ignore a giveaway if any of the blacklist entries are found in the prize.',
     },
     {
+      'name': 'Server Blacklist',
+      'type': 'server_selection_dialog',
+      'jsonQuery': '/Snipers/Blacklist',
+      'set': (Map<String, dynamic> config, List<dynamic> value) {
+        config['Snipers']['Blacklist'] = value;
+        return config;
+      },
+      'info':
+          'The giveaway and nitro sniper will ignore the servers in this list. You can only enter the server ID.',
+    },
+    {
       'name': 'Multi-Token Sniper',
       'type': 'switch',
       'jsonQuery': '/Snipers/MultiTokenSniper',

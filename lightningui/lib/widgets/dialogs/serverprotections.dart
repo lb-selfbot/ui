@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lightningui/config.dart';
+import 'package:lightningui/main.dart';
 import 'package:lightningui/widgets/configfields.dart';
 
 class ServerProtectionsConfig extends StatefulWidget {
@@ -153,10 +154,10 @@ class _ServerProtectionsDialogState extends State<ServerProtectionsDialog> {
       onDeleted: () {
         setState(() {
           protectedServers.remove(server);
-          final config = Config.config;
+          final config = getIt<Config>().config;
           config['Protections']['ServerProtections']['ProtectedServers'] =
               protectedServers;
-          Config.config = config;
+          getIt<Config>().config = config;
         });
       },
     );
@@ -179,10 +180,10 @@ class _ServerProtectionsDialogState extends State<ServerProtectionsDialog> {
 
         setState(() {
           protectedServers.add(controller.text);
-          final config = Config.config;
+          final config = getIt<Config>().config;
           config['Protections']['ServerProtections']['ProtectedServers'] =
               protectedServers;
-          Config.config = config;
+          getIt<Config>().config = config;
         });
         controller.clear();
       },
@@ -205,9 +206,9 @@ class _ServerProtectionsDialogState extends State<ServerProtectionsDialog> {
                 widget.onUpdate(antiDelete, antiInvite, antiSpam, antiUpper,
                     protectedServers);
               });
-              final config = Config.config;
+              final config = getIt<Config>().config;
               config['Protections']['ServerProtections']['AntiDelete'] = value;
-              Config.config = config;
+              getIt<Config>().config = config;
             },
           ),
         ),
@@ -223,9 +224,9 @@ class _ServerProtectionsDialogState extends State<ServerProtectionsDialog> {
                 widget.onUpdate(antiDelete, antiInvite, antiSpam, antiUpper,
                     protectedServers);
               });
-              final config = Config.config;
+              final config = getIt<Config>().config;
               config['Protections']['ServerProtections']['AntiInvite'] = value;
-              Config.config = config;
+              getIt<Config>().config = config;
             },
           ),
         ),
@@ -248,9 +249,9 @@ class _ServerProtectionsDialogState extends State<ServerProtectionsDialog> {
                 widget.onUpdate(antiDelete, antiInvite, antiSpam, antiUpper,
                     protectedServers);
               });
-              final config = Config.config;
+              final config = getIt<Config>().config;
               config['Protections']['ServerProtections']['AntiSpam'] = value;
-              Config.config = config;
+              getIt<Config>().config = config;
             },
           ),
         ),
@@ -267,9 +268,9 @@ class _ServerProtectionsDialogState extends State<ServerProtectionsDialog> {
                 widget.onUpdate(antiDelete, antiInvite, antiSpam, antiUpper,
                     protectedServers);
               });
-              final config = Config.config;
+              final config = getIt<Config>().config;
               config['Protections']['ServerProtections']['AntiUpper'] = value;
-              Config.config = config;
+              getIt<Config>().config = config;
             },
           ),
         ),

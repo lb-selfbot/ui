@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lightningui/commands.dart';
 import 'package:lightningui/config.dart';
+import 'package:lightningui/main.dart';
 import 'package:lightningui/widgets/configfields.dart';
 import 'package:searchfield/searchfield.dart';
 
@@ -118,7 +119,10 @@ class _CommandSelectionDialogState extends State<CommandSelectionDialog> {
       onDeleted: () {
         setState(() {
           selectedCommands.remove(command);
-          Config.config = widget.setConfig(Config.config, selectedCommands);
+          getIt<Config>().config = widget.setConfig(
+            getIt<Config>().config,
+            selectedCommands,
+          );
         });
       },
     );
@@ -141,7 +145,8 @@ class _CommandSelectionDialogState extends State<CommandSelectionDialog> {
 
         setState(() {
           selectedCommands.add(controller.text);
-          Config.config = widget.setConfig(Config.config, selectedCommands);
+          getIt<Config>().config =
+              widget.setConfig(getIt<Config>().config, selectedCommands);
         });
         controller.clear();
       },

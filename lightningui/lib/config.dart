@@ -1,18 +1,20 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
+
 import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:lightningui/ipc.dart';
 import 'package:lightningui/paths.dart';
 
-class Config {
-  static DateTime lastConfigUpdate = DateTime.fromMicrosecondsSinceEpoch(0);
+class Config extends ChangeNotifier {
+  DateTime lastUpdate = DateTime.fromMicrosecondsSinceEpoch(0);
 
-  static Map<String, dynamic> _config = {};
+  Map<String, dynamic> cachedConfig = {};
 
-  static Map<String, dynamic> get config {
-    if (DateTime.now().difference(lastConfigUpdate).inSeconds < 10) {
-      return _config;
+  Map<String, dynamic> get config {
+    if (DateTime.now().difference(lastUpdate).inSeconds < 10) {
+      return cachedConfig;
     }
 
     final configFile = File(Paths.configFile);
@@ -26,15 +28,21 @@ class Config {
       return {};
     }
 
-    _config = json.decode(configFile.readAsStringSync());
+    cachedConfig = json.decode(configFile.readAsStringSync());
 
-    return _config;
+    lastUpdate = DateTime.now();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      notifyListeners();
+    });
+
+    return cachedConfig;
   }
 
-  static set config(Map<String, dynamic> value) {
-    _config = value;
+  set config(Map<String, dynamic> value) {
+    cachedConfig = value;
 
-    lastConfigUpdate = DateTime.now();
+    lastUpdate = DateTime.now();
 
     IPC.send({'op': OP.configUpdate, 'data': value});
 
@@ -43,5 +51,9 @@ class Config {
     final json = const JsonEncoder.withIndent("  ").convert(value);
 
     configFile.writeAsStringSync(json);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      notifyListeners();
+    });
   }
 }

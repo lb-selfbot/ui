@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:lightningui/paths.dart';
 import 'package:lightningui/systemtray.dart';
 import 'package:lightningui/utils.dart';
@@ -18,12 +19,17 @@ import 'package:lightningui/pages/config.dart';
 import 'package:lightningui/pages/console.dart';
 import 'package:lightningui/pages/home.dart';
 import 'package:lightningui/pages/login.dart';
+import 'package:lightningui/pages/activity.dart';
 
 import 'widgets/titlebar.dart';
 import 'widgets/leftnav.dart';
 
+final getIt = GetIt.instance;
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  getIt.registerSingleton(Config());
 
   try {
     await Paths.init();
@@ -103,7 +109,7 @@ Future<void> checkVersion() async {
   );
 
   String downloadUrl = "${API.baseUrl}/static/executables/"
-      "${Platform.operatingSystem}/${Launching.architecture}/ui.exe";
+      "${Platform.operatingSystem}/${Paths.architecture}/ui.exe";
 
   final installerPath = path.join(Paths.mainFolder, "installer.exe");
 
@@ -145,6 +151,10 @@ Future<void> checkVersion() async {
 
 final currentRouteProvider = StateProvider<String>((ref) => '/');
 
+final configProvider = ChangeNotifierProvider<Config>((ref) {
+  return getIt<Config>();
+});
+
 const views = [
   {
     'title': 'Home',
@@ -160,6 +170,11 @@ const views = [
     'title': 'Config',
     'icon': Icons.settings,
     'route': '/config',
+  },
+  {
+    'title': 'Activity',
+    'icon': Icons.contacts,
+    'route': '/activity',
   },
 ];
 
@@ -229,6 +244,8 @@ class AppNavigator extends ConsumerWidget {
                 return const ConsolePage();
               case '/config':
                 return const ConfigPage();
+              case '/activity':
+                return ActivityPage();
               default:
                 return Container();
             }
@@ -270,7 +287,7 @@ class _AppBodyState extends ConsumerState<AppBody> {
 
     if (!shouldLogin && !passedFirstLogin && !tryingToAuth) {
       tryingToAuth = true;
-      final account = Config.config["Account"]["LightningBot"];
+      final account = getIt<Config>().config["Account"]["LightningBot"];
       API.auth(account["Username"], account["Password"]).then((result) {
         setState(() {
           authResult = result;

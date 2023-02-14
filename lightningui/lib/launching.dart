@@ -7,10 +7,9 @@ import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:lightningui/api.dart';
 import 'package:lightningui/config.dart';
 import 'package:lightningui/ipc.dart';
+import 'package:lightningui/main.dart';
 import 'package:lightningui/paths.dart';
 import 'package:lightningui/utils.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:system_info2/system_info2.dart';
 
 class UpdateResult {
   final APIResult? apiResult;
@@ -22,28 +21,12 @@ class UpdateResult {
 }
 
 class Launching {
-  static String pathSeperator = "";
-
-  static String documentsDirectory = "";
-  static String applicationDirectory = "";
   static String executableVersion = "";
-
-  static String architecture = SysInfo.kernelArchitecture.toLowerCase();
 
   static bool isFirstLaunch = false;
   static bool isDownloading = false;
 
   static Future<void> init() async {
-    pathSeperator = Platform.pathSeparator;
-    documentsDirectory = (await getApplicationDocumentsDirectory()).path;
-    applicationDirectory = (await getApplicationSupportDirectory()).path;
-
-    if (architecture == "x86_64") {
-      architecture = "amd64";
-    } else if (architecture == "x86") {
-      architecture = "386";
-    }
-
     ensureLatestSelfbotVersion();
 
     isFirstLaunch = await checkIsFirstLaunch();
@@ -143,7 +126,7 @@ class Launching {
     }
 
     String downloadUrl = "${API.baseUrl}/static/executables/"
-        "${Platform.operatingSystem}/$architecture/${getFilename()}";
+        "${Platform.operatingSystem}/$Paths.architecture/${getFilename()}";
 
     if (Platform.isMacOS) {
       downloadUrl = "${API.baseUrl}/static/executables/macos/selfbot";
@@ -205,10 +188,10 @@ class Launching {
   }
 
   static void onLogin(String username, String password) {
-    final config = Config.config;
+    final config = getIt<Config>().config;
     config["Account"]["LightningBot"]["Username"] = username;
     config["Account"]["LightningBot"]["Password"] = password;
-    Config.config = config;
+    getIt<Config>().config = config;
   }
 
   static bool shouldLogin() {
@@ -216,11 +199,11 @@ class Launching {
       return true;
     }
 
-    if (Config.config["Account"]["LightningBot"]["Username"] == "") {
+    if (getIt<Config>().config["Account"]["LightningBot"]["Username"] == "") {
       return true;
     }
 
-    if (Config.config["Account"]["LightningBot"]["Password"] == "") {
+    if (getIt<Config>().config["Account"]["LightningBot"]["Password"] == "") {
       return true;
     }
 
@@ -266,7 +249,7 @@ class Launching {
 
     if (changed) {
       // Save config using Config class so we don't have to read it again
-      Config.config = config;
+      getIt<Config>().config = config;
     }
   }
 }

@@ -6,6 +6,7 @@ import 'package:lightningui/launching.dart';
 import 'package:path/path.dart' as path;
 
 import 'package:lightningui/utils.dart';
+import 'package:system_info2/system_info2.dart';
 
 class Paths {
   static String mainFolder = "";
@@ -14,8 +15,16 @@ class Paths {
 
   static String executablePath = "";
 
+  static String architecture = SysInfo.kernelArchitecture.toLowerCase();
+
   static Future<void> init() async {
     mainFolder = Utils.getMainFolder().path;
+
+    if (architecture == "x86_64") {
+      architecture = "amd64";
+    } else if (architecture == "x86") {
+      architecture = "386";
+    }
 
     try {
       await createDirectories();
@@ -37,7 +46,7 @@ class Paths {
     );
 
     if (!Platform.isMacOS) {
-      executableFolder = path.join(executableFolder, Launching.architecture);
+      executableFolder = path.join(executableFolder, architecture);
     }
 
     if (!Directory(executableFolder).existsSync()) {

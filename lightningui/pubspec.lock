@@ -192,6 +192,30 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  functional_listener:
+    dependency: transitive
+    description:
+      name: functional_listener
+      sha256: "18f4f43478b78b037c9a64c3c10d4067a8c9a5d510f3e174775705ce4337414a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
+  get_it:
+    dependency: "direct main"
+    description:
+      name: get_it
+      sha256: "290fde3a86072e4b37dbb03c07bec6126f0ecc28dad403c12ffe2e5a2d751ab7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.2.0"
+  get_it_mixin:
+    dependency: "direct main"
+    description:
+      name: get_it_mixin
+      sha256: d6e90b642e6bae0eed2db366e2c18c7126427f9ae76b3a2ec88239ce2fa51ec5
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.4+2"
   globbing:
     dependency: transitive
     description:
@@ -264,6 +288,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.0"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      sha256: "03bac4c528c64c95c722ec99280375a6f2fc708eec17c7b3f07253b626cd2a20"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   package_info_plus:
     dependency: "direct main"
     description:
@@ -384,6 +416,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.4"
+  provider:
+    dependency: "direct main"
+    description:
+      name: provider
+      sha256: cdbe7530b12ecd9eb455bdaa2fcb8d4dad22e80b8afb4798b41479d5ce26847f
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.5"
   responsive_grid:
     dependency: "direct main"
     description:

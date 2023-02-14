@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lightningui/api.dart';
 import 'package:lightningui/config.dart';
 import 'package:lightningui/ipc.dart';
+import 'package:lightningui/main.dart';
 import 'package:lightningui/utils.dart';
 import 'package:lightningui/launching.dart';
 import 'package:responsive_grid/responsive_grid.dart';
@@ -95,7 +96,7 @@ class _ConsolePageState extends State<ConsolePage> {
 
   void onLaunchPress() async {
     // Check if Discord token has been set in config
-    if (Config.config["Account"]["Discord"]["Token"] == "") {
+    if (getIt<Config>().config["Account"]["Discord"]["Token"] == "") {
       Utils.showErrorDialog(
         context,
         "You haven't set your Discord token yet! Please set it in the config tab before launching LightningBot.",

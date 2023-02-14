@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lightningui/config.dart';
+import 'package:lightningui/main.dart';
 import 'package:lightningui/systemtray.dart';
 
 class WindowTitleBar extends StatelessWidget {
@@ -46,7 +47,8 @@ class WindowTitleBar extends StatelessWidget {
             ),
             MinimizeWindowButton(
               onPressed: () {
-                bool hideToSystemTray = Config.config["UI"]["HideToSystemTray"];
+                bool hideToSystemTray =
+                    getIt<Config>().config["UI"]["HideToSystemTray"];
 
                 if (hideToSystemTray) {
                   appWindow.hide();

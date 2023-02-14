@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lightningui/config.dart';
+import 'package:lightningui/main.dart';
 import 'package:lightningui/widgets/configfields.dart';
 
 class TextSelectionConfig extends StatefulWidget {
@@ -115,7 +116,10 @@ class _TextSelectionDialogState extends State<TextSelectionDialog> {
       onDeleted: () {
         setState(() {
           selectedTexts.remove(text);
-          Config.config = widget.setConfig(Config.config, selectedTexts);
+          getIt<Config>().config = widget.setConfig(
+            getIt<Config>().config,
+            selectedTexts,
+          );
         });
       },
     );
@@ -137,7 +141,8 @@ class _TextSelectionDialogState extends State<TextSelectionDialog> {
 
         setState(() {
           selectedTexts.add(controller.text);
-          Config.config = widget.setConfig(Config.config, selectedTexts);
+          getIt<Config>().config =
+              widget.setConfig(getIt<Config>().config, selectedTexts);
         });
         controller.clear();
       },

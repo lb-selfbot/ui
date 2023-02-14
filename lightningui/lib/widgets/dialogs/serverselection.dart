@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lightningui/config.dart';
+import 'package:lightningui/main.dart';
 import 'package:lightningui/widgets/configfields.dart';
 
 class ServerSelectionConfig extends StatefulWidget {
@@ -115,7 +116,10 @@ class _ServerSelectionDialogState extends State<ServerSelectionDialog> {
       onDeleted: () {
         setState(() {
           selectedServers.remove(server);
-          Config.config = widget.setConfig(Config.config, selectedServers);
+          getIt<Config>().config = widget.setConfig(
+            getIt<Config>().config,
+            selectedServers,
+          );
         });
       },
     );
@@ -138,7 +142,8 @@ class _ServerSelectionDialogState extends State<ServerSelectionDialog> {
 
         setState(() {
           selectedServers.add(controller.text);
-          Config.config = widget.setConfig(Config.config, selectedServers);
+          getIt<Config>().config =
+              widget.setConfig(getIt<Config>().config, selectedServers);
         });
         controller.clear();
       },
