@@ -20,7 +20,6 @@ const tabs = [
   Tab(text: "Snipers"),
   Tab(text: "Webhooks"),
   Tab(text: "Events"),
-  Tab(text: "RPC"),
   Tab(text: "UI"),
   Tab(text: "Protections"),
   Tab(text: "AFK"),
@@ -56,7 +55,7 @@ class _ConfigPageState extends State<ConfigPage> {
     final width = size.width - 170;
 
     return DefaultTabController(
-          length: 11,
+          length: 10,
           child: Column(
             children: [
               Container(
@@ -84,7 +83,6 @@ class _ConfigPageState extends State<ConfigPage> {
                     SnipersConfigPage(),
                     WebhooksConfigPage(),
                     EventsConfigPage(),
-                    RPCConfigPage(),
                     UIConfigPage(),
                     ProtectionsConfigPage(),
                     AFKConfigPage(),
