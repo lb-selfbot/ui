@@ -113,12 +113,7 @@ class IPC {
     log("ipc: $op");
     switch (op) {
       case OP.connected:
-        getApplicationDocumentsDirectory().then((value) {
-          send({
-            'op': OP.hello,
-            'data': {'mainFolder': value.path},
-          });
-        });
+        send({'op': OP.hello});
         websocketConnected = true;
         callListeners(onChangeListeners);
         break;

@@ -176,7 +176,7 @@ class _ActivityPageState extends State<ActivityPage> {
           return config;
         },
         'info':
-            'The large image key for the activity.\n\nUse the [p]cacreateimageid command to create an image key.',
+            'The large image key for the activity.\n\nUse the [p]cacreateimagekey command to create an image key.',
       },
       {
         'name': 'Large Image Text',
@@ -197,7 +197,7 @@ class _ActivityPageState extends State<ActivityPage> {
           return config;
         },
         'info':
-            'The small image key for the activity.\n\nUse the [p]cacreateimageid command to create an image key.',
+            'The small image key for the activity.\n\nUse the [p]cacreateimagekey command to create an image key.',
       },
       {
         'name': 'Small Image Text',
