@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/main.dart';
-import 'package:lightningui/widgets/activitycard.dart';
-import 'package:lightningui/widgets/configeditor.dart';
+import 'package:lightningui/widgets/activity_card.dart';
+import 'package:lightningui/widgets/config_editor.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 
 class ActivityPage extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:lightningui/widgets/configeditor.dart';
+import 'package:lightningui/widgets/config_editor.dart';
 
 class SelfbotConfigPage extends StatelessWidget {
   const SelfbotConfigPage({Key? key}) : super(key: key);

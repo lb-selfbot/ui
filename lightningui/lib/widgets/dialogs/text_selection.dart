@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/main.dart';
-import 'package:lightningui/widgets/configfields.dart';
+import 'package:lightningui/widgets/config_fields.dart';
 
-class UserSelectionConfig extends StatefulWidget {
-  const UserSelectionConfig({
+class TextSelectionConfig extends StatefulWidget {
+  const TextSelectionConfig({
     Key? key,
-    required this.selectedUsers,
+    required this.selectedTexts,
     required this.jsonQuery,
     required this.name,
     required this.info,
     required this.setConfig,
   }) : super(key: key);
 
-  final List<dynamic> selectedUsers;
+  final List<dynamic> selectedTexts;
   final String jsonQuery;
   final String name;
   final String info;
@@ -22,29 +22,29 @@ class UserSelectionConfig extends StatefulWidget {
       Map<String, dynamic> config, List<dynamic>) setConfig;
 
   @override
-  State<UserSelectionConfig> createState() => _UserSelectionConfigState();
+  State<TextSelectionConfig> createState() => _TextSelectionConfigState();
 }
 
-class _UserSelectionConfigState extends State<UserSelectionConfig> {
-  List<dynamic> selectedUsers = [];
+class _TextSelectionConfigState extends State<TextSelectionConfig> {
+  List<dynamic> selectedTexts = [];
 
   @override
   void initState() {
     super.initState();
-    selectedUsers = widget.selectedUsers;
-  }
-
-  String addS(int number) {
-    return number == 1 ? "" : "s";
+    selectedTexts = widget.selectedTexts;
   }
 
   String getLabelText() {
-    return '${selectedUsers.length} user${addS(selectedUsers.length)} selected';
+    if (selectedTexts.length == 1) {
+      return '1 entry selected';
+    } else {
+      return '${selectedTexts.length} entries selected';
+    }
   }
 
-  void onUpdate(selectedUsers) {
+  void onUpdate(selectedTexts) {
     setState(() {
-      this.selectedUsers = selectedUsers;
+      this.selectedTexts = selectedTexts;
     });
   }
 
@@ -68,9 +68,9 @@ class _UserSelectionConfigState extends State<UserSelectionConfig> {
         FocusScope.of(context).requestFocus(FocusNode());
         showDialog(
           context: context,
-          builder: (context) => UserSelectionDialog(
+          builder: (context) => TextSelectionDialog(
             name: widget.name,
-            selectedUsers: selectedUsers,
+            selectedTexts: selectedTexts,
             onUpdate: onUpdate,
             setConfig: widget.setConfig,
           ),
@@ -80,56 +80,56 @@ class _UserSelectionConfigState extends State<UserSelectionConfig> {
   }
 }
 
-class UserSelectionDialog extends StatefulWidget {
-  const UserSelectionDialog({
+class TextSelectionDialog extends StatefulWidget {
+  const TextSelectionDialog({
     Key? key,
     required this.name,
-    required this.selectedUsers,
+    required this.selectedTexts,
     required this.onUpdate,
     required this.setConfig,
   }) : super(key: key);
 
   final String name;
-  final List<dynamic> selectedUsers;
+  final List<dynamic> selectedTexts;
   final void Function(List<dynamic>) onUpdate;
   final Map<String, dynamic> Function(
       Map<String, dynamic> config, List<dynamic>) setConfig;
 
   @override
-  State<UserSelectionDialog> createState() => _UserSelectionDialogState();
+  State<TextSelectionDialog> createState() => _TextSelectionDialogState();
 }
 
-class _UserSelectionDialogState extends State<UserSelectionDialog> {
-  List<dynamic> selectedUsers = [];
+class _TextSelectionDialogState extends State<TextSelectionDialog> {
+  List<dynamic> selectedTexts = [];
 
   @override
   void initState() {
     super.initState();
-    selectedUsers = widget.selectedUsers;
+    selectedTexts = widget.selectedTexts;
   }
 
-  Widget buildUserListItem(dynamic user) {
+  Widget buildTextListItem(dynamic text) {
     return Chip(
-      label: Text(user.toString()),
+      label: Text(text.toString()),
       backgroundColor: Colors.grey[700],
       deleteIcon: const Icon(Icons.close),
       onDeleted: () {
         setState(() {
-          selectedUsers.remove(user);
+          selectedTexts.remove(text);
           getIt<ConfigService>().config = widget.setConfig(
             getIt<ConfigService>().config,
-            selectedUsers,
+            selectedTexts,
           );
         });
       },
     );
   }
 
-  List<Widget> userListItems() {
-    return selectedUsers.map(buildUserListItem).toList();
+  List<Widget> textListItems() {
+    return selectedTexts.map(buildTextListItem).toList();
   }
 
-  Widget addUserButton(BuildContext contect, TextEditingController controller) {
+  Widget addTextButton(BuildContext contect, TextEditingController controller) {
     return IconButton(
       icon: Icon(
         Icons.add,
@@ -140,9 +140,9 @@ class _UserSelectionDialogState extends State<UserSelectionDialog> {
         if (controller.text == '') return;
 
         setState(() {
-          selectedUsers.add(controller.text);
+          selectedTexts.add(controller.text);
           getIt<ConfigService>().config =
-              widget.setConfig(getIt<ConfigService>().config, selectedUsers);
+              widget.setConfig(getIt<ConfigService>().config, selectedTexts);
         });
         controller.clear();
       },
@@ -160,16 +160,16 @@ class _UserSelectionDialogState extends State<UserSelectionDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "Users (Name/ID)",
+              "Entries",
               style: GoogleFonts.montserrat(
                 fontSize: 20,
               ),
             ),
             const SizedBox(height: 10),
-            Wrap(children: userListItems()),
+            Wrap(children: textListItems()),
             const Divider(height: 30),
             Text(
-              "Add User",
+              "Add Entry",
               style: GoogleFonts.montserrat(
                 fontSize: 20,
               ),
@@ -179,8 +179,8 @@ class _UserSelectionDialogState extends State<UserSelectionDialog> {
               width: 400,
               child: TextField(
                 decoration: InputDecoration(
-                  labelText: "User Name/ID",
-                  suffix: addUserButton(context, controller),
+                  labelText: "Text",
+                  suffix: addTextButton(context, controller),
                 ),
                 controller: controller,
               ),

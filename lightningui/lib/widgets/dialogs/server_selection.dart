@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lightningui/categories.dart';
 import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/main.dart';
-import 'package:lightningui/widgets/configfields.dart';
-import 'package:searchfield/searchfield.dart';
+import 'package:lightningui/widgets/config_fields.dart';
 
-class CategorySelectionConfig extends StatefulWidget {
-  const CategorySelectionConfig({
+class ServerSelectionConfig extends StatefulWidget {
+  const ServerSelectionConfig({
     Key? key,
-    required this.selectedCategories,
+    required this.selectedServers,
     required this.jsonQuery,
     required this.name,
     required this.info,
     required this.setConfig,
   }) : super(key: key);
 
-  final List<dynamic> selectedCategories;
+  final List<dynamic> selectedServers;
   final String jsonQuery;
   final String name;
   final String info;
@@ -24,17 +22,16 @@ class CategorySelectionConfig extends StatefulWidget {
       Map<String, dynamic> config, List<dynamic>) setConfig;
 
   @override
-  State<CategorySelectionConfig> createState() =>
-      _CategorySelectionConfigState();
+  State<ServerSelectionConfig> createState() => _ServerSelectionConfigState();
 }
 
-class _CategorySelectionConfigState extends State<CategorySelectionConfig> {
-  List<dynamic> selectedCategories = [];
+class _ServerSelectionConfigState extends State<ServerSelectionConfig> {
+  List<dynamic> selectedServers = [];
 
   @override
   void initState() {
     super.initState();
-    selectedCategories = widget.selectedCategories;
+    selectedServers = widget.selectedServers;
   }
 
   String addS(int number) {
@@ -42,14 +39,12 @@ class _CategorySelectionConfigState extends State<CategorySelectionConfig> {
   }
 
   String getLabelText() {
-    final categoryText =
-        selectedCategories.length == 1 ? "category" : "categories";
-    return '${selectedCategories.length} $categoryText selected';
+    return '${selectedServers.length} server${addS(selectedServers.length)} selected';
   }
 
-  void onUpdate(selectedCategories) {
+  void onUpdate(selectedServers) {
     setState(() {
-      this.selectedCategories = selectedCategories;
+      this.selectedServers = selectedServers;
     });
   }
 
@@ -73,9 +68,9 @@ class _CategorySelectionConfigState extends State<CategorySelectionConfig> {
         FocusScope.of(context).requestFocus(FocusNode());
         showDialog(
           context: context,
-          builder: (context) => CategorySelectionDialog(
+          builder: (context) => ServerSelectionDialog(
             name: widget.name,
-            selectedCategories: selectedCategories,
+            selectedServers: selectedServers,
             onUpdate: onUpdate,
             setConfig: widget.setConfig,
           ),
@@ -85,57 +80,56 @@ class _CategorySelectionConfigState extends State<CategorySelectionConfig> {
   }
 }
 
-class CategorySelectionDialog extends StatefulWidget {
-  const CategorySelectionDialog({
+class ServerSelectionDialog extends StatefulWidget {
+  const ServerSelectionDialog({
     Key? key,
     required this.name,
-    required this.selectedCategories,
+    required this.selectedServers,
     required this.onUpdate,
     required this.setConfig,
   }) : super(key: key);
 
   final String name;
-  final List<dynamic> selectedCategories;
+  final List<dynamic> selectedServers;
   final void Function(List<dynamic>) onUpdate;
   final Map<String, dynamic> Function(
       Map<String, dynamic> config, List<dynamic>) setConfig;
 
   @override
-  State<CategorySelectionDialog> createState() =>
-      _CategorySelectionDialogState();
+  State<ServerSelectionDialog> createState() => _ServerSelectionDialogState();
 }
 
-class _CategorySelectionDialogState extends State<CategorySelectionDialog> {
-  List<dynamic> selectedCategories = [];
+class _ServerSelectionDialogState extends State<ServerSelectionDialog> {
+  List<dynamic> selectedServers = [];
 
   @override
   void initState() {
     super.initState();
-    selectedCategories = widget.selectedCategories;
+    selectedServers = widget.selectedServers;
   }
 
-  Widget buildCategoryListItem(dynamic category) {
+  Widget buildServerListItem(dynamic server) {
     return Chip(
-      label: Text(category.toString()),
+      label: Text(server.toString()),
       backgroundColor: Colors.grey[700],
       deleteIcon: const Icon(Icons.close),
       onDeleted: () {
         setState(() {
-          selectedCategories.remove(category);
+          selectedServers.remove(server);
           getIt<ConfigService>().config = widget.setConfig(
             getIt<ConfigService>().config,
-            selectedCategories,
+            selectedServers,
           );
         });
       },
     );
   }
 
-  List<Widget> categoryListItems() {
-    return selectedCategories.map(buildCategoryListItem).toList();
+  List<Widget> serverListItems() {
+    return selectedServers.map(buildServerListItem).toList();
   }
 
-  Widget addCategoryButton(
+  Widget addServerButton(
       BuildContext contect, TextEditingController controller) {
     return IconButton(
       icon: Icon(
@@ -144,14 +138,12 @@ class _CategorySelectionDialogState extends State<CategorySelectionDialog> {
       ),
       splashRadius: 20,
       onPressed: () {
-        if (!categories.contains(controller.text)) return;
+        if (controller.text == '') return;
 
         setState(() {
-          selectedCategories.add(controller.text);
-          getIt<ConfigService>().config = widget.setConfig(
-            getIt<ConfigService>().config,
-            selectedCategories,
-          );
+          selectedServers.add(controller.text);
+          getIt<ConfigService>().config =
+              widget.setConfig(getIt<ConfigService>().config, selectedServers);
         });
         controller.clear();
       },
@@ -169,35 +161,29 @@ class _CategorySelectionDialogState extends State<CategorySelectionDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "Categories",
+              "Servers (Name/ID)",
               style: GoogleFonts.montserrat(
                 fontSize: 20,
               ),
             ),
             const SizedBox(height: 10),
-            Wrap(children: categoryListItems()),
+            Wrap(children: serverListItems()),
             const Divider(height: 30),
             Text(
-              "Add Category",
+              "Add Server",
               style: GoogleFonts.montserrat(
                 fontSize: 20,
               ),
             ),
             SizedBox(
-              //height: 60,
+              height: 60,
               width: 400,
-              child: SearchField<String>(
-                suggestions: categories
-                    .where((e) => !selectedCategories.contains(e))
-                    .map((e) => SearchFieldListItem<String>(e,
-                        item: e, child: Text("  $e")))
-                    .toList(),
-                controller: controller,
-                searchInputDecoration: InputDecoration(
-                  labelText: "Category",
-                  suffix: addCategoryButton(context, controller),
-                  isDense: true,
+              child: TextField(
+                decoration: InputDecoration(
+                  labelText: "Server Name/ID",
+                  suffix: addServerButton(context, controller),
                 ),
+                controller: controller,
               ),
             ),
           ],

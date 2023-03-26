@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/main.dart';
-import 'package:lightningui/widgets/configfields.dart';
+import 'package:lightningui/widgets/config_fields.dart';
 
 class ServerProtectionsConfig extends StatefulWidget {
   const ServerProtectionsConfig({

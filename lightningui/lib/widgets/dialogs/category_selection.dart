@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lightningui/commands.dart';
+import 'package:lightningui/categories.dart';
 import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/main.dart';
-import 'package:lightningui/widgets/configfields.dart';
+import 'package:lightningui/widgets/config_fields.dart';
 import 'package:searchfield/searchfield.dart';
 
-class CommandSelectionConfig extends StatefulWidget {
-  const CommandSelectionConfig({
+class CategorySelectionConfig extends StatefulWidget {
+  const CategorySelectionConfig({
     Key? key,
-    required this.selectedCommands,
+    required this.selectedCategories,
     required this.jsonQuery,
     required this.name,
     required this.info,
     required this.setConfig,
   }) : super(key: key);
 
-  final List<dynamic> selectedCommands;
+  final List<dynamic> selectedCategories;
   final String jsonQuery;
   final String name;
   final String info;
@@ -24,16 +24,17 @@ class CommandSelectionConfig extends StatefulWidget {
       Map<String, dynamic> config, List<dynamic>) setConfig;
 
   @override
-  State<CommandSelectionConfig> createState() => _CommandSelectionConfigState();
+  State<CategorySelectionConfig> createState() =>
+      _CategorySelectionConfigState();
 }
 
-class _CommandSelectionConfigState extends State<CommandSelectionConfig> {
-  List<dynamic> selectedCommands = [];
+class _CategorySelectionConfigState extends State<CategorySelectionConfig> {
+  List<dynamic> selectedCategories = [];
 
   @override
   void initState() {
     super.initState();
-    selectedCommands = widget.selectedCommands;
+    selectedCategories = widget.selectedCategories;
   }
 
   String addS(int number) {
@@ -41,13 +42,14 @@ class _CommandSelectionConfigState extends State<CommandSelectionConfig> {
   }
 
   String getLabelText() {
-    final commandText = selectedCommands.length == 1 ? "command" : "commands";
-    return '${selectedCommands.length} $commandText selected';
+    final categoryText =
+        selectedCategories.length == 1 ? "category" : "categories";
+    return '${selectedCategories.length} $categoryText selected';
   }
 
-  void onUpdate(selectedCommands) {
+  void onUpdate(selectedCategories) {
     setState(() {
-      this.selectedCommands = selectedCommands;
+      this.selectedCategories = selectedCategories;
     });
   }
 
@@ -71,9 +73,9 @@ class _CommandSelectionConfigState extends State<CommandSelectionConfig> {
         FocusScope.of(context).requestFocus(FocusNode());
         showDialog(
           context: context,
-          builder: (context) => CommandSelectionDialog(
+          builder: (context) => CategorySelectionDialog(
             name: widget.name,
-            selectedCommands: selectedCommands,
+            selectedCategories: selectedCategories,
             onUpdate: onUpdate,
             setConfig: widget.setConfig,
           ),
@@ -83,56 +85,57 @@ class _CommandSelectionConfigState extends State<CommandSelectionConfig> {
   }
 }
 
-class CommandSelectionDialog extends StatefulWidget {
-  const CommandSelectionDialog({
+class CategorySelectionDialog extends StatefulWidget {
+  const CategorySelectionDialog({
     Key? key,
     required this.name,
-    required this.selectedCommands,
+    required this.selectedCategories,
     required this.onUpdate,
     required this.setConfig,
   }) : super(key: key);
 
   final String name;
-  final List<dynamic> selectedCommands;
+  final List<dynamic> selectedCategories;
   final void Function(List<dynamic>) onUpdate;
   final Map<String, dynamic> Function(
       Map<String, dynamic> config, List<dynamic>) setConfig;
 
   @override
-  State<CommandSelectionDialog> createState() => _CommandSelectionDialogState();
+  State<CategorySelectionDialog> createState() =>
+      _CategorySelectionDialogState();
 }
 
-class _CommandSelectionDialogState extends State<CommandSelectionDialog> {
-  List<dynamic> selectedCommands = [];
+class _CategorySelectionDialogState extends State<CategorySelectionDialog> {
+  List<dynamic> selectedCategories = [];
 
   @override
   void initState() {
     super.initState();
-    selectedCommands = widget.selectedCommands;
+    selectedCategories = widget.selectedCategories;
   }
 
-  Widget buildCommandListItem(dynamic command) {
+  Widget buildCategoryListItem(dynamic category) {
     return Chip(
-      label: Text(command.toString()),
+      label: Text(category.toString()),
       backgroundColor: Colors.grey[700],
       deleteIcon: const Icon(Icons.close),
       onDeleted: () {
         setState(() {
-          selectedCommands.remove(command);
+          selectedCategories.remove(category);
           getIt<ConfigService>().config = widget.setConfig(
             getIt<ConfigService>().config,
-            selectedCommands,
+            selectedCategories,
           );
         });
       },
     );
   }
 
-  List<Widget> commandListItems() {
-    return selectedCommands.map(buildCommandListItem).toList();
+  List<Widget> categoryListItems() {
+    return selectedCategories.map(buildCategoryListItem).toList();
   }
 
-  Widget addCommandButton(
+  Widget addCategoryButton(
       BuildContext contect, TextEditingController controller) {
     return IconButton(
       icon: Icon(
@@ -141,12 +144,14 @@ class _CommandSelectionDialogState extends State<CommandSelectionDialog> {
       ),
       splashRadius: 20,
       onPressed: () {
-        if (!commands.contains(controller.text)) return;
+        if (!categories.contains(controller.text)) return;
 
         setState(() {
-          selectedCommands.add(controller.text);
-          getIt<ConfigService>().config =
-              widget.setConfig(getIt<ConfigService>().config, selectedCommands);
+          selectedCategories.add(controller.text);
+          getIt<ConfigService>().config = widget.setConfig(
+            getIt<ConfigService>().config,
+            selectedCategories,
+          );
         });
         controller.clear();
       },
@@ -164,16 +169,16 @@ class _CommandSelectionDialogState extends State<CommandSelectionDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "Commands",
+              "Categories",
               style: GoogleFonts.montserrat(
                 fontSize: 20,
               ),
             ),
             const SizedBox(height: 10),
-            Wrap(children: commandListItems()),
+            Wrap(children: categoryListItems()),
             const Divider(height: 30),
             Text(
-              "Add Command",
+              "Add Category",
               style: GoogleFonts.montserrat(
                 fontSize: 20,
               ),
@@ -182,15 +187,15 @@ class _CommandSelectionDialogState extends State<CommandSelectionDialog> {
               //height: 60,
               width: 400,
               child: SearchField<String>(
-                suggestions: commands
-                    .where((e) => !selectedCommands.contains(e))
+                suggestions: categories
+                    .where((e) => !selectedCategories.contains(e))
                     .map((e) => SearchFieldListItem<String>(e,
                         item: e, child: Text("  $e")))
                     .toList(),
                 controller: controller,
                 searchInputDecoration: InputDecoration(
-                  labelText: "Command",
-                  suffix: addCommandButton(context, controller),
+                  labelText: "Category",
+                  suffix: addCategoryButton(context, controller),
                   isDense: true,
                 ),
               ),

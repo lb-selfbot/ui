@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lightningui/widgets/configeditor.dart';
+import 'package:lightningui/widgets/config_editor.dart';
 
 class SharingConfigPage extends StatelessWidget {
   const SharingConfigPage({Key? key}) : super(key: key);

@@ -8,7 +8,7 @@ import 'package:lightningui/ipc.dart';
 import 'package:lightningui/main.dart';
 import 'package:lightningui/utils.dart';
 import 'package:lightningui/launching.dart';
-import 'package:lightningui/widgets/infocard.dart';
+import 'package:lightningui/widgets/info_card.dart';
 
 class ConsoleButton extends StatelessWidget {
   const ConsoleButton({

@@ -23,7 +23,7 @@ import 'package:lightningui/pages/login.dart';
 import 'package:lightningui/pages/activity.dart';
 
 import 'widgets/titlebar.dart';
-import 'widgets/leftnav.dart';
+import 'widgets/left_nav.dart';
 
 final getIt = GetIt.instance;
 

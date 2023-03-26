@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lightningui/commands.dart';
 import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/main.dart';
-import 'package:lightningui/widgets/configfields.dart';
+import 'package:lightningui/widgets/config_fields.dart';
+import 'package:searchfield/searchfield.dart';
 
-class ServerSelectionConfig extends StatefulWidget {
-  const ServerSelectionConfig({
+class CommandSelectionConfig extends StatefulWidget {
+  const CommandSelectionConfig({
     Key? key,
-    required this.selectedServers,
+    required this.selectedCommands,
     required this.jsonQuery,
     required this.name,
     required this.info,
     required this.setConfig,
   }) : super(key: key);
 
-  final List<dynamic> selectedServers;
+  final List<dynamic> selectedCommands;
   final String jsonQuery;
   final String name;
   final String info;
@@ -22,16 +24,16 @@ class ServerSelectionConfig extends StatefulWidget {
       Map<String, dynamic> config, List<dynamic>) setConfig;
 
   @override
-  State<ServerSelectionConfig> createState() => _ServerSelectionConfigState();
+  State<CommandSelectionConfig> createState() => _CommandSelectionConfigState();
 }
 
-class _ServerSelectionConfigState extends State<ServerSelectionConfig> {
-  List<dynamic> selectedServers = [];
+class _CommandSelectionConfigState extends State<CommandSelectionConfig> {
+  List<dynamic> selectedCommands = [];
 
   @override
   void initState() {
     super.initState();
-    selectedServers = widget.selectedServers;
+    selectedCommands = widget.selectedCommands;
   }
 
   String addS(int number) {
@@ -39,12 +41,13 @@ class _ServerSelectionConfigState extends State<ServerSelectionConfig> {
   }
 
   String getLabelText() {
-    return '${selectedServers.length} server${addS(selectedServers.length)} selected';
+    final commandText = selectedCommands.length == 1 ? "command" : "commands";
+    return '${selectedCommands.length} $commandText selected';
   }
 
-  void onUpdate(selectedServers) {
+  void onUpdate(selectedCommands) {
     setState(() {
-      this.selectedServers = selectedServers;
+      this.selectedCommands = selectedCommands;
     });
   }
 
@@ -68,9 +71,9 @@ class _ServerSelectionConfigState extends State<ServerSelectionConfig> {
         FocusScope.of(context).requestFocus(FocusNode());
         showDialog(
           context: context,
-          builder: (context) => ServerSelectionDialog(
+          builder: (context) => CommandSelectionDialog(
             name: widget.name,
-            selectedServers: selectedServers,
+            selectedCommands: selectedCommands,
             onUpdate: onUpdate,
             setConfig: widget.setConfig,
           ),
@@ -80,56 +83,56 @@ class _ServerSelectionConfigState extends State<ServerSelectionConfig> {
   }
 }
 
-class ServerSelectionDialog extends StatefulWidget {
-  const ServerSelectionDialog({
+class CommandSelectionDialog extends StatefulWidget {
+  const CommandSelectionDialog({
     Key? key,
     required this.name,
-    required this.selectedServers,
+    required this.selectedCommands,
     required this.onUpdate,
     required this.setConfig,
   }) : super(key: key);
 
   final String name;
-  final List<dynamic> selectedServers;
+  final List<dynamic> selectedCommands;
   final void Function(List<dynamic>) onUpdate;
   final Map<String, dynamic> Function(
       Map<String, dynamic> config, List<dynamic>) setConfig;
 
   @override
-  State<ServerSelectionDialog> createState() => _ServerSelectionDialogState();
+  State<CommandSelectionDialog> createState() => _CommandSelectionDialogState();
 }
 
-class _ServerSelectionDialogState extends State<ServerSelectionDialog> {
-  List<dynamic> selectedServers = [];
+class _CommandSelectionDialogState extends State<CommandSelectionDialog> {
+  List<dynamic> selectedCommands = [];
 
   @override
   void initState() {
     super.initState();
-    selectedServers = widget.selectedServers;
+    selectedCommands = widget.selectedCommands;
   }
 
-  Widget buildServerListItem(dynamic server) {
+  Widget buildCommandListItem(dynamic command) {
     return Chip(
-      label: Text(server.toString()),
+      label: Text(command.toString()),
       backgroundColor: Colors.grey[700],
       deleteIcon: const Icon(Icons.close),
       onDeleted: () {
         setState(() {
-          selectedServers.remove(server);
+          selectedCommands.remove(command);
           getIt<ConfigService>().config = widget.setConfig(
             getIt<ConfigService>().config,
-            selectedServers,
+            selectedCommands,
           );
         });
       },
     );
   }
 
-  List<Widget> serverListItems() {
-    return selectedServers.map(buildServerListItem).toList();
+  List<Widget> commandListItems() {
+    return selectedCommands.map(buildCommandListItem).toList();
   }
 
-  Widget addServerButton(
+  Widget addCommandButton(
       BuildContext contect, TextEditingController controller) {
     return IconButton(
       icon: Icon(
@@ -138,12 +141,12 @@ class _ServerSelectionDialogState extends State<ServerSelectionDialog> {
       ),
       splashRadius: 20,
       onPressed: () {
-        if (controller.text == '') return;
+        if (!commands.contains(controller.text)) return;
 
         setState(() {
-          selectedServers.add(controller.text);
+          selectedCommands.add(controller.text);
           getIt<ConfigService>().config =
-              widget.setConfig(getIt<ConfigService>().config, selectedServers);
+              widget.setConfig(getIt<ConfigService>().config, selectedCommands);
         });
         controller.clear();
       },
@@ -161,29 +164,35 @@ class _ServerSelectionDialogState extends State<ServerSelectionDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "Servers (Name/ID)",
+              "Commands",
               style: GoogleFonts.montserrat(
                 fontSize: 20,
               ),
             ),
             const SizedBox(height: 10),
-            Wrap(children: serverListItems()),
+            Wrap(children: commandListItems()),
             const Divider(height: 30),
             Text(
-              "Add Server",
+              "Add Command",
               style: GoogleFonts.montserrat(
                 fontSize: 20,
               ),
             ),
             SizedBox(
-              height: 60,
+              //height: 60,
               width: 400,
-              child: TextField(
-                decoration: InputDecoration(
-                  labelText: "Server Name/ID",
-                  suffix: addServerButton(context, controller),
-                ),
+              child: SearchField<String>(
+                suggestions: commands
+                    .where((e) => !selectedCommands.contains(e))
+                    .map((e) => SearchFieldListItem<String>(e,
+                        item: e, child: Text("  $e")))
+                    .toList(),
                 controller: controller,
+                searchInputDecoration: InputDecoration(
+                  labelText: "Command",
+                  suffix: addCommandButton(context, controller),
+                  isDense: true,
+                ),
               ),
             ),
           ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/main.dart';
-import 'package:lightningui/widgets/activityimage.dart';
+import 'package:lightningui/widgets/activity_image.dart';
 
 class Activity extends StatefulWidget {
   const Activity({Key? key}) : super(key: key);

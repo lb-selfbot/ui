@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lightningui/widgets/configeditor.dart';
+import 'package:lightningui/widgets/config_editor.dart';
 
 class AFKConfigPage extends StatelessWidget {
   const AFKConfigPage({Key? key}) : super(key: key);

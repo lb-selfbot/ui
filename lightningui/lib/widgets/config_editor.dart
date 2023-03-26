@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/main.dart';
 import 'package:lightningui/utils.dart';
-import 'package:lightningui/widgets/dialogs/categoryselection.dart';
-import 'package:lightningui/widgets/dialogs/commandselection.dart';
-import 'package:lightningui/widgets/dialogs/serverprotections.dart';
-import 'package:lightningui/widgets/dialogs/serverselection.dart';
-import 'package:lightningui/widgets/dialogs/textselection.dart';
-import 'package:lightningui/widgets/dialogs/userselection.dart';
+import 'package:lightningui/widgets/dialogs/category_selection.dart';
+import 'package:lightningui/widgets/dialogs/command_selection.dart';
+import 'package:lightningui/widgets/dialogs/server_protections.dart';
+import 'package:lightningui/widgets/dialogs/server_selection.dart';
+import 'package:lightningui/widgets/dialogs/text_selection.dart';
+import 'package:lightningui/widgets/dialogs/user_selection.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 
-import 'configfields.dart';
+import 'config_fields.dart';
 
 class ConfigEditor extends StatelessWidget {
   const ConfigEditor({
