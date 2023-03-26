@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lightningui/utils.dart';
 
 class InfoIconButton extends StatelessWidget {
   const InfoIconButton({
@@ -12,22 +13,16 @@ class InfoIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon:
-          Icon(Icons.info_outline, color: Theme.of(context).primaryColorLight),
+      icon: Icon(
+        Icons.info_outline,
+        color: Theme.of(context).colorScheme.primary,
+      ),
       splashRadius: 20,
       onPressed: () {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text("Information"),
-            content: Text(info),
-            actions: [
-              TextButton(
-                child: const Text('Close'),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ],
-          ),
+        Utils.showAlertDialog(
+          context,
+          "Information",
+          info,
         );
       },
     );
@@ -103,8 +98,8 @@ class _SwitchConfigColState extends State<SwitchConfigCol> {
             scale: 0.75,
             child: Switch(
               value: isSwitched,
-              activeColor: Theme.of(context).primaryColorLight,
-              activeTrackColor: Theme.of(context).primaryColorDark,
+              activeColor: Theme.of(context).colorScheme.primary,
+              activeTrackColor: Theme.of(context).colorScheme.inversePrimary,
               onChanged: (value) {
                 setState(() {
                   isSwitched = value;

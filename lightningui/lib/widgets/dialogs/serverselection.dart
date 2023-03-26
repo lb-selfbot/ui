@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lightningui/config.dart';
+import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/main.dart';
 import 'package:lightningui/widgets/configfields.dart';
 
@@ -116,8 +116,8 @@ class _ServerSelectionDialogState extends State<ServerSelectionDialog> {
       onDeleted: () {
         setState(() {
           selectedServers.remove(server);
-          getIt<Config>().config = widget.setConfig(
-            getIt<Config>().config,
+          getIt<ConfigService>().config = widget.setConfig(
+            getIt<ConfigService>().config,
             selectedServers,
           );
         });
@@ -134,7 +134,7 @@ class _ServerSelectionDialogState extends State<ServerSelectionDialog> {
     return IconButton(
       icon: Icon(
         Icons.add,
-        color: Theme.of(context).primaryColorLight,
+        color: Theme.of(context).colorScheme.primary,
       ),
       splashRadius: 20,
       onPressed: () {
@@ -142,8 +142,8 @@ class _ServerSelectionDialogState extends State<ServerSelectionDialog> {
 
         setState(() {
           selectedServers.add(controller.text);
-          getIt<Config>().config =
-              widget.setConfig(getIt<Config>().config, selectedServers);
+          getIt<ConfigService>().config =
+              widget.setConfig(getIt<ConfigService>().config, selectedServers);
         });
         controller.clear();
       },
@@ -189,6 +189,7 @@ class _ServerSelectionDialogState extends State<ServerSelectionDialog> {
           ],
         ),
       ),
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       actions: [
         TextButton(
           child: const Text('Close'),

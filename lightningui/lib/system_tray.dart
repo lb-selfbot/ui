@@ -13,17 +13,15 @@ class SystemTray {
   static Future<void> init() async {
     iconPath = path.join(Utils.getMainFolder().path, "Logo");
 
-    if (Platform.isWindows) {
-      iconPath += ".ico";
-    } else {
-      iconPath += ".png";
-    }
+    iconPath += Platform.isWindows ? ".ico" : ".png";
 
     systemTray.registerSystemTrayEventHandler((eventName) {
-      if (eventName == "click") {
-        hide();
-        appWindow.show();
+      if (eventName != "click") {
+        return;
       }
+
+      hide();
+      appWindow.show();
     });
   }
 

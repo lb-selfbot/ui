@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:lightningui/api.dart';
-import 'package:lightningui/config.dart';
+import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/ipc.dart';
 import 'package:lightningui/main.dart';
 import 'package:lightningui/paths.dart';
@@ -188,10 +188,10 @@ class Launching {
   }
 
   static void onLogin(String username, String password) {
-    final config = getIt<Config>().config;
+    final config = getIt<ConfigService>().config;
     config["Account"]["LightningBot"]["Username"] = username;
     config["Account"]["LightningBot"]["Password"] = password;
-    getIt<Config>().config = config;
+    getIt<ConfigService>().config = config;
   }
 
   static bool shouldLogin() {
@@ -199,11 +199,13 @@ class Launching {
       return true;
     }
 
-    if (getIt<Config>().config["Account"]["LightningBot"]["Username"] == "") {
+    if (getIt<ConfigService>().config["Account"]["LightningBot"]["Username"] ==
+        "") {
       return true;
     }
 
-    if (getIt<Config>().config["Account"]["LightningBot"]["Password"] == "") {
+    if (getIt<ConfigService>().config["Account"]["LightningBot"]["Password"] ==
+        "") {
       return true;
     }
 
@@ -249,7 +251,7 @@ class Launching {
 
     if (changed) {
       // Save config using Config class so we don't have to read it again
-      getIt<Config>().config = config;
+      getIt<ConfigService>().config = config;
     }
   }
 }

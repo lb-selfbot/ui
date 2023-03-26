@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lightningui/config.dart';
+import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/main.dart';
 import 'package:lightningui/widgets/activitycard.dart';
 import 'package:lightningui/widgets/configeditor.dart';
@@ -18,30 +18,31 @@ class _ActivityPageState extends State<ActivityPage> {
   void onConfigChange() {
     if (!mounted) return;
 
-    if (activityType == getIt<Config>().config['Activity']['ActivityType']) {
+    if (activityType ==
+        getIt<ConfigService>().config['Activity']['ActivityType']) {
       return;
     }
 
     setState(() {
-      activityType = getIt<Config>().config['Activity']['ActivityType'];
+      activityType = getIt<ConfigService>().config['Activity']['ActivityType'];
     });
   }
 
   @override
   void dispose() {
-    getIt<Config>().removeListener(onConfigChange);
+    getIt<ConfigService>().removeListener(onConfigChange);
     super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
-    activityType = getIt<Config>().config['Activity']['ActivityType'];
-    getIt<Config>().addListener(onConfigChange);
+    activityType = getIt<ConfigService>().config['Activity']['ActivityType'];
+    getIt<ConfigService>().addListener(onConfigChange);
   }
 
   List<Map<String, Object>> getFields() {
-    final config = getIt<Config>().config;
+    final config = getIt<ConfigService>().config;
 
     final isRPC = config['Activity']['ActivityType'] == 'RPC';
     final isCustom = config['Activity']['ActivityType'] == 'CustomActivity';

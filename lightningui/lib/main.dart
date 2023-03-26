@@ -1,18 +1,19 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:lightningui/paths.dart';
-import 'package:lightningui/systemtray.dart';
+import 'package:lightningui/services/theme_service.dart';
+import 'package:lightningui/system_tray.dart';
 import 'package:lightningui/utils.dart';
 
 import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:path/path.dart' as path;
 import 'package:lightningui/api.dart';
-import 'package:lightningui/config.dart';
+import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/ipc.dart';
 import 'package:lightningui/launching.dart';
 import 'package:lightningui/pages/config.dart';
@@ -29,10 +30,12 @@ final getIt = GetIt.instance;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  getIt.registerSingleton(Config());
-
   try {
     await Paths.init();
+
+    getIt.registerSingleton(ConfigService());
+
+    getIt.registerSingleton(ThemeService());
 
     await checkVersion();
 
@@ -65,6 +68,11 @@ Future<void> main() async {
 
 Future<void> checkVersion() async {
   final packageInfo = await PackageInfo.fromPlatform();
+
+  if (packageInfo.version.contains("dev")) {
+    // Don't check for updates on dev builds
+    return;
+  }
 
   final apiResponse = await API.checkVersion("ui", packageInfo.version);
 
@@ -151,8 +159,8 @@ Future<void> checkVersion() async {
 
 final currentRouteProvider = StateProvider<String>((ref) => '/');
 
-final configProvider = ChangeNotifierProvider<Config>((ref) {
-  return getIt<Config>();
+final configProvider = ChangeNotifierProvider<ConfigService>((ref) {
+  return getIt<ConfigService>();
 });
 
 const views = [
@@ -178,45 +186,19 @@ const views = [
   },
 ];
 
-class App extends StatelessWidget {
+class App extends StatelessWidget with GetItMixin {
   App({Key? key}) : super(key: key);
 
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
+    final themeData = watchOnly((ThemeService t) => t.getTheme());
+
     return ProviderScope(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData.light().copyWith(
-          splashFactory: InkRipple.splashFactory,
-          primaryColor: const Color(0xFFFFAACC),
-          useMaterial3: true,
-          cardTheme: const CardTheme(
-            color: Color(0xFF1B2D48),
-            elevation: 2,
-          ),
-        ),
-        darkTheme: ThemeData.dark().copyWith(
-          splashFactory: InkRipple.splashFactory,
-          primaryColor: const Color(0xFF1B2D48),
-          primaryColorDark: const Color(0xFF2c4975),
-          primaryColorLight: const Color(0xFF2e73db),
-          useMaterial3: true,
-          cardTheme: const CardTheme(
-            color: Color(0xFF1B2D48),
-            elevation: 2,
-          ),
-          tabBarTheme: TabBarTheme(
-            labelStyle: GoogleFonts.montserrat(),
-            unselectedLabelStyle: GoogleFonts.montserrat(),
-          ),
-          textTheme: GoogleFonts.montserratTextTheme(
-            ThemeData.dark().textTheme,
-          ),
-          indicatorColor: const Color(0xFF47A7FF),
-        ),
-        themeMode: ThemeMode.dark,
+        theme: themeData,
         home: AppBody(navigatorKey: navigatorKey),
       ),
     );
@@ -284,10 +266,11 @@ class _AppBodyState extends ConsumerState<AppBody> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final theme = Theme.of(context);
 
     if (!shouldLogin && !passedFirstLogin && !tryingToAuth) {
       tryingToAuth = true;
-      final account = getIt<Config>().config["Account"]["LightningBot"];
+      final account = getIt<ConfigService>().config["Account"]["LightningBot"];
       API.auth(account["Username"], account["Password"]).then((result) {
         setState(() {
           authResult = result;
@@ -308,11 +291,11 @@ class _AppBodyState extends ConsumerState<AppBody> {
 
     if (shouldLogin || tryingToAuth) {
       return Scaffold(
-        backgroundColor: const Color(0xEE222222),
+        backgroundColor: theme.colorScheme.background,
         body: Center(
           child: ListView(
             children: [
-              const WindowTitleBar(dark: true, fullWidth: true),
+              const WindowTitleBar(fullWidth: true),
               LoginPage(
                 onLogin: () {
                   shouldLogin = false;
@@ -329,7 +312,7 @@ class _AppBodyState extends ConsumerState<AppBody> {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xEE222222),
+      backgroundColor: theme.colorScheme.background,
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -339,7 +322,7 @@ class _AppBodyState extends ConsumerState<AppBody> {
             height: size.height,
             child: Column(
               children: [
-                const WindowTitleBar(dark: true),
+                const WindowTitleBar(),
                 const SizedBox(height: 30),
                 SizedBox(
                   width: size.width - 150,

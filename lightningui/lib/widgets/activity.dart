@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lightningui/config.dart';
+import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/main.dart';
 import 'package:lightningui/widgets/activityimage.dart';
 
@@ -12,7 +12,7 @@ class Activity extends StatefulWidget {
 
 class _ActivityState extends State<Activity> {
   String getTitle() {
-    final config = getIt<Config>().config;
+    final config = getIt<ConfigService>().config;
 
     if (config["Activity"]["ActivityType"] == "RPC") {
       return "RPC Application";
@@ -36,14 +36,14 @@ class _ActivityState extends State<Activity> {
 
   @override
   void dispose() {
-    getIt<Config>().removeListener(onConfigChange);
+    getIt<ConfigService>().removeListener(onConfigChange);
     super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
-    getIt<Config>().addListener(onConfigChange);
+    getIt<ConfigService>().addListener(onConfigChange);
   }
 
   List<Widget> getActivityText(dynamic activity) {
@@ -74,7 +74,7 @@ class _ActivityState extends State<Activity> {
 
   @override
   Widget build(BuildContext context) {
-    final config = getIt<Config>().config;
+    final config = getIt<ConfigService>().config;
 
     final activity = config["Activity"];
 

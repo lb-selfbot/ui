@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lightningui/config.dart';
+import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/main.dart';
 import 'package:lightningui/widgets/configfields.dart';
 
@@ -116,8 +116,8 @@ class _TextSelectionDialogState extends State<TextSelectionDialog> {
       onDeleted: () {
         setState(() {
           selectedTexts.remove(text);
-          getIt<Config>().config = widget.setConfig(
-            getIt<Config>().config,
+          getIt<ConfigService>().config = widget.setConfig(
+            getIt<ConfigService>().config,
             selectedTexts,
           );
         });
@@ -133,7 +133,7 @@ class _TextSelectionDialogState extends State<TextSelectionDialog> {
     return IconButton(
       icon: Icon(
         Icons.add,
-        color: Theme.of(context).primaryColorLight,
+        color: Theme.of(context).colorScheme.primary,
       ),
       splashRadius: 20,
       onPressed: () {
@@ -141,8 +141,8 @@ class _TextSelectionDialogState extends State<TextSelectionDialog> {
 
         setState(() {
           selectedTexts.add(controller.text);
-          getIt<Config>().config =
-              widget.setConfig(getIt<Config>().config, selectedTexts);
+          getIt<ConfigService>().config =
+              widget.setConfig(getIt<ConfigService>().config, selectedTexts);
         });
         controller.clear();
       },
@@ -188,6 +188,7 @@ class _TextSelectionDialogState extends State<TextSelectionDialog> {
           ],
         ),
       ),
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       actions: [
         TextButton(
           child: const Text('Close'),

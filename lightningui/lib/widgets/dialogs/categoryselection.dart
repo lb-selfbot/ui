@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lightningui/categories.dart';
-import 'package:lightningui/config.dart';
+import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/main.dart';
 import 'package:lightningui/widgets/configfields.dart';
 import 'package:searchfield/searchfield.dart';
@@ -122,8 +122,8 @@ class _CategorySelectionDialogState extends State<CategorySelectionDialog> {
       onDeleted: () {
         setState(() {
           selectedCategories.remove(category);
-          getIt<Config>().config = widget.setConfig(
-            getIt<Config>().config,
+          getIt<ConfigService>().config = widget.setConfig(
+            getIt<ConfigService>().config,
             selectedCategories,
           );
         });
@@ -140,7 +140,7 @@ class _CategorySelectionDialogState extends State<CategorySelectionDialog> {
     return IconButton(
       icon: Icon(
         Icons.add,
-        color: Theme.of(context).primaryColorLight,
+        color: Theme.of(context).colorScheme.primary,
       ),
       splashRadius: 20,
       onPressed: () {
@@ -148,8 +148,10 @@ class _CategorySelectionDialogState extends State<CategorySelectionDialog> {
 
         setState(() {
           selectedCategories.add(controller.text);
-          getIt<Config>().config =
-              widget.setConfig(getIt<Config>().config, selectedCategories);
+          getIt<ConfigService>().config = widget.setConfig(
+            getIt<ConfigService>().config,
+            selectedCategories,
+          );
         });
         controller.clear();
       },
@@ -201,6 +203,7 @@ class _CategorySelectionDialogState extends State<CategorySelectionDialog> {
           ],
         ),
       ),
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       actions: [
         TextButton(
           child: const Text('Close'),

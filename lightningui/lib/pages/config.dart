@@ -54,43 +54,43 @@ class _ConfigPageState extends State<ConfigPage> {
     final width = size.width - 170;
 
     return DefaultTabController(
-          length: 10,
-          child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 20, right: 20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Theme.of(context).primaryColor,
-                ),
-                child: TabBar(
-                  isScrollable: true,
-                  splashBorderRadius: BorderRadius.circular(12),
-                  indicatorSize: TabBarIndicatorSize.label,
-                  indicatorColor: const Color(0xFF47A7FF),
-                  tabs: tabs,
-                ),
-              ),
-              SizedBox(
-                width: width,
-                height: height - 50,
-                child: const TabBarView(
-                  children: [
-                    AccountConfigPage(),
-                    SelfbotConfigPage(),
-                    NotificationsConfigPage(),
-                    SnipersConfigPage(),
-                    WebhooksConfigPage(),
-                    EventsConfigPage(),
-                    UIConfigPage(),
-                    ProtectionsConfigPage(),
-                    AFKConfigPage(),
-                    SharingConfigPage(),
-                  ],
-                ),
-              ),
-            ],
+      length: 10,
+      child: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.only(left: 20, right: 20),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Theme.of(context).colorScheme.primaryContainer,
+            ),
+            child: TabBar(
+              isScrollable: true,
+              splashBorderRadius: BorderRadius.circular(12),
+              indicatorSize: TabBarIndicatorSize.label,
+              indicatorColor: Theme.of(context).colorScheme.primary,
+              tabs: tabs,
+            ),
           ),
-        );
+          SizedBox(
+            width: width,
+            height: height - 50,
+            child: const TabBarView(
+              children: [
+                AccountConfigPage(),
+                SelfbotConfigPage(),
+                NotificationsConfigPage(),
+                SnipersConfigPage(),
+                WebhooksConfigPage(),
+                EventsConfigPage(),
+                UIConfigPage(),
+                ProtectionsConfigPage(),
+                AFKConfigPage(),
+                SharingConfigPage(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

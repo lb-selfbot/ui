@@ -2,21 +2,37 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lightningui/config.dart';
+import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/main.dart';
-import 'package:lightningui/systemtray.dart';
+import 'package:lightningui/system_tray.dart';
 
 class WindowTitleBar extends StatelessWidget {
   const WindowTitleBar({
     Key? key,
-    required this.dark,
     this.fullWidth = false,
   }) : super(key: key);
 
-  final bool dark;
   final bool fullWidth;
 
+  void minimize() {
+    bool hideToSystemTray =
+        getIt<ConfigService>().config["UI"]["HideToSystemTray"];
+
+    if (hideToSystemTray) {
+      appWindow.hide();
+      SystemTray.show();
+    } else {
+      appWindow.minimize();
+    }
+  }
+
   Widget buildTitleBar(BuildContext context, double width) {
+    final theme = Theme.of(context);
+
+    final dark = theme.brightness == Brightness.dark;
+
+    final weight = dark ? FontWeight.w200 : FontWeight.w500;
+
     return Container(
       width: fullWidth ? width : width - 150,
       height: 32.0,
@@ -36,9 +52,10 @@ class WindowTitleBar extends StatelessWidget {
                   child: Text(
                     "LightningBot",
                     style: GoogleFonts.montserrat(
-                      textStyle: const TextStyle(
+                      textStyle: TextStyle(
                         fontSize: 20,
-                        fontWeight: FontWeight.w200,
+                        fontWeight: weight,
+                        color: theme.textTheme.bodyLarge?.color,
                       ),
                     ),
                   ),
@@ -46,17 +63,7 @@ class WindowTitleBar extends StatelessWidget {
               ),
             ),
             MinimizeWindowButton(
-              onPressed: () {
-                bool hideToSystemTray =
-                    getIt<Config>().config["UI"]["HideToSystemTray"];
-
-                if (hideToSystemTray) {
-                  appWindow.hide();
-                  SystemTray.show();
-                } else {
-                  appWindow.minimize();
-                }
-              },
+              onPressed: minimize,
               colors: WindowButtonColors(
                 iconNormal: !dark ? Colors.black : Colors.white,
                 iconMouseDown: !dark ? Colors.black : Colors.white,

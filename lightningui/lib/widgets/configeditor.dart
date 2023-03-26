@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lightningui/config.dart';
+import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/main.dart';
 import 'package:lightningui/utils.dart';
 import 'package:lightningui/widgets/dialogs/categoryselection.dart';
@@ -52,13 +52,13 @@ class ConfigEditor extends StatelessWidget {
           info: field['info'] as String,
           defaultValue: Utils.getJsonElement(
             field['jsonQuery'],
-            getIt<Config>().config,
+            getIt<ConfigService>().config,
           ),
           obscure: field['obscure'] != null,
           onChanged: (value) {
             if (field["set"] != null) {
-              getIt<Config>().config = field["set"](
-                getIt<Config>().config,
+              getIt<ConfigService>().config = field["set"](
+                getIt<ConfigService>().config,
                 value,
               );
             }
@@ -71,12 +71,12 @@ class ConfigEditor extends StatelessWidget {
           info: field['info'] as String,
           defaultValue: Utils.getJsonElement(
             field['jsonQuery'],
-            getIt<Config>().config,
+            getIt<ConfigService>().config,
           ),
           onChanged: (value) {
             if (field["set"] != null) {
-              getIt<Config>().config = field["set"](
-                getIt<Config>().config,
+              getIt<ConfigService>().config = field["set"](
+                getIt<ConfigService>().config,
                 value,
               );
             }
@@ -90,12 +90,12 @@ class ConfigEditor extends StatelessWidget {
           options: field['options'] as List<Map<String, dynamic>>,
           defaultValue: Utils.getJsonElement(
             field['jsonQuery'],
-            getIt<Config>().config,
+            getIt<ConfigService>().config,
           ),
           onChanged: (value) {
             if (field["set"] != null) {
-              getIt<Config>().config = field["set"](
-                getIt<Config>().config,
+              getIt<ConfigService>().config = field["set"](
+                getIt<ConfigService>().config,
                 value,
               );
             }
@@ -108,13 +108,13 @@ class ConfigEditor extends StatelessWidget {
           info: field['info'] as String,
           defaultValue: Utils.getJsonElement(
             field['jsonQuery'],
-            getIt<Config>().config,
+            getIt<ConfigService>().config,
           ).toString(),
           numeric: true,
           onChanged: (value) {
             if (field["set"] != null) {
-              getIt<Config>().config = field["set"](
-                getIt<Config>().config,
+              getIt<ConfigService>().config = field["set"](
+                getIt<ConfigService>().config,
                 int.tryParse(value.isNotEmpty ? value : '0') ?? 0,
               );
             }
@@ -124,23 +124,23 @@ class ConfigEditor extends StatelessWidget {
       case 'server_protections_dialog':
         final antiDelete = Utils.getJsonElement(
           "Protections/ServerProtections/AntiDelete",
-          getIt<Config>().config,
+          getIt<ConfigService>().config,
         );
         final antiInvite = Utils.getJsonElement(
           "Protections/ServerProtections/AntiInvite",
-          getIt<Config>().config,
+          getIt<ConfigService>().config,
         );
         final antiSpam = Utils.getJsonElement(
           "Protections/ServerProtections/AntiSpam",
-          getIt<Config>().config,
+          getIt<ConfigService>().config,
         );
         final antiUpper = Utils.getJsonElement(
           "Protections/ServerProtections/AntiUpper",
-          getIt<Config>().config,
+          getIt<ConfigService>().config,
         );
         final protectedServers = Utils.getJsonElement(
           "Protections/ServerProtections/ProtectedServers",
-          getIt<Config>().config,
+          getIt<ConfigService>().config,
         ) as List<dynamic>;
 
         widget = ServerProtectionsConfig(
@@ -154,7 +154,7 @@ class ConfigEditor extends StatelessWidget {
       case 'user_selection_dialog':
         final selectedUsers = Utils.getJsonElement(
           field['jsonQuery'] as String,
-          getIt<Config>().config,
+          getIt<ConfigService>().config,
         );
         widget = UserSelectionConfig(
           selectedUsers: selectedUsers,
@@ -170,7 +170,7 @@ class ConfigEditor extends StatelessWidget {
       case 'server_selection_dialog':
         final selectedServers = Utils.getJsonElement(
           field['jsonQuery'] as String,
-          getIt<Config>().config,
+          getIt<ConfigService>().config,
         );
         widget = ServerSelectionConfig(
           selectedServers: selectedServers,
@@ -186,7 +186,7 @@ class ConfigEditor extends StatelessWidget {
       case 'category_selection_dialog':
         final selectedCategories = Utils.getJsonElement(
           field['jsonQuery'] as String,
-          getIt<Config>().config,
+          getIt<ConfigService>().config,
         );
         widget = CategorySelectionConfig(
           selectedCategories: selectedCategories,
@@ -202,7 +202,7 @@ class ConfigEditor extends StatelessWidget {
       case 'command_selection_dialog':
         final selectedCommands = Utils.getJsonElement(
           field['jsonQuery'] as String,
-          getIt<Config>().config,
+          getIt<ConfigService>().config,
         );
         widget = CommandSelectionConfig(
           selectedCommands: selectedCommands,
@@ -218,7 +218,7 @@ class ConfigEditor extends StatelessWidget {
       case 'text_selection_dialog':
         final selectedTexts = Utils.getJsonElement(
           field['jsonQuery'] as String,
-          getIt<Config>().config,
+          getIt<ConfigService>().config,
         );
         widget = TextSelectionConfig(
           selectedTexts: selectedTexts,

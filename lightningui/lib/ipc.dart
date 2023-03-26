@@ -6,7 +6,6 @@ import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:lightningui/launching.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:web_socket_channel/io.dart';
-import 'package:path_provider/path_provider.dart';
 
 abstract class OP {
   static const int connected = 98;
@@ -29,7 +28,7 @@ class IPC {
   static bool websocketConnected = false;
 
   static String defaultConsoleString =
-      '<image Source="assets/Banner.png" Width="650" Height="150" Centered />\n<text Color="#3CA5FF" Centered>Waiting for launch...</text>';
+      '<image Source="assets/Banner.png" Width="650" Height="150" Centered />\n<text Color="#C1EFFF" Centered>Waiting for launch...</text>';
   static String consoleString = defaultConsoleString;
 
   static Map<String, Function()> onChangeListeners = {};

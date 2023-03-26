@@ -21,74 +21,24 @@ class Utils {
 
       var matches = indexPattern.allMatches(query);
       query = query.replaceAll(indexPattern, '');
+      
       currentElement =
           currentElement != null ? currentElement[query] : json[query];
 
       for (Match match in matches) {
         String matchString = match.group(0) ?? '';
-        final index =
-            int.tryParse(matchString.replaceAll("[", "").replaceAll("]", ""));
-        if (index != null) {
-          currentElement =
-              currentElement != null ? currentElement[index] : json[query];
+        matchString = matchString.replaceAll(RegExp(r"[^\w\s]"), "");
+
+        final index = int.tryParse(matchString);
+        if (index == null) {
+          continue;
         }
+
+        currentElement =
+            currentElement != null ? currentElement[index] : json[query];
       }
     }
     return currentElement;
-  }
-
-  static dynamic setJsonElement(String jsonQuery, dynamic json, dynamic value) {
-    // iterate over jsonQuery in reverse, setting newJson to the value of the last element in jsonQuery, then second to last, etc.
-    // then update the json with newJson and return the updated json
-    final path = jsonQuery.split('/');
-    dynamic newJson = {};
-
-    for (String query in path.reversed) {
-      if (query.isEmpty) {
-        continue;
-      }
-
-      if (query != path.last) {
-        newJson = {query: newJson};
-        continue;
-      }
-      newJson[stripIndex(query)] =
-          _setWithIndex(json, newJson, query, path, value);
-    }
-    return newJson;
-  }
-
-  static dynamic _setWithIndex(dynamic json, dynamic newJson, String query,
-      List<String> path, dynamic value) {
-    var matches = indexPattern.allMatches(query);
-
-    if (matches.isNotEmpty) {
-      List<String> newPath = List.from(path);
-      newPath.removeLast();
-      newPath.add(stripIndex(path.last));
-      newJson[newPath.last] = getJsonElement(newPath.join('/'), json);
-      for (Match match in matches) {
-        String matchString = match.group(0) ?? '';
-        final index =
-            int.tryParse(matchString.replaceAll("[", "").replaceAll("]", ""));
-        if (index != null) {
-          if (matches.length == 1 || match == matches.last) {
-            try {
-              newJson = List.from(newJson[newPath.last]);
-            } catch (_) {
-              newJson = Map.from(newJson[newPath.last]);
-            }
-            newJson[index] = value;
-          } else {
-            newJson = newJson[index];
-          }
-        }
-      }
-    } else {
-      newJson[query] = value;
-    }
-
-    return newJson;
   }
 
   static String stripIndex(String jsonQuery) =>
@@ -261,6 +211,7 @@ class Utils {
       builder: (context) => AlertDialog(
         title: Text(title),
         content: Text(text),
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         actions: [
           TextButton(
             child: const Text('Close'),

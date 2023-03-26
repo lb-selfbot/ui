@@ -7,7 +7,7 @@ import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:lightningui/ipc.dart';
 import 'package:lightningui/paths.dart';
 
-class Config extends ChangeNotifier {
+class ConfigService extends ChangeNotifier {
   DateTime lastUpdate = DateTime.fromMicrosecondsSinceEpoch(0);
 
   Map<String, dynamic> cachedConfig = {};

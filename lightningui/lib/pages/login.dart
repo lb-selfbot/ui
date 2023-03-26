@@ -146,11 +146,10 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final primaryColor = Theme.of(context).primaryColor;
 
     return LoginContainer(
       size: size,
-      color: primaryColor,
+      color: Theme.of(context).colorScheme.primaryContainer,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: tryingToAuth ? loadingWidgets() : loginWidgets(context),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lightningui/config.dart';
+import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/main.dart';
 import 'package:lightningui/widgets/activity.dart';
 
@@ -18,14 +18,14 @@ class _ActivityCardState extends State<ActivityCard> {
 
   @override
   void dispose() {
-    getIt<Config>().removeListener(onConfigChange);
+    getIt<ConfigService>().removeListener(onConfigChange);
     super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
-    getIt<Config>().addListener(onConfigChange);
+    getIt<ConfigService>().addListener(onConfigChange);
   }
 
   Widget buildHeader() {
@@ -135,7 +135,7 @@ class _ActivityCardState extends State<ActivityCard> {
   }
 
   List<Widget> buildRPCButtons() {
-    final config = getIt<Config>().config;
+    final config = getIt<ConfigService>().config;
 
     if (config["Activity"]["ActivityType"] != "RPC") {
       return [];
@@ -161,7 +161,7 @@ class _ActivityCardState extends State<ActivityCard> {
   }
 
   String getActivityText() {
-    final config = getIt<Config>().config;
+    final config = getIt<ConfigService>().config;
 
     final nameObject = config["Activity"]["Name"];
 
@@ -227,7 +227,7 @@ class _ActivityCardState extends State<ActivityCard> {
 
   @override
   Widget build(BuildContext context) {
-    final config = getIt<Config>().config;
+    final config = getIt<ConfigService>().config;
 
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,

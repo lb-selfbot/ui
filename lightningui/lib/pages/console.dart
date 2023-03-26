@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+
+import 'package:responsive_grid/responsive_grid.dart';
+
 import 'package:lightningui/api.dart';
-import 'package:lightningui/config.dart';
+import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/ipc.dart';
 import 'package:lightningui/main.dart';
 import 'package:lightningui/utils.dart';
 import 'package:lightningui/launching.dart';
-import 'package:responsive_grid/responsive_grid.dart';
 import 'package:lightningui/widgets/infocard.dart';
 
 class ConsoleButton extends StatelessWidget {
@@ -25,9 +27,7 @@ class ConsoleButton extends StatelessWidget {
       width: 24,
       height: 24,
       padding: const EdgeInsets.all(2.0),
-      child: const CircularProgressIndicator(
-        strokeWidth: 3,
-      ),
+      child: const CircularProgressIndicator(strokeWidth: 3),
     );
   }
 
@@ -35,7 +35,7 @@ class ConsoleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final buttonStyle = ButtonStyle(
       backgroundColor: MaterialStateProperty.all(
-        Theme.of(context).primaryColorDark,
+        Theme.of(context).colorScheme.inversePrimary,
       ),
     );
 
@@ -96,7 +96,7 @@ class _ConsolePageState extends State<ConsolePage> {
 
   void onLaunchPress() async {
     // Check if Discord token has been set in config
-    if (getIt<Config>().config["Account"]["Discord"]["Token"] == "") {
+    if (getIt<ConfigService>().config["Account"]["Discord"]["Token"] == "") {
       Utils.showErrorDialog(
         context,
         "You haven't set your Discord token yet! Please set it in the config tab before launching LightningBot.",

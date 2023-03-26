@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lightningui/config.dart';
+import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/main.dart';
 import 'package:lightningui/widgets/configfields.dart';
 
@@ -116,8 +116,8 @@ class _UserSelectionDialogState extends State<UserSelectionDialog> {
       onDeleted: () {
         setState(() {
           selectedUsers.remove(user);
-          getIt<Config>().config = widget.setConfig(
-            getIt<Config>().config,
+          getIt<ConfigService>().config = widget.setConfig(
+            getIt<ConfigService>().config,
             selectedUsers,
           );
         });
@@ -133,7 +133,7 @@ class _UserSelectionDialogState extends State<UserSelectionDialog> {
     return IconButton(
       icon: Icon(
         Icons.add,
-        color: Theme.of(context).primaryColorLight,
+        color: Theme.of(context).colorScheme.primary,
       ),
       splashRadius: 20,
       onPressed: () {
@@ -141,8 +141,8 @@ class _UserSelectionDialogState extends State<UserSelectionDialog> {
 
         setState(() {
           selectedUsers.add(controller.text);
-          getIt<Config>().config =
-              widget.setConfig(getIt<Config>().config, selectedUsers);
+          getIt<ConfigService>().config =
+              widget.setConfig(getIt<ConfigService>().config, selectedUsers);
         });
         controller.clear();
       },
@@ -188,6 +188,7 @@ class _UserSelectionDialogState extends State<UserSelectionDialog> {
           ],
         ),
       ),
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       actions: [
         TextButton(
           child: const Text('Close'),

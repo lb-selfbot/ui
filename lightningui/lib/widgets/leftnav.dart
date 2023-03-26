@@ -39,7 +39,7 @@ class LeftNavContainer extends StatelessWidget {
       width: 150,
       height: MediaQuery.of(context).size.height - 2,
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+        color: Theme.of(context).colorScheme.primaryContainer,
         borderRadius: const BorderRadius.only(
           topRight: Radius.circular(8),
           bottomRight: Radius.circular(8),
@@ -60,6 +60,8 @@ class LeftNavButtons extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentRoute = ref.watch(currentRouteProvider);
+    final theme = Theme.of(context);
+
     return Column(
       children: [
         for (final view in views)
@@ -67,7 +69,10 @@ class LeftNavButtons extends ConsumerWidget {
             style: ButtonStyle(
               minimumSize: MaterialStateProperty.all(const Size(0, 60)),
               foregroundColor: MaterialStateProperty.all(
-                _getNavButtonColor(currentRoute == view['route'] as String),
+                _getNavButtonColor(
+                  theme,
+                  currentRoute == view['route'] as String,
+                ),
               ),
             ),
             onPressed: () {
@@ -91,7 +96,9 @@ class LeftNavButtons extends ConsumerWidget {
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
                       color: _getNavButtonColor(
-                          currentRoute == view['route'] as String),
+                        theme,
+                        currentRoute == view['route'] as String,
+                      ),
                     ),
                   ),
                 ),
@@ -102,8 +109,10 @@ class LeftNavButtons extends ConsumerWidget {
     );
   }
 
-  Color _getNavButtonColor(bool isCurrentRoute) {
-    return isCurrentRoute ? const Color(0xFF47A7FF) : const Color(0xFFEEEEEE);
+  Color? _getNavButtonColor(ThemeData theme, bool isCurrentRoute) {
+    return isCurrentRoute
+        ? theme.colorScheme.primary.withOpacity(0.7)
+        : theme.textTheme.bodyMedium?.color;
   }
 }
 
@@ -122,16 +131,19 @@ class _LeftNavState extends State<LeftNav> {
   @override
   void initState() {
     super.initState();
-    
+
     PackageInfo.fromPlatform().then((packageInfo) {
-      setState(() {
-        version = packageInfo.version;
-      });
+      setState(() => version = packageInfo.version);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    final dark = theme.brightness == Brightness.dark;
+    final weight = dark ? FontWeight.w300 : FontWeight.w500;
+
     return LeftNavContainer(
       child: Stack(
         children: [
@@ -167,10 +179,9 @@ class _LeftNavState extends State<LeftNav> {
                     child: Text(
                       "v$version",
                       style: GoogleFonts.montserrat(
-                        textStyle: const TextStyle(
-                          color: Color(0xFFEEEEEE),
+                        textStyle: TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.w300,
+                          fontWeight: weight,
                         ),
                       ),
                     ),

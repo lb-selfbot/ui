@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lightningui/config.dart';
+import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/main.dart';
 import 'package:lightningui/widgets/configfields.dart';
 
@@ -154,10 +154,10 @@ class _ServerProtectionsDialogState extends State<ServerProtectionsDialog> {
       onDeleted: () {
         setState(() {
           protectedServers.remove(server);
-          final config = getIt<Config>().config;
+          final config = getIt<ConfigService>().config;
           config['Protections']['ServerProtections']['ProtectedServers'] =
               protectedServers;
-          getIt<Config>().config = config;
+          getIt<ConfigService>().config = config;
         });
       },
     );
@@ -172,7 +172,7 @@ class _ServerProtectionsDialogState extends State<ServerProtectionsDialog> {
     return IconButton(
       icon: Icon(
         Icons.add,
-        color: Theme.of(context).primaryColorLight,
+        color: Theme.of(context).colorScheme.primary,
       ),
       splashRadius: 20,
       onPressed: () {
@@ -180,10 +180,10 @@ class _ServerProtectionsDialogState extends State<ServerProtectionsDialog> {
 
         setState(() {
           protectedServers.add(controller.text);
-          final config = getIt<Config>().config;
+          final config = getIt<ConfigService>().config;
           config['Protections']['ServerProtections']['ProtectedServers'] =
               protectedServers;
-          getIt<Config>().config = config;
+          getIt<ConfigService>().config = config;
         });
         controller.clear();
       },
@@ -206,9 +206,9 @@ class _ServerProtectionsDialogState extends State<ServerProtectionsDialog> {
                 widget.onUpdate(antiDelete, antiInvite, antiSpam, antiUpper,
                     protectedServers);
               });
-              final config = getIt<Config>().config;
+              final config = getIt<ConfigService>().config;
               config['Protections']['ServerProtections']['AntiDelete'] = value;
-              getIt<Config>().config = config;
+              getIt<ConfigService>().config = config;
             },
           ),
         ),
@@ -224,9 +224,9 @@ class _ServerProtectionsDialogState extends State<ServerProtectionsDialog> {
                 widget.onUpdate(antiDelete, antiInvite, antiSpam, antiUpper,
                     protectedServers);
               });
-              final config = getIt<Config>().config;
+              final config = getIt<ConfigService>().config;
               config['Protections']['ServerProtections']['AntiInvite'] = value;
-              getIt<Config>().config = config;
+              getIt<ConfigService>().config = config;
             },
           ),
         ),
@@ -249,9 +249,9 @@ class _ServerProtectionsDialogState extends State<ServerProtectionsDialog> {
                 widget.onUpdate(antiDelete, antiInvite, antiSpam, antiUpper,
                     protectedServers);
               });
-              final config = getIt<Config>().config;
+              final config = getIt<ConfigService>().config;
               config['Protections']['ServerProtections']['AntiSpam'] = value;
-              getIt<Config>().config = config;
+              getIt<ConfigService>().config = config;
             },
           ),
         ),
@@ -268,9 +268,9 @@ class _ServerProtectionsDialogState extends State<ServerProtectionsDialog> {
                 widget.onUpdate(antiDelete, antiInvite, antiSpam, antiUpper,
                     protectedServers);
               });
-              final config = getIt<Config>().config;
+              final config = getIt<ConfigService>().config;
               config['Protections']['ServerProtections']['AntiUpper'] = value;
-              getIt<Config>().config = config;
+              getIt<ConfigService>().config = config;
             },
           ),
         ),
@@ -320,6 +320,7 @@ class _ServerProtectionsDialogState extends State<ServerProtectionsDialog> {
           ],
         ),
       ),
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       actions: [
         TextButton(
           child: const Text('Close'),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lightningui/commands.dart';
-import 'package:lightningui/config.dart';
+import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/main.dart';
 import 'package:lightningui/widgets/configfields.dart';
 import 'package:searchfield/searchfield.dart';
@@ -119,8 +119,8 @@ class _CommandSelectionDialogState extends State<CommandSelectionDialog> {
       onDeleted: () {
         setState(() {
           selectedCommands.remove(command);
-          getIt<Config>().config = widget.setConfig(
-            getIt<Config>().config,
+          getIt<ConfigService>().config = widget.setConfig(
+            getIt<ConfigService>().config,
             selectedCommands,
           );
         });
@@ -137,7 +137,7 @@ class _CommandSelectionDialogState extends State<CommandSelectionDialog> {
     return IconButton(
       icon: Icon(
         Icons.add,
-        color: Theme.of(context).primaryColorLight,
+        color: Theme.of(context).colorScheme.primary,
       ),
       splashRadius: 20,
       onPressed: () {
@@ -145,8 +145,8 @@ class _CommandSelectionDialogState extends State<CommandSelectionDialog> {
 
         setState(() {
           selectedCommands.add(controller.text);
-          getIt<Config>().config =
-              widget.setConfig(getIt<Config>().config, selectedCommands);
+          getIt<ConfigService>().config =
+              widget.setConfig(getIt<ConfigService>().config, selectedCommands);
         });
         controller.clear();
       },
@@ -198,6 +198,7 @@ class _CommandSelectionDialogState extends State<CommandSelectionDialog> {
           ],
         ),
       ),
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       actions: [
         TextButton(
           child: const Text('Close'),
