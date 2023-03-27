@@ -21,9 +21,8 @@ import 'package:lightningui/pages/console.dart';
 import 'package:lightningui/pages/home.dart';
 import 'package:lightningui/pages/login.dart';
 import 'package:lightningui/pages/activity.dart';
-
-import 'widgets/titlebar.dart';
-import 'widgets/left_nav.dart';
+import 'package:lightningui/widgets/titlebar.dart';
+import 'package:lightningui/widgets/left_nav.dart';
 
 final getIt = GetIt.instance;
 
