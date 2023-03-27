@@ -66,6 +66,9 @@ class API {
   static UserData? userData;
   static Stats? stats;
 
+  static List<String> categories = [];
+  static List<String> commands = [];
+
   static Future<Map<String, dynamic>> getJson(String path) async {
     final response = await http.get(Uri.parse("$baseUrl$path"));
     if (response.statusCode == 200) {
@@ -156,7 +159,8 @@ class API {
         },
       );
     } catch (e) {
-      return APIResult(success: false, response: null, json: {}, error: e as Exception);
+      return APIResult(
+          success: false, response: null, json: {}, error: e as Exception);
     }
 
     return APIResult(
@@ -164,5 +168,22 @@ class API {
       response: response,
       json: Utils.tryDecode(response.body),
     );
+  }
+
+  static Future<void> getFeatures() async {
+    Map<String, dynamic> response;
+    try {
+      response = await getJson("/static/features.json");
+    } catch (e) {
+      return;
+    }
+
+    final rawCategories = response["categories"] as List<dynamic>;
+    final rawCommands = response["commands"] as List<dynamic>;
+
+    mapFunc(dynamic item) => item["name"] as String;
+
+    categories = rawCategories.map(mapFunc).toList();
+    commands = rawCommands.map(mapFunc).toList();
   }
 }

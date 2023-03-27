@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lightningui/categories.dart';
+import 'package:lightningui/api.dart';
 import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/main.dart';
 import 'package:lightningui/widgets/config_fields.dart';
@@ -144,7 +144,7 @@ class _CategorySelectionDialogState extends State<CategorySelectionDialog> {
       ),
       splashRadius: 20,
       onPressed: () {
-        if (!categories.contains(controller.text)) return;
+        if (!API.categories.contains(controller.text)) return;
 
         setState(() {
           selectedCategories.add(controller.text);
@@ -187,7 +187,7 @@ class _CategorySelectionDialogState extends State<CategorySelectionDialog> {
               //height: 60,
               width: 400,
               child: SearchField<String>(
-                suggestions: categories
+                suggestions: API.categories
                     .where((e) => !selectedCategories.contains(e))
                     .map((e) => SearchFieldListItem<String>(e,
                         item: e, child: Text("  $e")))

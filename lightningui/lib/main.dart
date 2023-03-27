@@ -42,7 +42,10 @@ Future<void> main() async {
 
     IPC.tryConnect();
 
-    await SystemTray.init();
+    SystemTray.init();
+
+    // Don't await this so it can run in the background
+    API.getFeatures();
 
     runApp(App());
 

@@ -10,7 +10,7 @@ class SystemTray {
   static system_tray.SystemTray systemTray = system_tray.SystemTray();
   static String iconPath = "";
 
-  static Future<void> init() async {
+  static void init() {
     iconPath = path.join(Utils.getMainFolder().path, "Logo");
 
     iconPath += Platform.isWindows ? ".ico" : ".png";
