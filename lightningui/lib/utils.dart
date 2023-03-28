@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:lightningui/utils/color.dart';
 import 'package:path/path.dart' as path;
 import 'package:crypto/crypto.dart' as crypto;
 import 'package:google_fonts/google_fonts.dart';
@@ -21,7 +22,7 @@ class Utils {
 
       var matches = indexPattern.allMatches(query);
       query = query.replaceAll(indexPattern, '');
-      
+
       currentElement =
           currentElement != null ? currentElement[query] : json[query];
 
@@ -134,7 +135,7 @@ class Utils {
       content,
       style: GoogleFonts.robotoMono(
         textStyle: TextStyle(
-          color: fromHex(textColor),
+          color: Colors.transparent.fromString(textColor),
           fontWeight: FontWeight.w400,
         ),
       ),
@@ -145,29 +146,12 @@ class Utils {
     return textWidget;
   }
 
-  static Color fromHex(String hexString) {
-    final buffer = StringBuffer();
-    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
-    buffer.write(hexString.replaceFirst('#', ''));
-    return Color(int.parse(buffer.toString(), radix: 16));
-  }
-
   static dynamic tryDecode(String source) {
     try {
       return jsonDecode(source);
     } catch (e) {
-      return <String, dynamic>{};
+      return {};
     }
-  }
-
-  static Future<Response> downloadFile(
-    String uri,
-    String path, {
-    void Function(int, int)? onProgress,
-  }) async {
-    final dio = Dio();
-
-    return await dio.download(uri, path, onReceiveProgress: onProgress);
   }
 
   static String getUserConfigDir() {

@@ -134,13 +134,11 @@ class Launching {
 
     isDownloading = true;
 
+    final dio = Dio();
     Response? response;
 
     try {
-      response = await Utils.downloadFile(
-        downloadUrl,
-        Paths.executablePath,
-      );
+      response = await dio.download(downloadUrl, Paths.executablePath);
     } catch (e) {
       FlutterPlatformAlert.showAlert(
         windowTitle: "LightningBot - Error",

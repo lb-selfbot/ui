@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
@@ -124,7 +125,9 @@ Future<void> checkVersion() async {
   final installerPath = path.join(Paths.mainFolder, "installer.exe");
 
   try {
-    await Utils.downloadFile(downloadUrl, installerPath);
+    final dio = Dio();
+
+    await dio.download(downloadUrl, installerPath);
 
     await FlutterPlatformAlert.showAlert(
       windowTitle: "LightningBot - New Version Available",
