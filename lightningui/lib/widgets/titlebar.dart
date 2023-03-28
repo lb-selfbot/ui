@@ -4,7 +4,7 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/main.dart';
-import 'package:lightningui/system_tray.dart';
+import 'package:lightningui/services/system_tray_service.dart';
 
 class WindowTitleBar extends StatelessWidget {
   const WindowTitleBar({
@@ -19,8 +19,8 @@ class WindowTitleBar extends StatelessWidget {
         getIt<ConfigService>().config["UI"]["HideToSystemTray"];
 
     if (hideToSystemTray) {
+      getIt<SystemTrayService>().show();
       appWindow.hide();
-      SystemTray.show();
     } else {
       appWindow.minimize();
     }

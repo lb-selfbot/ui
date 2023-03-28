@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:lightningui/paths.dart';
+import 'package:lightningui/services/system_tray_service.dart';
 import 'package:lightningui/services/theme_service.dart';
-import 'package:lightningui/system_tray.dart';
 import 'package:lightningui/utils.dart';
 
 import 'package:flutter_platform_alert/flutter_platform_alert.dart';
@@ -34,6 +34,8 @@ Future<void> main() async {
 
     getIt.registerSingleton(ConfigService());
 
+    getIt.registerSingleton(SystemTrayService());
+
     getIt.registerSingleton(ThemeService());
 
     await checkVersion();
@@ -41,8 +43,6 @@ Future<void> main() async {
     await Launching.init();
 
     IPC.tryConnect();
-
-    SystemTray.init();
 
     // Don't await this so it can run in the background
     API.getFeatures();

@@ -1,31 +1,24 @@
 import 'dart:io';
 
 import 'package:bitsdojo_window/bitsdojo_window.dart';
-import 'package:system_tray/system_tray.dart' as system_tray;
+import 'package:system_tray/system_tray.dart';
 import 'package:path/path.dart' as path;
 
 import 'package:lightningui/utils.dart';
 
-class SystemTray {
-  static system_tray.SystemTray systemTray = system_tray.SystemTray();
-  static String iconPath = "";
+class SystemTrayService {
+  SystemTray systemTray = SystemTray();
+  String iconPath = "";
 
-  static void init() {
+  SystemTrayService() {
     iconPath = path.join(Utils.getMainFolder().path, "Logo");
 
     iconPath += Platform.isWindows ? ".ico" : ".png";
 
-    systemTray.registerSystemTrayEventHandler((eventName) {
-      if (eventName != "click") {
-        return;
-      }
-
-      hide();
-      appWindow.show();
-    });
+    systemTray.registerSystemTrayEventHandler(systemTrayHandler);
   }
 
-  static Future<void> show() async {
+  Future<void> show() async {
     await systemTray.initSystemTray(
       iconPath: iconPath,
       title: "LightningBot",
@@ -33,7 +26,16 @@ class SystemTray {
     );
   }
 
-  static Future<void> hide() async {
+  Future<void> hide() async {
     await systemTray.destroy();
+  }
+
+  void systemTrayHandler(String eventName) {
+    if (eventName != "click") {
+      return;
+    }
+
+    hide();
+    appWindow.show();
   }
 }
