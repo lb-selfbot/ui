@@ -62,14 +62,16 @@ class Paths {
     executablePath = path.join(executableFolder, Launching.getFilename());
 
     // Load icons
+    final logoPNGFile = await File(
+      path.join(mainFolder, 'Logo.png'),
+    ).create(recursive: true);
+
+    final logoICOFile = await File(
+      path.join(mainFolder, 'Logo.ico'),
+    ).create(recursive: true);
+    
     final logoPNG = await rootBundle.load('assets/Logo.png');
     final logoICO = await rootBundle.load('assets/Logo.ico');
-
-    final logoPNGFilePath = path.join(mainFolder, 'Logo.png');
-    final logoICOFilePath = path.join(mainFolder, 'Logo.ico');
-
-    final logoPNGFile = await File(logoPNGFilePath).create(recursive: true);
-    final logoICOFile = await File(logoICOFilePath).create(recursive: true);
 
     await logoPNGFile.writeAsBytes(logoPNG.buffer.asUint8List());
     await logoICOFile.writeAsBytes(logoICO.buffer.asUint8List());
