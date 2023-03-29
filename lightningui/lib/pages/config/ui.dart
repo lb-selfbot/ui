@@ -7,26 +7,38 @@ class UIConfigPage extends StatelessWidget {
   static var fields = [
     {
       'name': 'Theme',
-      'type': 'dropdown',
+      'type': 'text_with_auto_complete',
       'jsonQuery': '/UI/Theme',
       'set': (Map<String, dynamic> config, String value) {
         config['UI']['Theme'] = value;
         return config;
       },
-      'info': 'The theme of the UI.',
-      'options': [
-        {
-          'label': 'Dark',
-          'value': 'Dark',
-          'info': 'Dark Theme',
-        },
-        {
-          'label': 'Light',
-          'value': 'Light',
-          'info': 'Light Theme',
-        },
-      ],
+      'info':
+          'The theme of the UI. You can use one of the default themes (Dark, Light) or enter a hex color to create a theme dynamically.',
+      'options': ['Light', 'Dark']
     },
+    // {
+    //   'name': 'Theme',
+    //   'type': 'dropdown',
+    //   'jsonQuery': '/UI/Theme',
+    //   'set': (Map<String, dynamic> config, String value) {
+    //     config['UI']['Theme'] = value;
+    //     return config;
+    //   },
+    //   'info': 'The theme of the UI.',
+    //   'options': [
+    //     {
+    //       'label': 'Dark',
+    //       'value': 'Dark',
+    //       'info': 'Dark Theme',
+    //     },
+    //     {
+    //       'label': 'Light',
+    //       'value': 'Light',
+    //       'info': 'Light Theme',
+    //     },
+    //   ],
+    // },
     {
       'name': 'Hide To System Tray',
       'type': 'switch',

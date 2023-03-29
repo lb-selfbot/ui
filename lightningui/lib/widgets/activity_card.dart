@@ -28,15 +28,22 @@ class _ActivityCardState extends State<ActivityCard> {
     getIt<ConfigService>().addListener(onConfigChange);
   }
 
-  Widget buildHeader() {
-    const borderSide = BorderSide(width: 5.0, color: Color(0xFF043362));
+  Widget buildHeader(ThemeData theme) {
+    final borderSide =
+        BorderSide(width: 5.0, color: theme.colorScheme.primaryContainer);
+    final border = Border(
+      top: borderSide,
+      left: borderSide,
+      right: borderSide,
+      bottom: borderSide,
+    );
 
     return Stack(
       children: [
         Container(height: 120),
         Container(
           height: 70,
-          color: const Color(0xFF043362),
+          color: theme.colorScheme.primaryContainer,
         ),
         Positioned(
           left: 15,
@@ -44,15 +51,10 @@ class _ActivityCardState extends State<ActivityCard> {
           child: Container(
             height: 100,
             width: 100,
-            decoration: const BoxDecoration(
-              color: Color(0xFF292B2F),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.background.withAlpha(200),
               shape: BoxShape.circle,
-              border: Border(
-                top: borderSide,
-                left: borderSide,
-                right: borderSide,
-                bottom: borderSide,
-              ),
+              border: border,
             ),
             child: Center(
               child: Image.asset(
@@ -73,10 +75,7 @@ class _ActivityCardState extends State<ActivityCard> {
         children: [
           TextSpan(
             text: 'LightningBot',
-            style: TextStyle(
-              color: Color(0xFFFDFDFD),
-              fontSize: 20,
-            ),
+            style: TextStyle(fontSize: 20),
           ),
           TextSpan(
             text: '#1234',
@@ -97,7 +96,6 @@ class _ActivityCardState extends State<ActivityCard> {
         Text(
           "ABOUT ME",
           style: TextStyle(
-            color: Color(0xFFFDFDFD),
             fontSize: 13,
             fontWeight: FontWeight.w900,
           ),
@@ -106,7 +104,7 @@ class _ActivityCardState extends State<ActivityCard> {
         Text(
           "LightningBot Activity Preview",
           style: TextStyle(
-            color: Color(0xFFd8d9da),
+            color: Color(0xFFb0b2b5),
             fontSize: 13,
           ),
         ),
@@ -212,7 +210,6 @@ class _ActivityCardState extends State<ActivityCard> {
         Text(
           getActivityText(),
           style: const TextStyle(
-            color: Color(0xFFFDFDFD),
             fontSize: 13,
             fontWeight: FontWeight.w900,
           ),
@@ -228,20 +225,20 @@ class _ActivityCardState extends State<ActivityCard> {
   @override
   Widget build(BuildContext context) {
     final config = getIt<ConfigService>().config;
+    final theme = Theme.of(context);
 
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      color: const Color(0xFF292B2F),
-      surfaceTintColor: const Color(0xFF292B2F),
+      color: theme.colorScheme.background,
       child: Column(
         children: [
-          buildHeader(),
+          buildHeader(theme),
           Expanded(
             child: Card(
               clipBehavior: Clip.antiAliasWithSaveLayer,
               margin: const EdgeInsets.all(12),
-              color: const Color(0xFF18191c),
-              surfaceTintColor: const Color(0xFF18191c),
+              color: theme.colorScheme.background,
+              surfaceTintColor: theme.colorScheme.background,
               child: ListView(
                 shrinkWrap: true,
                 padding: const EdgeInsets.all(10),
