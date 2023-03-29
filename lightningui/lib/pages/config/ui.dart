@@ -14,8 +14,8 @@ class UIConfigPage extends StatelessWidget {
         return config;
       },
       'info':
-          'The theme of the UI. You can use one of the default themes (Dark, Light) or enter a hex color to create a theme dynamically.',
-      'options': ['Light', 'Dark']
+          'The theme of the UI. You can use one of the default themes (Dark, Light) or enter a hex color to create a theme dynamically. Press enter to submit a color.',
+      'options': ['Light', 'Dark'],
     },
     // {
     //   'name': 'Theme',

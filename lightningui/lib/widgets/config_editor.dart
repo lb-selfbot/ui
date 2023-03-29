@@ -65,6 +65,25 @@ class ConfigEditor extends StatelessWidget {
           },
         );
         break;
+      case 'text_with_auto_complete':
+        widget = TextFieldAutoCompleteConfigCol(
+          name: field['name'] as String,
+          info: field['info'] as String,
+          defaultValue: Utils.getJsonElement(
+            field['jsonQuery'],
+            getIt<ConfigService>().config,
+          ),
+          options: field['options'] as List<String>,
+          onChanged: (value) {
+            if (field["set"] != null) {
+              getIt<ConfigService>().config = field["set"](
+                getIt<ConfigService>().config,
+                value,
+              );
+            }
+          },
+        );
+        break;
       case 'switch':
         widget = SwitchConfigCol(
           name: field['name'] as String,
@@ -236,7 +255,7 @@ class ConfigEditor extends StatelessWidget {
       xs: 12,
       md: fullWidthElements ? 12 : 6,
       child: Container(
-        height: 70,
+        height: 74,
         alignment: const Alignment(0, 0),
         padding: const EdgeInsets.all(5),
         child: widget,

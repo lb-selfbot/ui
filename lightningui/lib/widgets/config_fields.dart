@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lightningui/utils.dart';
+import 'package:searchfield/searchfield.dart';
 
 class InfoIconButton extends StatelessWidget {
   const InfoIconButton({
@@ -59,6 +60,48 @@ class TextFieldConfigCol extends StatelessWidget {
       obscureText: obscure,
       controller: TextEditingController()..text = defaultValue,
       onChanged: onChanged,
+    );
+  }
+}
+
+class TextFieldAutoCompleteConfigCol extends StatelessWidget {
+  const TextFieldAutoCompleteConfigCol({
+    Key? key,
+    required this.name,
+    required this.info,
+    required this.defaultValue,
+    required this.options,
+    required this.onChanged,
+  }) : super(key: key);
+
+  final String name;
+  final String info;
+  final String defaultValue;
+  final List<String> options;
+  final void Function(String) onChanged;
+
+  SearchFieldListItem<String> optionMapper(String option) {
+    return SearchFieldListItem(option);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = TextEditingController(text: defaultValue);
+
+    return SearchField<String>(
+      suggestions: options.map(optionMapper).toList(),
+      controller: controller,
+      searchInputDecoration: InputDecoration(
+        labelText: name,
+        labelStyle: const TextStyle(height: 3),
+        suffix: InfoIconButton(info: info),
+        isDense: true,
+      ),
+      onSuggestionTap: (suggestion) {
+        // controller.text = suggestion.value;
+        onChanged(suggestion.searchKey);
+      },
+      onSubmit: onChanged,
     );
   }
 }
