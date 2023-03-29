@@ -1,3 +1,4 @@
+import 'package:flex_seed_scheme/flex_seed_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -78,9 +79,10 @@ class ThemeService extends ChangeNotifier {
 
     final defaultTheme = dark ? _defaultDark : _defaultLight;
 
-    final colorScheme = ColorScheme.fromSeed(
-      seedColor: color,
+    final colorScheme = SeedColorScheme.fromSeeds(
       brightness: brightness,
+      primaryKey: color,
+      tones: FlexTones.jolly(brightness),
     );
 
     final themeData = defaultTheme.copyWith(
