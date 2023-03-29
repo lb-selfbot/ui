@@ -17,28 +17,6 @@ class UIConfigPage extends StatelessWidget {
           'The theme of the UI. You can use one of the default themes (Dark, Light) or enter a hex color to create a theme dynamically. Press enter to submit a color.',
       'options': ['Light', 'Dark'],
     },
-    // {
-    //   'name': 'Theme',
-    //   'type': 'dropdown',
-    //   'jsonQuery': '/UI/Theme',
-    //   'set': (Map<String, dynamic> config, String value) {
-    //     config['UI']['Theme'] = value;
-    //     return config;
-    //   },
-    //   'info': 'The theme of the UI.',
-    //   'options': [
-    //     {
-    //       'label': 'Dark',
-    //       'value': 'Dark',
-    //       'info': 'Dark Theme',
-    //     },
-    //     {
-    //       'label': 'Light',
-    //       'value': 'Light',
-    //       'info': 'Light Theme',
-    //     },
-    //   ],
-    // },
     {
       'name': 'Hide To System Tray',
       'type': 'switch',
