@@ -82,7 +82,7 @@ class ThemeService extends ChangeNotifier {
     final colorScheme = SeedColorScheme.fromSeeds(
       brightness: brightness,
       primaryKey: color,
-      tones: FlexTones.jolly(brightness),
+      tones: FlexTones.vividSurfaces(brightness),
     );
 
     final themeData = defaultTheme.copyWith(
