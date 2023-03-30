@@ -35,13 +35,13 @@ Future<void> main() async {
 
     getIt.registerSingleton(ConfigService());
 
-    getIt.registerSingleton(SystemTrayService());
-
-    getIt.registerSingleton(ThemeService());
-
     await checkVersion();
 
     await Launching.init();
+    
+    getIt.registerSingleton(SystemTrayService());
+
+    getIt.registerSingleton(ThemeService());
 
     IPC.tryConnect();
 
