@@ -3,16 +3,17 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
-import 'package:lightningui/paths.dart';
-import 'package:lightningui/services/system_tray_service.dart';
-import 'package:lightningui/services/theme_service.dart';
-import 'package:lightningui/utils.dart';
-
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:path/path.dart' as path;
+
+import 'package:lightningui/paths.dart';
+import 'package:lightningui/services/system_tray_service.dart';
+import 'package:lightningui/services/theme_service.dart';
+import 'package:lightningui/utils.dart';
 import 'package:lightningui/api.dart';
 import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/ipc.dart';
@@ -30,18 +31,27 @@ final getIt = GetIt.instance;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await SentryFlutter.init(
+    (options) {
+      options.dsn = 'https://3cbd94268f7241f3a7bf986ec98f1088@o4504927797379072.ingest.sentry.io/4504927807537152';
+
+      options.tracesSampleRate = 1.0;
+    },
+    appRunner: () => runApp(MyApp()),
+  );
+
   try {
     await Paths.init();
 
     getIt.registerSingleton(ConfigService());
 
-    getIt.registerSingleton(SystemTrayService());
-
-    getIt.registerSingleton(ThemeService());
-
     await checkVersion();
 
     await Launching.init();
+    
+    getIt.registerSingleton(SystemTrayService());
+
+    getIt.registerSingleton(ThemeService());
 
     IPC.tryConnect();
 
