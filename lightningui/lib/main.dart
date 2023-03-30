@@ -13,7 +13,6 @@ import 'package:path/path.dart' as path;
 import 'package:lightningui/paths.dart';
 import 'package:lightningui/services/system_tray_service.dart';
 import 'package:lightningui/services/theme_service.dart';
-import 'package:lightningui/utils.dart';
 import 'package:lightningui/api.dart';
 import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/ipc.dart';
@@ -26,6 +25,9 @@ import 'package:lightningui/pages/activity.dart';
 import 'package:lightningui/widgets/titlebar.dart';
 import 'package:lightningui/widgets/left_nav.dart';
 
+const sentryDSN =
+    'https://3cbd94268f7241f3a7bf986ec98f1088@o4504927797379072.ingest.sentry.io/4504927807537152';
+
 final getIt = GetIt.instance;
 
 Future<void> main() async {
@@ -33,13 +35,14 @@ Future<void> main() async {
 
   await SentryFlutter.init(
     (options) {
-      options.dsn = 'https://3cbd94268f7241f3a7bf986ec98f1088@o4504927797379072.ingest.sentry.io/4504927807537152';
-
+      options.dsn = sentryDSN;
       options.tracesSampleRate = 1.0;
     },
-    appRunner: () => runApp(MyApp()),
+    appRunner: run,
   );
+}
 
+Future<void> run() async {
   try {
     await Paths.init();
 
@@ -48,7 +51,7 @@ Future<void> main() async {
     await checkVersion();
 
     await Launching.init();
-    
+
     getIt.registerSingleton(SystemTrayService());
 
     getIt.registerSingleton(ThemeService());
@@ -76,6 +79,8 @@ Future<void> main() async {
           "\n\n  Exception: $e",
       iconStyle: IconStyle.information,
     );
+
+    rethrow;
   }
 }
 
@@ -272,6 +277,17 @@ class _AppBodyState extends ConsumerState<AppBody> {
   bool tryingToAuth = false;
   APIResult? authResult;
 
+  void onLogin() {
+    final username =
+        getIt<ConfigService>().config["Account"]?["LightningBot"]?["Username"];
+
+    Sentry.configureScope((scope) {
+      scope.setUser(
+        SentryUser(username: username ?? "no username"),
+      );
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -292,6 +308,7 @@ class _AppBodyState extends ConsumerState<AppBody> {
           tryingToAuth = false;
           passedFirstLogin = true;
         });
+        onLogin();
       });
     }
 
@@ -317,6 +334,7 @@ class _AppBodyState extends ConsumerState<AppBody> {
                   widget.navigatorKey.currentState?.popAndPushNamed('/');
                   ref.read(currentRouteProvider.notifier).state = '/';
                   setState(() {});
+                  onLogin();
                 },
                 tryingToAuth: tryingToAuth && !shouldLogin,
               ),
