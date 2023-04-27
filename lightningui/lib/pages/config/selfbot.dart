@@ -49,7 +49,8 @@ class SelfbotConfigPage extends StatelessWidget {
         {
           'label': 'Webhook Embed',
           'value': 'WebhookEmbed',
-          'info': 'The bot will respond to commands with a webhook embed if possible.',
+          'info':
+              'The bot will respond to commands with a webhook embed if possible.',
           'icon': 'link',
         },
       ],
@@ -119,6 +120,37 @@ class SelfbotConfigPage extends StatelessWidget {
       },
       'info':
           'If enabled, the bot will not use colored codeblocks to improve readability on mobile.',
+    },
+    {
+      'name': 'Client',
+      'type': 'dropdown',
+      'jsonQuery': '/Selfbot/Client',
+      'set': (Map<String, dynamic> config, String value) {
+        config['Selfbot']['Client'] = value;
+        return config;
+      },
+      'info':
+          'The client that the selfbot will show up as for Discord. A restart of the selfbot is required for any changes to take effect.',
+      'options': [
+        {
+          'label': 'Desktop',
+          'value': 'Desktop',
+          'info': 'The desktop client.',
+          'icon': 'code-braces',
+        },
+        {
+          'label': 'Web',
+          'value': 'Web',
+          'info': 'The web client.',
+          'icon': 'text',
+        },
+        {
+          'label': 'Mobile',
+          'value': 'Mobile',
+          'info': 'The mobile client.',
+          'icon': 'link',
+        },
+      ],
     },
   ];
 
