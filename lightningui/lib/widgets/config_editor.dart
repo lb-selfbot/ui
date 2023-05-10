@@ -7,6 +7,7 @@ import 'package:lightningui/widgets/dialogs/command_selection.dart';
 import 'package:lightningui/widgets/dialogs/server_protections.dart';
 import 'package:lightningui/widgets/dialogs/server_selection.dart';
 import 'package:lightningui/widgets/dialogs/text_selection.dart';
+import 'package:lightningui/widgets/dialogs/trigger_list.dart';
 import 'package:lightningui/widgets/dialogs/user_selection.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 
@@ -250,6 +251,21 @@ class ConfigEditor extends StatelessWidget {
           ),
         );
         break;
+      case 'trigger_list_dialog':
+        final triggerList = Utils.getJsonElement(
+          field['jsonQuery'] as String,
+          getIt<ConfigService>().config,
+        );
+        widget = TriggerListConfig(
+          triggerList: triggerList,
+          jsonQuery: field['jsonQuery'] as String,
+          name: field['name'] as String,
+          info: field['info'] as String,
+          setConfig: field['set'] as Map<String, dynamic> Function(
+            Map<String, dynamic>,
+            List<dynamic>,
+          ),
+        );
     }
     return ResponsiveGridCol(
       xs: 12,
