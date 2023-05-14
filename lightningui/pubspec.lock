@@ -542,10 +542,10 @@ packages:
     dependency: "direct main"
     description:
       name: system_info2
-      sha256: af2f948e3f31a3367a049932a8ad59faf0063ecf836a020d975b9f41566d8bc9
+      sha256: "90621f3ba586e1f268e38cc7951b172cd4d997e43dc1fbed12eb334c8a22a886"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.2"
+    version: "2.0.4"
   system_tray:
     dependency: "direct main"
     description:
