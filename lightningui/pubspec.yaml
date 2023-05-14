@@ -59,23 +59,23 @@ dependencies:
 
   http:
 
-  dio: ^4.0.6
+  dio: ^5.1.2
 
   awesome_snackbar_content:
 
   path: ^1.8.2
 
-  system_info2: ^2.0.4
+  system_info2: ^3.0.2
 
-  package_info_plus: ^3.0.2
+  package_info_plus: ^3.1.2
 
-  flutter_platform_alert: ^0.3.0
+  flutter_platform_alert: ^0.4.0
 
   system_tray: ^2.0.2
 
   # Get It
   get_it: ^7.2.0
-  get_it_mixin: ^3.1.4+2
+  get_it_mixin: ^4.1.1
 
   provider: ^6.0.5
 
