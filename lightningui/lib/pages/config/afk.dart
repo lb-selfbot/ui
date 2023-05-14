@@ -92,7 +92,7 @@ class AFKConfigPage extends StatelessWidget {
       'name': 'Trigger List',
       'type': 'trigger_list_dialog',
       'jsonQuery': '/AFK/TriggerList',
-      'set': (Map<String, dynamic> config, List<dynamic> value) {
+      'set': (Map<String, dynamic> config, Map<String, dynamic> value) {
         config['AFK']['TriggerList'] = value;
         return config;
       },

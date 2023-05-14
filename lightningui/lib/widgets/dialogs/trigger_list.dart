@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/main.dart';
 import 'package:lightningui/widgets/config_fields.dart';
+import 'package:lightningui/widgets/dialogs/server_selection.dart';
+import 'package:lightningui/widgets/dialogs/user_selection.dart';
 
 class TriggerListConfig extends StatefulWidget {
   const TriggerListConfig({
@@ -19,7 +21,7 @@ class TriggerListConfig extends StatefulWidget {
   final String name;
   final String info;
   final Map<String, dynamic> Function(
-      Map<String, dynamic> config, List<dynamic>) setConfig;
+      Map<String, dynamic> config, Map<String, dynamic>) setConfig;
 
   @override
   State<TriggerListConfig> createState() => _TriggerListConfigState();
@@ -35,7 +37,7 @@ class _TriggerListConfigState extends State<TriggerListConfig> {
   }
 
   String getLabelText() {
-    return triggerList['Type'] ?? 'Unknown';
+    return "Type: ${triggerList['Type'] ?? 'Unknown'}";
   }
 
   void onUpdate(triggerList) {
@@ -89,7 +91,7 @@ class TriggerListDialog extends StatefulWidget {
   final Map<String, dynamic> triggerList;
   final void Function(List<dynamic>) onUpdate;
   final Map<String, dynamic> Function(
-      Map<String, dynamic> config, List<dynamic>) setConfig;
+      Map<String, dynamic> config, Map<String, dynamic>) setConfig;
 
   @override
   State<TriggerListDialog> createState() => _TriggerListDialogState();
@@ -146,43 +148,135 @@ class _TriggerListDialogState extends State<TriggerListDialog> {
     );
   }
 
+  List<Widget> getDialogContent() {
+    List<Widget> typeConfig = [
+      SizedBox(
+        height: 70,
+        width: 400,
+        child: DropdownConfigCol(
+          name: "Trigger List Type",
+          info: "The type of trigger list to use.",
+          options: const [
+            {
+              'label': 'Global',
+              'value': 'Global',
+            },
+            {
+              'label': 'Whitelist',
+              'value': 'Whitelist',
+            },
+            {
+              'label': 'Blacklist',
+              'value': 'Blacklist',
+            }
+          ],
+          defaultValue: triggerList['Type'],
+          onChanged: (newType) {
+            setState(() {
+              triggerList['Type'] = newType;
+              widget.setConfig(getIt<ConfigService>().config, triggerList);
+            });
+          },
+        ),
+      ),
+      const Divider(height: 30),
+    ];
+
+    switch (triggerList['Type']) {
+      case 'Global':
+        return [
+          ...typeConfig,
+          Text(
+            'Every message or event will trigger in global mode. There are no configuration options for this trigger type.',
+            style: GoogleFonts.montserrat(fontSize: 14),
+          ),
+        ];
+      case 'Whitelist':
+        return [
+          ...typeConfig,
+          SizedBox(
+            height: 70,
+            width: 400,
+            child: UserSelectionConfig(
+              selectedUsers: triggerList["Users"],
+              jsonQuery: "/AFK/TriggerList/Users",
+              name: "Allowed Users",
+              info: "",
+              setConfig: (config, newUsers) {
+                triggerList["Users"] = newUsers;
+                return widget.setConfig(config, triggerList);
+              },
+            ),
+          ),
+          const SizedBox(height: 20),
+          SizedBox(
+            height: 70,
+            width: 400,
+            child: ServerSelectionConfig(
+              selectedServers: triggerList["Servers"],
+              jsonQuery: "/AFK/TriggerList/Servers",
+              name: "Allowed Servers",
+              info: "",
+              setConfig: (config, newUsers) {
+                triggerList["Servers"] = newUsers;
+                return widget.setConfig(config, triggerList);
+              },
+            ),
+          ),
+        ];
+      case 'Blacklist':
+        return [
+          ...typeConfig,
+          SizedBox(
+            height: 70,
+            width: 400,
+            child: UserSelectionConfig(
+              selectedUsers: triggerList["Users"],
+              jsonQuery: "/AFK/TriggerList/Users",
+              name: "Ignored Users",
+              info: "",
+              setConfig: (config, newUsers) {
+                triggerList["Users"] = newUsers;
+                return widget.setConfig(config, triggerList);
+              },
+            ),
+          ),
+          const SizedBox(height: 20),
+          SizedBox(
+            height: 70,
+            width: 400,
+            child: ServerSelectionConfig(
+              selectedServers: triggerList["Servers"],
+              jsonQuery: "/AFK/TriggerList/Servers",
+              name: "Ignored Servers",
+              info: "",
+              setConfig: (config, newUsers) {
+                triggerList["Servers"] = newUsers;
+                return widget.setConfig(config, triggerList);
+              },
+            ),
+          ),
+        ];
+      default:
+        return [
+          ...typeConfig,
+          Text(
+            'Unknown trigger type: ${triggerList['Type']}',
+            style: GoogleFonts.montserrat(fontSize: 16),
+          ),
+        ];
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final controller = TextEditingController();
     return AlertDialog(
       title: Text(widget.name),
       content: SizedBox(
         width: 575,
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              "Entries",
-              style: GoogleFonts.montserrat(
-                fontSize: 20,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Wrap(children: textListItems()),
-            const Divider(height: 30),
-            Text(
-              "Add Entry",
-              style: GoogleFonts.montserrat(
-                fontSize: 20,
-              ),
-            ),
-            SizedBox(
-              height: 60,
-              width: 400,
-              child: TextField(
-                decoration: InputDecoration(
-                  labelText: "Text",
-                  suffix: addTextButton(context, controller),
-                ),
-                controller: controller,
-              ),
-            ),
-          ],
+          children: getDialogContent(),
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.primaryContainer,

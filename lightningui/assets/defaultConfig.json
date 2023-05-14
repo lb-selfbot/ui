@@ -2,8 +2,11 @@
   "AFK": {
     "Delay": 10,
     "Enabled": false,
-    "IgnoredServers": [],
-    "IgnoredUsers": [],
+    "TriggerList": {
+      "Type": "Whitelist",
+      "Users": [],
+      "Servers": []
+    },
     "Message": "I am currently AFK",
     "OnDM": true,
     "OnPing": true,

@@ -263,7 +263,7 @@ class ConfigEditor extends StatelessWidget {
           info: field['info'] as String,
           setConfig: field['set'] as Map<String, dynamic> Function(
             Map<String, dynamic>,
-            List<dynamic>,
+            Map<String, dynamic>,
           ),
         );
     }
