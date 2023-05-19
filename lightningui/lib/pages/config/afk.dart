@@ -102,27 +102,6 @@ class AFKConfigPage extends StatelessWidget {
           'servers where the AFK message will be sent. In blacklist mode, you can select users or servers where the AFK '
           'message will not be sent. In global mode, the AFK message will be sent for any DM or ping.',
     },
-    // TODO: remove these
-    // {
-    //   'name': 'Ignored Users',
-    //   'type': 'user_selection_dialog',
-    //   'jsonQuery': '/AFK/IgnoredUsers',
-    //   'set': (Map<String, dynamic> config, List<dynamic> value) {
-    //     config['AFK']['IgnoredUsers'] = value;
-    //     return config;
-    //   },
-    //   'info': 'Messages from these users will be ignored.',
-    // },
-    // {
-    //   'name': 'Ignored Servers',
-    //   'type': 'server_selection_dialog',
-    //   'jsonQuery': '/AFK/IgnoredServers',
-    //   'set': (Map<String, dynamic> config, List<dynamic> value) {
-    //     config['AFK']['IgnoredServers'] = value;
-    //     return config;
-    //   },
-    //   'info': 'Messages from these servers will be ignored.',
-    // },
     {
       'name': 'Message',
       'type': 'text',

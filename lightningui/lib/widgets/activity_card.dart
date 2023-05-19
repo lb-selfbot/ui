@@ -90,9 +90,9 @@ class _ActivityCardState extends State<ActivityCard> {
   }
 
   Widget buildUserInfo() {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
+      children: [
         Text(
           "ABOUT ME",
           style: TextStyle(

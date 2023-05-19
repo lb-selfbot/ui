@@ -9,7 +9,6 @@ import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/ipc.dart';
 import 'package:lightningui/main.dart';
 import 'package:lightningui/paths.dart';
-import 'package:lightningui/utils.dart';
 
 class UpdateResult {
   final APIResult? apiResult;
