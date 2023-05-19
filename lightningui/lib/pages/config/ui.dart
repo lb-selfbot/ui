@@ -28,6 +28,27 @@ class UIConfigPage extends StatelessWidget {
       'info':
           'If enabled, the UI will be hidden to the system tray when you minimize it.',
     },
+    {
+      'name': 'Run On Startup',
+      'type': 'switch',
+      'jsonQuery': '/UI/RunOnStartup',
+      'set': (Map<String, dynamic> config, bool value) {
+        config['UI']['RunOnStartup'] = value;
+        return config;
+      },
+      'info': 'If enabled, the UI will run when you start your computer.',
+    },
+    {
+      'name': 'Run Selfbot On Startup',
+      'type': 'switch',
+      'jsonQuery': '/UI/RunOnStartup',
+      'set': (Map<String, dynamic> config, bool value) {
+        config['UI']['RunOnStartup'] = value;
+        return config;
+      },
+      'info':
+          'If enabled, the UI will automatically launch the selfbot when you start the UI.',
+    },
   ];
 
   @override

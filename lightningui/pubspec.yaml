@@ -82,6 +82,8 @@ dependencies:
   flex_seed_scheme: ^1.2.3
 
   sentry_flutter: ^7.4.0
+  
+  launch_at_startup: ^0.2.2
 
 dev_dependencies:
   flutter_test:

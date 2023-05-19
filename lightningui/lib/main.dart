@@ -3,6 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
+import 'package:launch_at_startup/launch_at_startup.dart';
+import 'package:lightningui/services/startup_service.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -30,8 +32,12 @@ const sentryDSN =
 
 final getIt = GetIt.instance;
 
-Future<void> main() async {
+List<String> cmdArgs = [];
+
+Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  cmdArgs = args;
 
   await SentryFlutter.init(
     (options) {
@@ -44,6 +50,12 @@ Future<void> main() async {
 
 Future<void> run() async {
   try {
+    launchAtStartup.setup(
+      appName: "LightningBot",
+      appPath: Platform.resolvedExecutable,
+      args: ["--auto"],
+    );
+
     await Paths.init();
 
     getIt.registerSingleton(ConfigService());
@@ -56,10 +68,14 @@ Future<void> run() async {
 
     getIt.registerSingleton(ThemeService());
 
+    getIt.registerSingleton(StartupService());
+
     IPC.tryConnect();
 
     // Don't await this so it can run in the background
     API.getFeatures();
+
+    final isAutoStartup = cmdArgs.contains("--auto");
 
     runApp(App());
 
@@ -68,8 +84,20 @@ Future<void> run() async {
         ..minSize = const Size(720, 540)
         ..size = const Size(900, 640)
         ..alignment = Alignment.center
-        ..title = "LightningBot"
-        ..show();
+        ..title = "LightningBot";
+
+      if (isAutoStartup) {
+        appWindow.hide();
+        getIt<SystemTrayService>().show();
+      } else {
+        appWindow.show();
+      }
+
+      final config = getIt<ConfigService>().config;
+
+      if (config["UI"]["RunSelfbotOnStartup"]) {
+        Launching.launch();
+      }
     });
   } catch (e) {
     await FlutterPlatformAlert.showAlert(
