@@ -100,6 +100,8 @@
     "Tokens": []
   },
   "UI": {
+    "RunOnStartup": false,
+    "RunSelfbotOnStartup": false,
     "HideToSystemTray": false,
     "Theme": "Dark"
   },
