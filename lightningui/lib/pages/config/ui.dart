@@ -41,9 +41,9 @@ class UIConfigPage extends StatelessWidget {
     {
       'name': 'Run Selfbot On Startup',
       'type': 'switch',
-      'jsonQuery': '/UI/RunOnStartup',
+      'jsonQuery': '/UI/RunSelfbotOnStartup',
       'set': (Map<String, dynamic> config, bool value) {
-        config['UI']['RunOnStartup'] = value;
+        config['UI']['RunSelfbotOnStartup'] = value;
         return config;
       },
       'info':
