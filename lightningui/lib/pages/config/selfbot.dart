@@ -122,7 +122,7 @@ class SelfbotConfigPage extends StatelessWidget {
           'If enabled, the bot will not use colored codeblocks to improve readability on mobile.',
     },
     {
-      'name': 'Client',
+      'name': 'Client Spoof',
       'type': 'dropdown',
       'jsonQuery': '/Selfbot/Client',
       'set': (Map<String, dynamic> config, String value) {

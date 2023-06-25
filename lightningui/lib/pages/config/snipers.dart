@@ -81,7 +81,7 @@ class SnipersConfigPage extends StatelessWidget {
         return config;
       },
       'info':
-          'Enable or disable the giveaway sniper.\n\nThe giveaway sniper will try to join every giveaway hosted in servers you are in and notify you when you win a giveaway.',
+          'Enable or disable the multi-token sniper.\n\nThe sniper will try to join giveaways and redeem codes using the tokens you provide. The codes will be redeemed on your main account. The selfbot has to be restarted for changes to take effect.',
     },
     {
       'name': 'Tokens',
