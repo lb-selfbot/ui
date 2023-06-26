@@ -233,50 +233,46 @@ class _ActivityPageState extends State<ActivityPage> {
           'info':
               'If enabled, your Rich Presence will show how much time has elapsed.',
         },
-      if (isRPC)
-        {
-          'name': 'Button 1 Label',
-          'type': 'text',
-          'jsonQuery': '/Activity/Button1Label',
-          'set': (Map<String, dynamic> config, String value) {
-            config['Activity']['Button1Label'] = value;
-            return config;
-          },
-          'info': 'The label for the first button.',
+      {
+        'name': 'Button 1 Label',
+        'type': 'text',
+        'jsonQuery': '/Activity/Button1Label',
+        'set': (Map<String, dynamic> config, String value) {
+          config['Activity']['Button1Label'] = value;
+          return config;
         },
-      if (isRPC)
-        {
-          'name': 'Button 1 URL',
-          'type': 'url',
-          'jsonQuery': '/Activity/Button1URL',
-          'set': (Map<String, dynamic> config, String value) {
-            config['Activity']['Button1URL'] = value;
-            return config;
-          },
-          'info': 'The URL for the first button.',
+        'info': 'The label for the first button.',
+      },
+      {
+        'name': 'Button 1 URL',
+        'type': 'url',
+        'jsonQuery': '/Activity/Button1URL',
+        'set': (Map<String, dynamic> config, String value) {
+          config['Activity']['Button1URL'] = value;
+          return config;
         },
-      if (isRPC)
-        {
-          'name': 'Button 2 Label',
-          'type': 'text',
-          'jsonQuery': '/Activity/Button2Label',
-          'set': (Map<String, dynamic> config, String value) {
-            config['Activity']['Button2Label'] = value;
-            return config;
-          },
-          'info': 'The label for the second button.',
+        'info': 'The URL for the first button.',
+      },
+      {
+        'name': 'Button 2 Label',
+        'type': 'text',
+        'jsonQuery': '/Activity/Button2Label',
+        'set': (Map<String, dynamic> config, String value) {
+          config['Activity']['Button2Label'] = value;
+          return config;
         },
-      if (isRPC)
-        {
-          'name': 'Button 2 URL',
-          'type': 'url',
-          'jsonQuery': '/Activity/Button2URL',
-          'set': (Map<String, dynamic> config, String value) {
-            config['Activity']['Button2URL'] = value;
-            return config;
-          },
-          'info': 'The URL for the second button.',
+        'info': 'The label for the second button.',
+      },
+      {
+        'name': 'Button 2 URL',
+        'type': 'url',
+        'jsonQuery': '/Activity/Button2URL',
+        'set': (Map<String, dynamic> config, String value) {
+          config['Activity']['Button2URL'] = value;
+          return config;
         },
+        'info': 'The URL for the second button.',
+      },
     ];
   }
 

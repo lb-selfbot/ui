@@ -135,11 +135,8 @@ class _ActivityCardState extends State<ActivityCard> {
   List<Widget> buildRPCButtons() {
     final config = getIt<ConfigService>().config;
 
-    if (config["Activity"]["ActivityType"] != "RPC") {
-      return [];
-    }
-
-    if (config["Activity"]["Invitable"]) {
+    if (config["Activity"]["ActivityType"] == "RPC" &&
+        config["Activity"]["Invitable"]) {
       return [];
     }
 
