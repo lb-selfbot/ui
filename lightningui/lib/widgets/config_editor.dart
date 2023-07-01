@@ -54,7 +54,7 @@ class ConfigEditor extends StatelessWidget {
           defaultValue: Utils.getJsonElement(
             field['jsonQuery'],
             getIt<ConfigService>().config,
-          ),
+          ) ?? '',
           obscure: field['obscure'] != null,
           onChanged: (value) {
             if (field["set"] != null) {
@@ -73,7 +73,7 @@ class ConfigEditor extends StatelessWidget {
           defaultValue: Utils.getJsonElement(
             field['jsonQuery'],
             getIt<ConfigService>().config,
-          ),
+          ) ?? '',
           options: field['options'] as List<String>,
           onChanged: (value) {
             if (field["set"] != null) {
@@ -92,7 +92,7 @@ class ConfigEditor extends StatelessWidget {
           defaultValue: Utils.getJsonElement(
             field['jsonQuery'],
             getIt<ConfigService>().config,
-          ),
+          ) ?? false,
           onChanged: (value) {
             if (field["set"] != null) {
               getIt<ConfigService>().config = field["set"](
@@ -111,7 +111,7 @@ class ConfigEditor extends StatelessWidget {
           defaultValue: Utils.getJsonElement(
             field['jsonQuery'],
             getIt<ConfigService>().config,
-          ),
+          ) ?? field['options'][0]['value'],
           onChanged: (value) {
             if (field["set"] != null) {
               getIt<ConfigService>().config = field["set"](
