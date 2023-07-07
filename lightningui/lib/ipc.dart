@@ -28,7 +28,8 @@ class IPC {
   static bool websocketConnected = false;
 
   static String defaultConsoleString =
-      '<image Source="assets/Banner.png" Width="650" Height="150" Centered />\n<text Color="#C1EFFF" Centered>Waiting for launch...</text>';
+      '<div style="color: #C1EFFF;text-align: center">Waiting for launch...</div>';
+
   static String consoleString = defaultConsoleString;
 
   static Map<String, Function()> onChangeListeners = {};
@@ -117,7 +118,7 @@ class IPC {
         callListeners(onChangeListeners);
         break;
       case OP.consoleAppend:
-        consoleString += '\n${data['text']}';
+        consoleString += '${data['text']}';
         callListeners(onChangeListeners);
         break;
       case OP.consoleClear:

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:responsive_grid/responsive_grid.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:lightningui/api.dart';
 import 'package:lightningui/services/config_service.dart';
@@ -9,6 +11,27 @@ import 'package:lightningui/main.dart';
 import 'package:lightningui/utils.dart';
 import 'package:lightningui/launching.dart';
 import 'package:lightningui/widgets/info_card.dart';
+
+class Console extends StatelessWidget {
+  const Console({Key? key, required this.consoleText}) : super(key: key);
+
+  final String consoleText;
+
+  @override
+  Widget build(BuildContext context) {
+    final font = GoogleFonts.robotoMono();
+
+    return Html(
+      data: "<pre>$consoleText</pre>",
+      style: {
+        "*": Style(
+          fontFamily: font.fontFamily,
+          fontWeight: FontWeight.w400,
+        ),
+      },
+    );
+  }
+}
 
 class ConsoleButton extends StatelessWidget {
   const ConsoleButton({
@@ -68,14 +91,20 @@ class _ConsolePageState extends State<ConsolePage> {
   bool isUpdating = false;
   bool firstBuild = true;
 
+  ScrollController controller = ScrollController();
+
   void changeListener() {
     if (!mounted) return;
 
     // Update console text and set isLaunching
     setState(() {
-      if (!IPC.websocketConnected) return;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        controller.jumpTo(controller.position.maxScrollExtent);
+      });
 
-      isLaunching = false;
+      if (IPC.websocketConnected) {
+        isLaunching = false;
+      }
     });
   }
 
@@ -86,6 +115,10 @@ class _ConsolePageState extends State<ConsolePage> {
     changeListenerName = "consolePage-${DateTime.now().millisecondsSinceEpoch}";
 
     IPC.addChangeListener(changeListenerName, changeListener);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.jumpTo(controller.position.maxScrollExtent);
+    });
   }
 
   @override
@@ -184,9 +217,7 @@ class _ConsolePageState extends State<ConsolePage> {
     final size = MediaQuery.of(context).size;
     final height = size.height - 65;
     final consoleHeight = height - 140;
-    final controller = ScrollController();
     final consoleCached = Utils.isConsoleCached();
-    final console = Utils.renderConsole();
 
     if (!consoleCached || firstBuild) {
       // Scroll all the way down
@@ -220,7 +251,16 @@ class _ConsolePageState extends State<ConsolePage> {
                     child: SelectionArea(
                       child: ListView(
                         controller: controller,
-                        children: console,
+                        children: [
+                          const Center(
+                            child: Image(
+                              image: AssetImage("assets/Banner.png"),
+                              width: 650,
+                              height: 150,
+                            ),
+                          ),
+                          Console(consoleText: IPC.consoleString),
+                        ],
                       ),
                     ),
                   ),

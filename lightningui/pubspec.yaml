@@ -61,8 +61,6 @@ dependencies:
 
   dio: ^5.1.2
 
-  awesome_snackbar_content:
-
   path: ^1.8.2
 
   system_info2: ^2.0.4
@@ -84,6 +82,8 @@ dependencies:
   sentry_flutter: ^7.4.0
   
   launch_at_startup: ^0.2.2
+
+  flutter_html: ^3.0.0-beta.2
 
 dev_dependencies:
   flutter_test:
