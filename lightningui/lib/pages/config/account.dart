@@ -19,6 +19,7 @@ class AccountConfigPage extends StatelessWidget {
     {
       'name': 'Password',
       'type': 'text',
+      'obscure': true,
       'jsonQuery': '/Account/LightningBot/Password',
       'set': (Map<String, dynamic> config, String value) {
         config['Account']['LightningBot']['Password'] = value;
@@ -30,6 +31,7 @@ class AccountConfigPage extends StatelessWidget {
     {
       'name': 'Discord Token',
       'type': 'text',
+      'obscure': true,
       'jsonQuery': '/Account/Discord/Token',
       'set': (Map<String, dynamic> config, String value) {
         config['Account']['Discord']['Token'] = value;
