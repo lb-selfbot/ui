@@ -40,17 +40,6 @@ class SnipersConfigPage extends StatelessWidget {
           'Time in seconds that the sniper will wait before joining a giveaway after finding it.',
     },
     {
-      'name': 'Custom Bots',
-      'type': 'user_selection_dialog',
-      'jsonQuery': '/Snipers/GiveawaySniper/CustomBots',
-      'set': (Map<String, dynamic> config, List<dynamic> value) {
-        config['Snipers']['GiveawaySniper']['CustomBots'] = value;
-        return config;
-      },
-      'info':
-          'Custom bots for the giveaway sniper.\n\nThe bot will try to enter giveaways hosted using these bots.',
-    },
-    {
       'name': 'Blacklist',
       'type': 'text_selection_dialog',
       'jsonQuery': '/Snipers/Blacklist',
@@ -73,6 +62,17 @@ class SnipersConfigPage extends StatelessWidget {
           'The giveaway and nitro sniper will ignore the servers in this list. You can only enter the server ID.',
     },
     {
+      'name': 'Custom Bots',
+      'type': 'user_selection_dialog',
+      'jsonQuery': '/Snipers/GiveawaySniper/CustomBots',
+      'set': (Map<String, dynamic> config, List<dynamic> value) {
+        config['Snipers']['GiveawaySniper']['CustomBots'] = value;
+        return config;
+      },
+      'info':
+          'Custom bots for the giveaway sniper.\n\nThe bot will try to enter giveaways hosted using these bots.',
+    },
+    {
       'name': 'Multi-Token Sniper',
       'type': 'switch',
       'jsonQuery': '/Snipers/MultiTokenSniper',
@@ -93,6 +93,17 @@ class SnipersConfigPage extends StatelessWidget {
       },
       'info':
           'Tokens for the multi-token sniper.\n\nThe sniper will try to join giveaways and redeem codes using these tokens.',
+    },
+    {
+      'name': 'Privnote Sniper',
+      'type': 'switch',
+      'jsonQuery': '/Snipers/PrivnoteSniper',
+      'set': (Map<String, dynamic> config, bool value) {
+        config['Snipers']['PrivnoteSniper'] = value;
+        return config;
+      },
+      'info':
+          'Enable or disable the privnote sniper.\n\nThe Privnote sniper will try to open every privnote message that is sent in servers so you can read the contents of the message.',
     },
   ];
 
