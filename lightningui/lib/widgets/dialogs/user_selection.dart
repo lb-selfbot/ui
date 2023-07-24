@@ -160,7 +160,7 @@ class _UserSelectionDialogState extends State<UserSelectionDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "Users (Name/ID)",
+              "Users (ID)",
               style: GoogleFonts.montserrat(
                 fontSize: 20,
               ),
@@ -179,7 +179,7 @@ class _UserSelectionDialogState extends State<UserSelectionDialog> {
               width: 400,
               child: TextField(
                 decoration: InputDecoration(
-                  labelText: "User Name/ID",
+                  labelText: "User ID",
                   suffix: addUserButton(context, controller),
                 ),
                 controller: controller,

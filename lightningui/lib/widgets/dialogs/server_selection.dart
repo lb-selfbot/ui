@@ -161,7 +161,7 @@ class _ServerSelectionDialogState extends State<ServerSelectionDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "Servers (Name/ID)",
+              "Servers (ID)",
               style: GoogleFonts.montserrat(
                 fontSize: 20,
               ),
@@ -180,7 +180,7 @@ class _ServerSelectionDialogState extends State<ServerSelectionDialog> {
               width: 400,
               child: TextField(
                 decoration: InputDecoration(
-                  labelText: "Server Name/ID",
+                  labelText: "Server ID",
                   suffix: addServerButton(context, controller),
                 ),
                 controller: controller,
