@@ -59,6 +59,10 @@ jobs:
 
           dart pub global activate https://github.com/jeffrey0606/flutter_to_debian.git --source git
 
+      - name: Create folder structure
+        run: |
+          mkdir -p ${{ github.workspace }}/executables/linux/amd64
+
       - name: Build for Linux
         run: |
           export PATH="$PATH":"$PUB_CACHE/.pub-cache/bin"
@@ -69,13 +73,10 @@ jobs:
 
           flutter_to_debian
 
-          mv ${{ github.workspace }}/lightningui/debian/packages/*.deb ${{ github.workspace }}/lightningui/debian/packages/ui.deb
+          deb_file=$(find ${{ github.workspace }}/lightningui -type f -name "*.deb")
 
-      - name: Create folder structure
-        run: |
-          mkdir -p ${{ github.workspace }}/executables/linux/amd64
 
-          cp -a ${{ github.workspace }}/lightningui/debian/packages/. ${{ github.workspace }}/executables/linux/amd64
+          mv "$deb_file" ${{ github.workspace }}/executables/linux/amd64/ui.deb
 
       - name: Upload builds
         uses: actions/upload-artifact@v3.1.0
@@ -110,11 +111,11 @@ jobs:
       - name: Create folder structure
         run: |
           mkdir -p ${{ github.workspace }}/executables/macos
-      
+
       - name: Create ICNS
         run: |
           cd ${{ github.workspace }}/installer
-          
+
           mkdir icons.iconset
           sips -z 16 16     LightningBot.png --out icons.iconset/icon_16x16.png
           sips -z 32 32     LightningBot.png --out icons.iconset/icon_16x16@2x.png
@@ -128,7 +129,7 @@ jobs:
           sips -z 1024 1024 LightningBot.png --out icons.iconset/icon_512x512@2x.png
 
           iconutil -c icns icons.iconset
-          
+
           rm -R icons.iconset
 
       - name: Create DMG
