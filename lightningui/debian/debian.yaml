@@ -5,10 +5,10 @@ flutter_app:
 
 control:
   Package: LightningBot
-  Version: 4.0.0
+  Version: 4.6.0
   Architecture: amd64
   Essential: no
   Priority: optional
   Depends:
   Maintainer: LightningBot
-  Description: A Discord Selfbot
+  Description: Improve your Discord experience with LightningBot
