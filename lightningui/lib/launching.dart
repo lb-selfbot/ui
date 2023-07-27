@@ -48,6 +48,8 @@ class Launching {
       return "The selfbot is currently downloading. Please wait a few seconds and try again.";
     }
 
+    isDownloading = true;
+
     final exists = await File(Paths.executablePath).exists();
 
     if (!exists) {
@@ -56,8 +58,11 @@ class Launching {
     }
 
     if (IPC.websocketConnected && !force) {
+      isDownloading = false;
       return "";
     }
+
+    isDownloading = false;
 
     try {
       await Process.start(Paths.executablePath, ["-l"]);
@@ -90,11 +95,18 @@ class Launching {
   static Future<UpdateResult> ensureLatestSelfbotVersion({
     bool notifyOnSuccess = false,
   }) async {
+    if (isDownloading) {
+      return UpdateResult(null, null, false, false);
+    }
+
+    isDownloading = true;
+
     executableVersion = await getExecutableVersion();
 
     final apiResult = await API.checkVersion("selfbot", executableVersion);
 
     if (!apiResult.success) {
+      isDownloading = false;
       return UpdateResult(null, apiResult.error, false, false);
     }
 
@@ -113,25 +125,21 @@ class Launching {
 
       final response = await startDownload(notifyOnSuccess: notifyOnSuccess);
 
+      isDownloading = false;
       return UpdateResult(apiResult, null, isLatest, response != null);
     }
 
+    isDownloading = false;
     return UpdateResult(apiResult, null, isLatest, true);
   }
 
   static Future<Response?> startDownload({bool notifyOnSuccess = false}) async {
-    if (isDownloading) {
-      return null;
-    }
-
     String downloadUrl = "${API.baseUrl}/static/executables/"
         "${Platform.operatingSystem}/${Paths.architecture}/${getFilename()}";
 
     if (Platform.isMacOS) {
       downloadUrl = "${API.baseUrl}/static/executables/macos/selfbot";
     }
-
-    isDownloading = true;
 
     final dio = Dio();
     Response? response;
@@ -151,8 +159,6 @@ class Launching {
       return null;
     }
 
-    isDownloading = false;
-
     if (!Platform.isWindows) {
       try {
         await Process.run("chmod", ["+x", Paths.executablePath]);
@@ -167,6 +173,8 @@ class Launching {
           iconStyle: IconStyle.information,
         );
 
+        isDownloading = false;
+
         return null;
       }
     }
@@ -180,6 +188,8 @@ class Launching {
         iconStyle: IconStyle.information,
       );
     }
+
+    isDownloading = false;
 
     return response;
   }
