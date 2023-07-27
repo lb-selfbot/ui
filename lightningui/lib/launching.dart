@@ -26,7 +26,13 @@ class Launching {
   static bool isDownloading = false;
 
   static Future<void> init() async {
-    ensureLatestSelfbotVersion();
+    ensureLatestSelfbotVersion().then((val) {
+      final config = getIt<ConfigService>().config;
+
+      if (config["UI"]["RunSelfbotOnStartup"]) {
+        Launching.launch();
+      }
+    });
 
     isFirstLaunch = await checkIsFirstLaunch();
 

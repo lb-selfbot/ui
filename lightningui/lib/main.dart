@@ -92,12 +92,6 @@ Future<void> run() async {
       } else {
         appWindow.show();
       }
-
-      final config = getIt<ConfigService>().config;
-
-      if (config["UI"]["RunSelfbotOnStartup"]) {
-        Launching.launch();
-      }
     });
   } catch (e) {
     await FlutterPlatformAlert.showAlert(
