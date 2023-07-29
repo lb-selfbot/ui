@@ -71,7 +71,11 @@ class Launching {
     isDownloading = false;
 
     try {
-      await Process.start(Paths.executablePath, ["-l"]);
+      await Process.start(
+        Paths.executablePath,
+        ["-l"],
+        mode: ProcessStartMode.inheritStdio,
+      );
       return "";
     } catch (e) {
       return "Failed to start the selfbot executable.\n\nError: $e";
