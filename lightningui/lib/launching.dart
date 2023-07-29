@@ -74,7 +74,7 @@ class Launching {
       await Process.start(
         Paths.executablePath,
         ["-l"],
-        mode: ProcessStartMode.inheritStdio,
+        mode: ProcessStartMode.detached,
       );
       return "";
     } catch (e) {
