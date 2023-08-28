@@ -109,4 +109,14 @@ class Paths {
       await Directory(folder).create(recursive: true);
     }
   }
+
+  static void openFolder() {
+    if (Platform.isWindows) {
+      Process.run("explorer.exe", [mainFolder]);
+    } else if (Platform.isLinux) {
+      Process.run("xdg-open", [mainFolder]);
+    } else if (Platform.isMacOS) {
+      Process.run("open", [mainFolder]);
+    }
+  }
 }

@@ -27,14 +27,14 @@ class ProtectionsConfigPage extends StatelessWidget {
       'info': 'If enabled, the bot will protect you against DM spam.',
     },
     {
-      'name': 'Anti Phising',
+      'name': 'Anti Phishing',
       'type': 'switch',
-      'jsonQuery': '/Protections/AntiPhising',
+      'jsonQuery': '/Protections/AntiPhishing',
       'set': (Map<String, dynamic> config, bool value) {
-        config['Protections']['AntiPhising'] = value;
+        config['Protections']['AntiPhishing'] = value;
         return config;
       },
-      'info': 'If enabled, the bot will warn you against phising links.',
+      'info': 'If enabled, the bot will warn you against phishing links.',
     },
     {
       'name': 'Server Protections',

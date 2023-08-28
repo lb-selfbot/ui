@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lightningui/paths.dart';
 
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -182,6 +183,8 @@ class _ConsolePageState extends State<ConsolePage> {
     }
   }
 
+  void onOpenFolderPress() => Paths.openFolder();
+
   List<Widget> _getConsoleButtons() {
     final connectedButtons = [
       ConsoleButton(
@@ -192,6 +195,11 @@ class _ConsolePageState extends State<ConsolePage> {
       ConsoleButton(
         onPressed: onRestartPress,
         text: "Restart",
+      ),
+      Expanded(child: Container()),
+      ConsoleButton(
+        onPressed: onOpenFolderPress,
+        text: "Open folder",
       ),
     ];
 
@@ -206,6 +214,11 @@ class _ConsolePageState extends State<ConsolePage> {
         onPressed: onCheckForUpdatesPress,
         loading: isUpdating,
         text: "Check for updates",
+      ),
+      Expanded(child: Container()),
+      ConsoleButton(
+        onPressed: onOpenFolderPress,
+        text: "Open folder",
       ),
     ];
 
@@ -268,6 +281,7 @@ class _ConsolePageState extends State<ConsolePage> {
                     children: [
                       const SizedBox(width: 20),
                       ..._getConsoleButtons(),
+                      const SizedBox(width: 20),
                     ],
                   )
                 ],
