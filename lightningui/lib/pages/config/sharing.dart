@@ -14,7 +14,18 @@ class SharingConfigPage extends StatelessWidget {
         return config;
       },
       'info':
-          'Share all commands with the shared users.\n\nWARNING: Users in the shared users list will be able to run any command in the bot. This means they can execute commands like shutdownpc, hiddeneveryone, etc.',
+          'Share all commands with the shared users.\n\nWARNING: Users in the shared users list will be able to run any command in the bot. This means they can execute commands like shutdownpc and hiddeneveryone unless you enable the Block Dangerous Commands option.',
+    },
+    {
+      'name': 'Block Dangerous Commands',
+      'type': 'switch',
+      'jsonQuery': '/Sharing/BlockDangerousCommands',
+      'set': (Map<String, dynamic> config, bool value) {
+        config['Sharing']['BlockDangerousCommands'] = value;
+        return config;
+      },
+      'info':
+          'Block users from being able to run dangerous commands like shutdownpc and hiddeneveryone.',
     },
     {
       'name': 'Shared Users',

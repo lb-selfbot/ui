@@ -83,6 +83,7 @@
   },
   "Sharing": {
     "ShareAll": false,
+    "BlockDangerousCommands": true,
     "SharedCategories": [],
     "SharedCommands": [],
     "SharedUsers": []
