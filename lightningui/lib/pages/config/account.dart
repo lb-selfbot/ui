@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lightningui/widgets/config_editor.dart';
 
 class AccountConfigPage extends StatelessWidget {
-  const AccountConfigPage({Key? key}) : super(key: key);
+  const AccountConfigPage({Key? key, required this.x}) : super(key: key);
+
+  final int x;
 
   static var fields = [
     {
@@ -30,7 +32,7 @@ class AccountConfigPage extends StatelessWidget {
     },
     {
       'name': 'Discord Token',
-      'type': 'text',
+      'type': 'token',
       'obscure': true,
       'jsonQuery': '/Account/Discord/Token',
       'set': (Map<String, dynamic> config, String value) {

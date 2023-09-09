@@ -49,9 +49,16 @@ class Launching {
     return !configFileExists;
   }
 
-  static Future<String> launch({bool force = false}) async {
+  static Future<(String, Process?)> launch({
+    bool force = false,
+    bool detached = true,
+    List<String>? args,
+  }) async {
     if (isDownloading) {
-      return "The selfbot is currently downloading. Please wait a few seconds and try again.";
+      return (
+        "The selfbot is currently downloading. Please wait a few seconds and try again.",
+        null
+      );
     }
 
     isDownloading = true;
@@ -60,25 +67,27 @@ class Launching {
 
     if (!exists) {
       startDownload(notifyOnSuccess: true);
-      return "The selfbot executable is missing. It will now start downloading.";
-    }
-
-    if (IPC.websocketConnected && !force) {
-      isDownloading = false;
-      return "";
+      return (
+        "The selfbot executable is missing. It will now start downloading.",
+        null
+      );
     }
 
     isDownloading = false;
 
+    if (IPC.websocketConnected && !force) {
+      return ("", null);
+    }
+
     try {
-      await Process.start(
+      final process = await Process.start(
         Paths.executablePath,
-        ["-l"],
-        mode: ProcessStartMode.detached,
+        ["-l", ...?args],
+        mode: detached ? ProcessStartMode.detached : ProcessStartMode.normal,
       );
-      return "";
+      return ("", process);
     } catch (e) {
-      return "Failed to start the selfbot executable.\n\nError: $e";
+      return ("Failed to start the selfbot executable.\n\nError: $e", null);
     }
   }
 

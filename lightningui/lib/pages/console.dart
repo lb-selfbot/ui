@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lightningui/paths.dart';
+import 'package:lightningui/widgets/dialogs/qr_login_dialog.dart';
 
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -133,14 +134,29 @@ class _ConsolePageState extends State<ConsolePage> {
     if (getIt<ConfigService>().config["Account"]["Discord"]["Token"] == "") {
       Utils.showErrorDialog(
         context,
-        "You haven't set your Discord token yet! Please set it in the config tab before launching LightningBot.",
+        "You haven't set your Discord token yet! Please set it in the config page before launching LightningBot.",
+        actions: [
+          TextButton(
+            child: const Text('Login with QR code'),
+            onPressed: () {
+              Navigator.of(context, rootNavigator: true).pop();
+
+              Future.delayed(const Duration(milliseconds: 500), () {
+                showDialog(
+                  context: context,
+                  builder: (context) => const QRLoginDialog(),
+                );
+              });
+            },
+          ),
+        ],
       );
       return;
     }
 
     setState(() => isLaunching = true);
 
-    final error = await Launching.launch();
+    final (error, _) = await Launching.launch();
 
     // Check if the page is still mounted before showing the error dialog
     if (error.isNotEmpty && mounted) {
@@ -175,7 +191,7 @@ class _ConsolePageState extends State<ConsolePage> {
   void onRestartPress() async {
     IPC.send({"op": OP.exit, "data": {}});
 
-    final error = await Launching.launch(force: true);
+    final (error, _) = await Launching.launch(force: true);
 
     // Check if the page is still mounted before showing the error dialog
     if (error.isNotEmpty && mounted) {

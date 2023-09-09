@@ -46,6 +46,12 @@ class ActivityImage extends StatelessWidget {
   }
 
   Widget buildRPCImage() {
+    final isValidUri = Uri.tryParse(image)?.isAbsolute;
+
+    if (isValidUri == true) {
+      return buildNetworkImage(image);
+    }
+
     final apiUrl =
         "https://discordapp.com/api/oauth2/applications/$clientId/assets";
 

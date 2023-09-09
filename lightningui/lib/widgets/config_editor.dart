@@ -66,6 +66,25 @@ class ConfigEditor extends StatelessWidget {
           },
         );
         break;
+      case 'token':
+        widget = TokenConfigCol(
+          name: field['name'] as String,
+          info: field['info'] as String,
+          defaultValue: Utils.getJsonElement(
+            field['jsonQuery'],
+            getIt<ConfigService>().config,
+          ) ?? '',
+          obscure: field['obscure'] != null,
+          onChanged: (value) {
+            if (field["set"] != null) {
+              getIt<ConfigService>().config = field["set"](
+                getIt<ConfigService>().config,
+                value,
+              );
+            }
+          },
+        );
+        break;
       case 'text_with_auto_complete':
         widget = TextFieldAutoCompleteConfigCol(
           name: field['name'] as String,

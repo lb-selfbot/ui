@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lightningui/utils.dart';
+import 'package:lightningui/widgets/dialogs/qr_login_dialog.dart';
 import 'package:searchfield/searchfield.dart';
 
 class InfoIconButton extends StatelessWidget {
@@ -24,6 +25,27 @@ class InfoIconButton extends StatelessWidget {
           context,
           "Information",
           info,
+        );
+      },
+    );
+  }
+}
+
+class QRLoginIconButton extends StatelessWidget {
+  const QRLoginIconButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(
+        Icons.qr_code,
+        color: Theme.of(context).colorScheme.primary,
+      ),
+      splashRadius: 20,
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (context) => const QRLoginDialog(),
         );
       },
     );
@@ -54,6 +76,47 @@ class TextFieldConfigCol extends StatelessWidget {
       decoration: InputDecoration(
         labelText: name,
         suffix: InfoIconButton(info: info),
+      ),
+      keyboardType: numeric ? TextInputType.number : TextInputType.text,
+      inputFormatters: numeric ? [FilteringTextInputFormatter.digitsOnly] : [],
+      obscureText: obscure,
+      controller: TextEditingController()..text = defaultValue,
+      onChanged: onChanged,
+    );
+  }
+}
+
+class TokenConfigCol extends StatelessWidget {
+  const TokenConfigCol({
+    Key? key,
+    required this.name,
+    required this.info,
+    required this.defaultValue,
+    this.numeric = false,
+    this.obscure = false,
+    required this.onChanged,
+  }) : super(key: key);
+
+  final String name;
+  final String info;
+  final String defaultValue;
+  final bool numeric;
+  final bool obscure;
+  final void Function(String) onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      decoration: InputDecoration(
+        labelText: name,
+        suffix: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const QRLoginIconButton(),
+            InfoIconButton(info: info),
+          ],
+        ),
       ),
       keyboardType: numeric ? TextInputType.number : TextInputType.text,
       inputFormatters: numeric ? [FilteringTextInputFormatter.digitsOnly] : [],

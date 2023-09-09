@@ -187,8 +187,9 @@ class Utils {
   static Future<void> showAlertDialog(
     BuildContext context,
     String title,
-    String text,
-  ) async {
+    String text, {
+    List<Widget>? actions,
+  }) async {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -196,6 +197,7 @@ class Utils {
         content: Text(text),
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         actions: [
+          if (actions != null) ...actions,
           TextButton(
             child: const Text('Close'),
             onPressed: () => Navigator.of(context).pop(),
@@ -205,8 +207,12 @@ class Utils {
     );
   }
 
-  static Future<void> showErrorDialog(BuildContext context, String text) async {
-    return await showAlertDialog(context, "Error", text);
+  static Future<void> showErrorDialog(
+    BuildContext context,
+    String text, {
+    List<Widget>? actions,
+  }) async {
+    return await showAlertDialog(context, "Error", text, actions: actions);
   }
 
   static String parseSeconds(int seconds) {

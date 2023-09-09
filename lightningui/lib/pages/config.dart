@@ -33,18 +33,22 @@ class ConfigPage extends StatefulWidget {
 }
 
 class _ConfigPageState extends State<ConfigPage> {
+  // Dummy variable to force a rebuild when the config changes.
+  int x = 0;
+
   @override
   void initState() {
     super.initState();
-    void listener() {
-      if (mounted) {
-        setState(() {});
-      } else {
-        IPC.removeConfigChangeListener("configPage");
-      }
-    }
 
-    IPC.addConfigChangeListener("configPage", listener);
+    IPC.addConfigChangeListener("configPage", onConfigChange);
+  }
+
+  void onConfigChange() {
+    if (mounted) {
+      setState(() => x++);
+    } else {
+      IPC.removeConfigChangeListener("configPage");
+    }
   }
 
   @override
@@ -74,18 +78,18 @@ class _ConfigPageState extends State<ConfigPage> {
           SizedBox(
             width: width,
             height: height - 50,
-            child: const TabBarView(
+            child: TabBarView(
               children: [
-                AccountConfigPage(),
-                SelfbotConfigPage(),
-                NotificationsConfigPage(),
-                SnipersConfigPage(),
-                WebhooksConfigPage(),
-                EventsConfigPage(),
-                UIConfigPage(),
-                ProtectionsConfigPage(),
-                AFKConfigPage(),
-                SharingConfigPage(),
+                AccountConfigPage(x: x),
+                const SelfbotConfigPage(),
+                const NotificationsConfigPage(),
+                const SnipersConfigPage(),
+                const WebhooksConfigPage(),
+                const EventsConfigPage(),
+                const UIConfigPage(),
+                const ProtectionsConfigPage(),
+                const AFKConfigPage(),
+                const SharingConfigPage(),
               ],
             ),
           ),
