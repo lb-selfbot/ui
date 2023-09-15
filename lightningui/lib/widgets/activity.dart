@@ -23,10 +23,6 @@ class _ActivityState extends State<Activity> {
     } else {
       return config["Activity"]["Details"];
     }
-
-    // else {
-    //   return config["Activity"]["Name"];
-    // }
   }
 
   void onConfigChange() {
@@ -78,7 +74,7 @@ class _ActivityState extends State<Activity> {
 
     final activity = config["Activity"];
 
-    final time = activity["ActivityType"] == "RPC" && activity["Time"];
+    final time = activity["Time"];
 
     return Row(
       children: [
@@ -103,10 +99,6 @@ class _ActivityState extends State<Activity> {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             ...getActivityText(activity),
-            // if (config["Activity"]["Details"] != "")
-            //   Text(config["Activity"]["Details"]),
-            // if (config["Activity"]["State"] != "")
-            //   Text(config["Activity"]["State"]),
             time ? const Text("00:00 elapsed") : Container(),
           ],
         ),

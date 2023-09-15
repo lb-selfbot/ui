@@ -221,18 +221,17 @@ class _ActivityPageState extends State<ActivityPage> {
           },
           'info': 'If enabled, you can send fake game invites to other people.',
         },
-      if (isRPC)
-        {
-          'name': 'Time',
-          'type': 'switch',
-          'jsonQuery': '/Activity/Time',
-          'set': (Map<String, dynamic> config, bool value) {
-            config['Activity']['Time'] = value;
-            return config;
-          },
-          'info':
-              'If enabled, your Rich Presence will show how much time has elapsed.',
+      {
+        'name': 'Time',
+        'type': 'switch',
+        'jsonQuery': '/Activity/Time',
+        'set': (Map<String, dynamic> config, bool value) {
+          config['Activity']['Time'] = value;
+          return config;
         },
+        'info':
+            'If enabled, your Rich Presence will show how much time has elapsed.',
+      },
       {
         'name': 'Button 1 Label',
         'type': 'text',
