@@ -46,6 +46,7 @@ class _ActivityPageState extends State<ActivityPage> {
 
     final isRPC = config['Activity']['ActivityType'] == 'RPC';
     final isCustom = config['Activity']['ActivityType'] == 'CustomActivity';
+    final isStreaming = config['Activity']['Type'] == 'Streaming';
 
     return [
       {
@@ -232,6 +233,17 @@ class _ActivityPageState extends State<ActivityPage> {
         'info':
             'If enabled, your Rich Presence will show how much time has elapsed.',
       },
+      if (isStreaming)
+        {
+          'name': 'Streaming URL',
+          'type': 'url',
+          'jsonQuery': '/Activity/StreamingURL',
+          'set': (Map<String, dynamic> config, String value) {
+            config['Activity']['StreamingURL'] = value;
+            return config;
+          },
+          'info': 'The URL for the streaming activity.',
+        },
       {
         'name': 'Button 1 Label',
         'type': 'text',

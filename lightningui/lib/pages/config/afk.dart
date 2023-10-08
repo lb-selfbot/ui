@@ -89,6 +89,26 @@ class AFKConfigPage extends StatelessWidget {
           'If enabled, Discord will display that you are typing for as long as the delay before sending the AFK message.',
     },
     {
+      'name': 'Use AI',
+      'type': 'switch',
+      'jsonQuery': '/AFK/AI',
+      'set': (Map<String, dynamic> config, bool value) {
+        config['AFK']['AI'] = value;
+        return config;
+      },
+      'info': 'If enabled, the AFK message will be generated using AI. The message configuration will be used as an instruction for the AI model.',
+    },
+    {
+      'name': 'Message',
+      'type': 'text',
+      'jsonQuery': '/AFK/Message',
+      'set': (Map<String, dynamic> config, String value) {
+        config['AFK']['Message'] = value;
+        return config;
+      },
+      'info': 'The message to be sent when a message triggers the AFK bot.',
+    },
+    {
       'name': 'Trigger List',
       'type': 'trigger_list_dialog',
       'jsonQuery': '/AFK/TriggerList',
@@ -101,16 +121,6 @@ class AFKConfigPage extends StatelessWidget {
           'You can choose between the types whitelist, blacklist, and global. In whitelist mode, you can select users or '
           'servers where the AFK message will be sent. In blacklist mode, you can select users or servers where the AFK '
           'message will not be sent. In global mode, the AFK message will be sent for any DM or ping.',
-    },
-    {
-      'name': 'Message',
-      'type': 'text',
-      'jsonQuery': '/AFK/Message',
-      'set': (Map<String, dynamic> config, String value) {
-        config['AFK']['Message'] = value;
-        return config;
-      },
-      'info': 'The message to be sent when a message triggers the AFK bot.',
     },
   ];
 

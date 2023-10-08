@@ -11,7 +11,8 @@
     "OnDM": true,
     "OnPing": true,
     "Reply": true,
-    "Typing": true
+    "Typing": true,
+    "AI": true
   },
   "Account": {
     "Discord": {
@@ -61,6 +62,7 @@
     "Details": "",
     "Invitable": false,
     "Time": true,
+    "StreamingURL": "https://twitch.tv/yourusername",
     "LargeImage": "mp:external/ohNK0T0rUHTB2LD4m7s0SIJXgVARXBrlAFOj6aun1mY/https/lightning-bot.com/logo.png",
     "LargeImageText": "",
     "SmallImage": "",
