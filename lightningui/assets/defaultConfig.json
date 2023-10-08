@@ -12,7 +12,7 @@
     "OnPing": true,
     "Reply": true,
     "Typing": true,
-    "AI": true
+    "AI": false
   },
   "Account": {
     "Discord": {
