@@ -89,6 +89,7 @@ class Paths {
       path.join(mainFolder, "Backups"),
       path.join(mainFolder, "SlashCommands"),
       path.join(mainFolder, "Downloads"),
+      path.join(mainFolder, "Extensions"),
       path.join(mainFolder, "Executables"),
       path.join(mainFolder, "Executables", "windows"),
       path.join(mainFolder, "Executables", "windows", "amd64"),
