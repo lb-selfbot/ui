@@ -106,48 +106,6 @@ class _TriggerListDialogState extends State<TriggerListDialog> {
     triggerList = widget.triggerList;
   }
 
-  Widget buildTextListItem(dynamic text) {
-    return Chip(
-      label: Text(text.toString()),
-      backgroundColor: Colors.grey[700],
-      deleteIcon: const Icon(Icons.close),
-      onDeleted: () {
-        setState(() {
-          // triggerList.remove(text);
-          // getIt<ConfigService>().config = widget.setConfig(
-          //   getIt<ConfigService>().config,
-          //   selectedTexts,
-          // );
-        });
-      },
-    );
-  }
-
-  List<Widget> textListItems() {
-    return [];
-    // return selectedTexts.map(buildTextListItem).toList();
-  }
-
-  Widget addTextButton(BuildContext contect, TextEditingController controller) {
-    return IconButton(
-      icon: Icon(
-        Icons.add,
-        color: Theme.of(context).colorScheme.primary,
-      ),
-      splashRadius: 20,
-      onPressed: () {
-        if (controller.text == '') return;
-
-        setState(() {
-          // selectedTexts.add(controller.text);
-          // getIt<ConfigService>().config =
-          //     widget.setConfig(getIt<ConfigService>().config, selectedTexts);
-        });
-        controller.clear();
-      },
-    );
-  }
-
   List<Widget> getDialogContent() {
     List<Widget> typeConfig = [
       SizedBox(
@@ -174,7 +132,10 @@ class _TriggerListDialogState extends State<TriggerListDialog> {
           onChanged: (newType) {
             setState(() {
               triggerList['Type'] = newType;
-              widget.setConfig(getIt<ConfigService>().config, triggerList);
+              getIt<ConfigService>().config = widget.setConfig(
+                getIt<ConfigService>().config,
+                triggerList,
+              );
             });
           },
         ),
