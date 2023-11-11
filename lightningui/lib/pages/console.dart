@@ -255,7 +255,9 @@ class _ConsolePageState extends State<ConsolePage> {
     if (!consoleCached || firstBuild) {
       // Scroll all the way down
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        controller.jumpTo(controller.position.maxScrollExtent);
+        if (controller.hasClients) {
+          controller.jumpTo(controller.position.maxScrollExtent);
+        }
       });
       firstBuild = false;
     }
