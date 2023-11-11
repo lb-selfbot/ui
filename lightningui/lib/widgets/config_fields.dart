@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lightningui/utils.dart';
-import 'package:lightningui/widgets/dialogs/qr_login_dialog.dart';
+import 'package:lightningui/widgets/dialogs/login_dialog.dart';
 import 'package:searchfield/searchfield.dart';
 
 class InfoIconButton extends StatelessWidget {
@@ -31,21 +31,21 @@ class InfoIconButton extends StatelessWidget {
   }
 }
 
-class QRLoginIconButton extends StatelessWidget {
-  const QRLoginIconButton({Key? key}) : super(key: key);
+class LoginIconButton extends StatelessWidget {
+  const LoginIconButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
       icon: Icon(
-        Icons.qr_code,
+        Icons.login,
         color: Theme.of(context).colorScheme.primary,
       ),
       splashRadius: 20,
       onPressed: () {
         showDialog(
           context: context,
-          builder: (context) => const QRLoginDialog(),
+          builder: (context) => const LoginDialog(),
         );
       },
     );
@@ -113,7 +113,7 @@ class TokenConfigCol extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const QRLoginIconButton(),
+            const LoginIconButton(),
             InfoIconButton(info: info),
           ],
         ),

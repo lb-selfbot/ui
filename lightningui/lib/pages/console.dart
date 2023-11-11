@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lightningui/paths.dart';
-import 'package:lightningui/widgets/dialogs/qr_login_dialog.dart';
+import 'package:lightningui/widgets/dialogs/login_dialog.dart';
 
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -22,6 +22,10 @@ class Console extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final font = GoogleFonts.robotoMono();
+
+    if (IPC.consoleIsRaw) {
+      return Text(IPC.consoleString, style: font);
+    }
 
     return Html(
       data: "<pre>$consoleText</pre>",
@@ -137,14 +141,14 @@ class _ConsolePageState extends State<ConsolePage> {
         "You haven't set your Discord token yet! Please set it in the config page before launching LightningBot.",
         actions: [
           TextButton(
-            child: const Text('Login with QR code'),
+            child: const Text('Login'),
             onPressed: () {
               Navigator.of(context, rootNavigator: true).pop();
 
               Future.delayed(const Duration(milliseconds: 500), () {
                 showDialog(
                   context: context,
-                  builder: (context) => const QRLoginDialog(),
+                  builder: (context) => const LoginDialog(),
                 );
               });
             },

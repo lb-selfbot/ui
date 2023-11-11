@@ -32,6 +32,8 @@ class IPC {
 
   static String consoleString = defaultConsoleString;
 
+  static bool consoleIsRaw = false;
+
   static Map<String, Function()> onChangeListeners = {};
   static Map<String, Function()> onConfigChangeListeners = {};
 
@@ -80,6 +82,7 @@ class IPC {
   }
 
   static void onDisconnect() {
+    consoleIsRaw = false;
     consoleString = defaultConsoleString;
   }
 
@@ -119,14 +122,17 @@ class IPC {
         break;
       case OP.consoleAppend:
         consoleString += '${data['text']}';
+        consoleIsRaw = data['is_raw'] ?? false;
         callListeners(onChangeListeners);
         break;
       case OP.consoleClear:
         consoleString = '';
+        consoleIsRaw = true;
         callListeners(onChangeListeners);
         break;
       case OP.consoleSet:
         consoleString = data['text'];
+        consoleIsRaw = data['is_raw'] ?? false;
         callListeners(onChangeListeners);
         break;
       case OP.configUpdate:
