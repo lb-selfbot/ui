@@ -54,7 +54,7 @@ class AFKConfigPage extends StatelessWidget {
         return config;
       },
       'info':
-          'If enabled, the AFK message will be only be sent if your computer has not been used for the specified timeout.',
+          'If enabled, the AFK message will be only be sent if you haven\'t been active on Discord.',
     },
     {
       'name': 'Inactive Timeout',
@@ -64,7 +64,7 @@ class AFKConfigPage extends StatelessWidget {
         config['AFK']['InactiveTimeout'] = value;
         return config;
       },
-      'info': 'Delay before considering your computer inactive in seconds.',
+      'info': 'Delay before being considered inactive in seconds.',
     },
     {
       'name': 'Reply To Message',
