@@ -16,6 +16,31 @@ class AFKConfigPage extends StatelessWidget {
       'info': 'Turn AFK on or off.',
     },
     {
+      'name': 'Trigger List',
+      'type': 'trigger_list_dialog',
+      'jsonQuery': '/AFK/TriggerList',
+      'set': (Map<String, dynamic> config, Map<String, dynamic> value) {
+        config['AFK']['TriggerList'] = value;
+        return config;
+      },
+      'info': 'The trigger list will be used to check if the AFK message should be sent. If any of the triggers are found, '
+          'the AFK message will be sent. If the trigger list is empty, the AFK message will be sent for any DM or ping. '
+          'You can choose between the types whitelist, blacklist, and global. In whitelist mode, you can select users or '
+          'servers where the AFK message will be sent. In blacklist mode, you can select users or servers where the AFK '
+          'message will not be sent. In global mode, the AFK message will be sent for any DM or ping.',
+    },
+    {
+      'name': 'Random Delay',
+      'type': 'switch',
+      'jsonQuery': '/AFK/RandomDelay',
+      'set': (Map<String, dynamic> config, bool value) {
+        config['AFK']['RandomDelay'] = value;
+        return config;
+      },
+      'info':
+          'If enabled, the delay before sending the AFK message will be random with the given delay as the maximum.',
+    },
+    {
       'name': 'Delay',
       'type': 'number',
       'jsonQuery': '/AFK/Delay',
@@ -24,26 +49,6 @@ class AFKConfigPage extends StatelessWidget {
         return config;
       },
       'info': 'Delay before sending the AFK message in seconds.',
-    },
-    {
-      'name': 'On DM',
-      'type': 'switch',
-      'jsonQuery': '/AFK/OnDM',
-      'set': (Map<String, dynamic> config, bool value) {
-        config['AFK']['OnDM'] = value;
-        return config;
-      },
-      'info': 'If enabled, the AFK message will be sent when you get a DM.',
-    },
-    {
-      'name': 'On Ping',
-      'type': 'switch',
-      'jsonQuery': '/AFK/OnPing',
-      'set': (Map<String, dynamic> config, bool value) {
-        config['AFK']['OnPing'] = value;
-        return config;
-      },
-      'info': 'If enabled, the AFK message will be sent when you get pinged.',
     },
     {
       'name': 'Must Be Inactive',
@@ -65,6 +70,26 @@ class AFKConfigPage extends StatelessWidget {
         return config;
       },
       'info': 'Delay before being considered inactive in seconds.',
+    },
+    {
+      'name': 'On DM',
+      'type': 'switch',
+      'jsonQuery': '/AFK/OnDM',
+      'set': (Map<String, dynamic> config, bool value) {
+        config['AFK']['OnDM'] = value;
+        return config;
+      },
+      'info': 'If enabled, the AFK message will be sent when you get a DM.',
+    },
+    {
+      'name': 'On Ping',
+      'type': 'switch',
+      'jsonQuery': '/AFK/OnPing',
+      'set': (Map<String, dynamic> config, bool value) {
+        config['AFK']['OnPing'] = value;
+        return config;
+      },
+      'info': 'If enabled, the AFK message will be sent when you get pinged.',
     },
     {
       'name': 'Reply To Message',
@@ -89,16 +114,6 @@ class AFKConfigPage extends StatelessWidget {
           'If enabled, Discord will display that you are typing for as long as the delay before sending the AFK message.',
     },
     {
-      'name': 'Use AI',
-      'type': 'switch',
-      'jsonQuery': '/AFK/AI',
-      'set': (Map<String, dynamic> config, bool value) {
-        config['AFK']['AI'] = value;
-        return config;
-      },
-      'info': 'If enabled, the AFK message will be generated using AI. The message configuration will be used as an instruction for the AI model.',
-    },
-    {
       'name': 'Message',
       'type': 'text',
       'jsonQuery': '/AFK/Message',
@@ -109,18 +124,15 @@ class AFKConfigPage extends StatelessWidget {
       'info': 'The message to be sent when a message triggers the AFK bot.',
     },
     {
-      'name': 'Trigger List',
-      'type': 'trigger_list_dialog',
-      'jsonQuery': '/AFK/TriggerList',
-      'set': (Map<String, dynamic> config, Map<String, dynamic> value) {
-        config['AFK']['TriggerList'] = value;
+      'name': 'Use AI',
+      'type': 'switch',
+      'jsonQuery': '/AFK/AI',
+      'set': (Map<String, dynamic> config, bool value) {
+        config['AFK']['AI'] = value;
         return config;
       },
-      'info': 'The trigger list will be used to check if the AFK message should be sent. If any of the triggers are found, '
-          'the AFK message will be sent. If the trigger list is empty, the AFK message will be sent for any DM or ping. '
-          'You can choose between the types whitelist, blacklist, and global. In whitelist mode, you can select users or '
-          'servers where the AFK message will be sent. In blacklist mode, you can select users or servers where the AFK '
-          'message will not be sent. In global mode, the AFK message will be sent for any DM or ping.',
+      'info':
+          'If enabled, the AFK message will be generated using AI. The message configuration will be used as an instruction for the AI model.',
     },
   ];
 

@@ -1,6 +1,7 @@
 {
   "AFK": {
     "Delay": 10,
+    "RandomDelay": false,
     "Enabled": false,
     "TriggerList": {
       "Type": "Whitelist",
