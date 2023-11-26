@@ -119,5 +119,7 @@
     "SelfbotDetection": "",
     "StaffDetection": "",
     "Sessions": ""
-  }
+  },
+  "SlashCommandJobs": [],
+  "EventReactions": []
 }
