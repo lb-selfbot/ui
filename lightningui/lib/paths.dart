@@ -87,7 +87,6 @@ class Paths {
       path.join(mainFolder, "Animations"),
       path.join(mainFolder, "Dumping"),
       path.join(mainFolder, "Backups"),
-      path.join(mainFolder, "SlashCommands"),
       path.join(mainFolder, "Downloads"),
       path.join(mainFolder, "Extensions"),
       path.join(mainFolder, "Executables"),
