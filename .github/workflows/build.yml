@@ -167,6 +167,7 @@ jobs:
 
       - name: Create DMG
         run: |
+          python3 -m pip install setuptools
           npm install -g appdmg
 
           npx appdmg ${{ github.workspace }}/installer/dmg/config.json  ${{ github.workspace }}/executables/macos/ui.dmg
