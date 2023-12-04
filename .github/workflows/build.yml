@@ -79,38 +79,38 @@ jobs:
 
           mv "$deb_file" ${{ github.workspace }}/executables/linux/amd64/ui.deb
 
-      - name: Build for Linux (arm64)
-        uses: pguyot/arm-runner-action@HEAD
-        with:
-          base_image: raspios_lite_arm64:latest
-          cpu: cortex-a53
-          bind_mount_repository: true
-          image_additional_mb: 2000
-          commands: |
-            # Install dependencies
-            sudo apt-get update -y
-            sudo apt-get install -y cmake ninja-build clang libgtk-3-dev git curl unzip
-            sudo apt-get install -y libayatana-appindicator3-dev
+      # - name: Build for Linux (arm64)
+      #   uses: pguyot/arm-runner-action@HEAD
+      #   with:
+      #     base_image: raspios_lite_arm64:latest
+      #     cpu: cortex-a53
+      #     bind_mount_repository: true
+      #     image_additional_mb: 2000
+      #     commands: |
+      #       # Install dependencies
+      #       sudo apt-get update -y
+      #       sudo apt-get install -y cmake ninja-build clang libgtk-3-dev git curl unzip
+      #       sudo apt-get install -y libayatana-appindicator3-dev
 
-            cd $HOME
-            git clone https://github.com/flutter/flutter.git -b stable
-            sudo ln -s /home/pi/flutter/bin/flutter /usr/bin/
+      #       cd $HOME
+      #       git clone https://github.com/flutter/flutter.git -b stable
+      #       sudo ln -s /home/pi/flutter/bin/flutter /usr/bin/
 
-            dart pub global activate https://github.com/jeffrey0606/flutter_to_debian.git --source git
+      #       dart pub global activate https://github.com/jeffrey0606/flutter_to_debian.git --source git
 
-            export PATH="$PATH":"$PUB_CACHE/.pub-cache/bin"
+      #       export PATH="$PATH":"$PUB_CACHE/.pub-cache/bin"
 
-            cd /LB-UI/lightningui
+      #       cd /LB-UI/lightningui
 
-            flutter pub get
-            flutter config --enable-linux-desktop
-            flutter build linux --release --target-platform=linux-arm64
+      #       flutter pub get
+      #       flutter config --enable-linux-desktop
+      #       flutter build linux --release --target-platform=linux-arm64
 
-            flutter_to_debian
+      #       flutter_to_debian
 
-            deb_file=$(find /LB-UI/lightningui -type f -name "*.deb")
+      #       deb_file=$(find /LB-UI/lightningui -type f -name "*.deb")
 
-            mv "$deb_file" /LB-UI/executables/linux/arm64/ui.deb
+      #       mv "$deb_file" /LB-UI/executables/linux/arm64/ui.deb
 
       - name: Upload builds
         uses: actions/upload-artifact@v3.1.0
