@@ -26,7 +26,7 @@ jobs:
         run: |
           Copy-Item -Force -Recurse -Verbose .\installer\* -Destination .\lightningui\build\windows\runner\Release
           cd lightningui\build\windows\runner\Release
-          makensis -V2 lightningui/build/windows/runner/Release/installer.nsi
+          makensis -V2 installer.nsi
 
       - name: Create folder structure
         run: |
