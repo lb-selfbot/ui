@@ -24,8 +24,8 @@ jobs:
 
       - name: Package into installer
         run: |
-          Copy-Item -Force -Recurse -Verbose .\installer\* -Destination .\lightningui\build\windows\runner\Release
-          cd lightningui\build\windows\runner\Release
+          Copy-Item -Force -Recurse -Verbose .\installer\* -Destination .\lightningui\build\windows\x64\runner\Release
+          cd lightningui\build\windows\x64\runner\Release
           makensis -V2 installer.nsi
 
       - name: Create folder structure
@@ -35,8 +35,8 @@ jobs:
           mkdir -Path ${{ github.workspace }}/executables/windows/386
           mkdir -Path ${{ github.workspace }}/executables/windows/amd64
 
-          cp -Path ${{ github.workspace }}/lightningui/build/windows/runner/Release/ui.exe -Destination ${{ github.workspace }}/executables/windows/386
-          cp -Path ${{ github.workspace }}/lightningui/build/windows/runner/Release/ui.exe -Destination ${{ github.workspace }}/executables/windows/amd64
+          cp -Path ${{ github.workspace }}/lightningui/build/windows/x64/runner/Release/ui.exe -Destination ${{ github.workspace }}/executables/windows/386
+          cp -Path ${{ github.workspace }}/lightningui/build/windows/x64/runner/Release/ui.exe -Destination ${{ github.workspace }}/executables/windows/amd64
 
       - name: Upload builds
         uses: actions/upload-artifact@v3.1.0
