@@ -4,6 +4,7 @@ import 'package:lightningui/main.dart';
 import 'package:lightningui/utils.dart';
 import 'package:lightningui/widgets/dialogs/category_selection.dart';
 import 'package:lightningui/widgets/dialogs/command_selection.dart';
+import 'package:lightningui/widgets/dialogs/poketwo_sniper.dart';
 import 'package:lightningui/widgets/dialogs/server_protections.dart';
 import 'package:lightningui/widgets/dialogs/server_selection.dart';
 import 'package:lightningui/widgets/dialogs/text_selection.dart';
@@ -52,9 +53,10 @@ class ConfigEditor extends StatelessWidget {
           name: field['name'] as String,
           info: field['info'] as String,
           defaultValue: Utils.getJsonElement(
-            field['jsonQuery'],
-            getIt<ConfigService>().config,
-          ) ?? '',
+                field['jsonQuery'],
+                getIt<ConfigService>().config,
+              ) ??
+              '',
           obscure: field['obscure'] != null,
           onChanged: (value) {
             if (field["set"] != null) {
@@ -71,9 +73,10 @@ class ConfigEditor extends StatelessWidget {
           name: field['name'] as String,
           info: field['info'] as String,
           defaultValue: Utils.getJsonElement(
-            field['jsonQuery'],
-            getIt<ConfigService>().config,
-          ) ?? '',
+                field['jsonQuery'],
+                getIt<ConfigService>().config,
+              ) ??
+              '',
           obscure: field['obscure'] != null,
           onChanged: (value) {
             if (field["set"] != null) {
@@ -90,9 +93,10 @@ class ConfigEditor extends StatelessWidget {
           name: field['name'] as String,
           info: field['info'] as String,
           defaultValue: Utils.getJsonElement(
-            field['jsonQuery'],
-            getIt<ConfigService>().config,
-          ) ?? '',
+                field['jsonQuery'],
+                getIt<ConfigService>().config,
+              ) ??
+              '',
           options: field['options'] as List<String>,
           onChanged: (value) {
             if (field["set"] != null) {
@@ -109,9 +113,10 @@ class ConfigEditor extends StatelessWidget {
           name: field['name'] as String,
           info: field['info'] as String,
           defaultValue: Utils.getJsonElement(
-            field['jsonQuery'],
-            getIt<ConfigService>().config,
-          ) ?? false,
+                field['jsonQuery'],
+                getIt<ConfigService>().config,
+              ) ??
+              false,
           onChanged: (value) {
             if (field["set"] != null) {
               getIt<ConfigService>().config = field["set"](
@@ -128,9 +133,10 @@ class ConfigEditor extends StatelessWidget {
           info: field['info'] as String,
           options: field['options'] as List<Map<String, dynamic>>,
           defaultValue: Utils.getJsonElement(
-            field['jsonQuery'],
-            getIt<ConfigService>().config,
-          ) ?? field['options'][0]['value'],
+                field['jsonQuery'],
+                getIt<ConfigService>().config,
+              ) ??
+              field['options'][0]['value'],
           onChanged: (value) {
             if (field["set"] != null) {
               getIt<ConfigService>().config = field["set"](
@@ -285,6 +291,24 @@ class ConfigEditor extends StatelessWidget {
             Map<String, dynamic>,
           ),
         );
+        break;
+      case 'poketwo_sniper_dialog':
+        final poketwoSniper = Utils.getJsonElement(
+          field['jsonQuery'] as String,
+          getIt<ConfigService>().config,
+        );
+        
+        widget = PoketwoSniperConfig(
+          poketwoSniper: poketwoSniper,
+          jsonQuery: field['jsonQuery'] as String,
+          name: field['name'] as String,
+          info: field['info'] as String,
+          setConfig: field['set'] as Map<String, dynamic> Function(
+            Map<String, dynamic>,
+            dynamic,
+          ),
+        );
+        break;
     }
     return ResponsiveGridCol(
       xs: 12,

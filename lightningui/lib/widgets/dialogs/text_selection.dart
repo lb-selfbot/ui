@@ -166,7 +166,7 @@ class _TextSelectionDialogState extends State<TextSelectionDialog> {
               ),
             ),
             const SizedBox(height: 10),
-            Wrap(children: textListItems()),
+            Wrap(spacing: 5, runSpacing: 5, children: textListItems()),
             const Divider(height: 30),
             Text(
               "Add Entry",

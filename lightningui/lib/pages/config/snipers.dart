@@ -103,7 +103,18 @@ class SnipersConfigPage extends StatelessWidget {
         return config;
       },
       'info':
-          'Enable or disable the privnote sniper.\n\nThe Privnote sniper will try to open every privnote message that is sent in servers so you can read the contents of the message.',
+          'Enable or disable the Privnote sniper.\n\nThe Privnote sniper will try to open every privnote message that is sent in servers so you can read the contents of the message.',
+    },
+    {
+      'name': 'PokéTwo Sniper',
+      'type': 'poketwo_sniper_dialog',
+      'jsonQuery': '/Snipers/PokeTwoSniper',
+      'info':
+          'Enable or disable the PokéTwo sniper.\n\nThe PokéTwo sniper will try to catch Pokémon using AI detection that spawns in the channels you specify.',
+      'set': (Map<String, dynamic> config, dynamic value) {
+        config['Snipers']['PokeTwoSniper'] = value;
+        return config;
+      },
     },
   ];
 

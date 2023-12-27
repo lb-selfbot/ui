@@ -69,6 +69,7 @@ class _ConfigPageState extends State<ConfigPage> {
             ),
             child: TabBar(
               isScrollable: true,
+              tabAlignment: TabAlignment.start,
               splashBorderRadius: BorderRadius.circular(12),
               indicatorSize: TabBarIndicatorSize.label,
               indicatorColor: Theme.of(context).colorScheme.primary,

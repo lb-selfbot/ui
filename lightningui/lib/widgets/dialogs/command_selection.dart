@@ -170,7 +170,7 @@ class _CommandSelectionDialogState extends State<CommandSelectionDialog> {
               ),
             ),
             const SizedBox(height: 10),
-            Wrap(children: commandListItems()),
+            Wrap(spacing: 5, runSpacing: 5, children: commandListItems()),
             const Divider(height: 30),
             Text(
               "Add Command",

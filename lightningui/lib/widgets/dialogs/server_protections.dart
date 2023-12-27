@@ -295,7 +295,7 @@ class _ServerProtectionsDialogState extends State<ServerProtectionsDialog> {
               ),
             ),
             const SizedBox(height: 10),
-            Wrap(children: serverListItems()),
+            Wrap(spacing: 5, runSpacing: 5, children: serverListItems()),
             const Divider(height: 30),
             Text(
               "Add Server",

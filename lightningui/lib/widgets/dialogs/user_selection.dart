@@ -166,7 +166,7 @@ class _UserSelectionDialogState extends State<UserSelectionDialog> {
               ),
             ),
             const SizedBox(height: 10),
-            Wrap(children: userListItems()),
+            Wrap(spacing: 5, runSpacing: 5, children: userListItems()),
             const Divider(height: 30),
             Text(
               "Add User",

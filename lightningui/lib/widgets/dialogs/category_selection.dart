@@ -175,7 +175,7 @@ class _CategorySelectionDialogState extends State<CategorySelectionDialog> {
               ),
             ),
             const SizedBox(height: 10),
-            Wrap(children: categoryListItems()),
+            Wrap(spacing: 5, runSpacing: 5, children: categoryListItems()),
             const Divider(height: 30),
             Text(
               "Add Category",
