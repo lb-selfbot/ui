@@ -5,7 +5,7 @@ flutter_app:
 
 control:
   Package: LightningBot
-  Version: 4.6.0
+  Version: 4.9.0
   Architecture: amd64
   Essential: no
   Priority: optional
