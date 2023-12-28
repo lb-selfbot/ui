@@ -53,6 +53,13 @@ class SelfbotConfigPage extends StatelessWidget {
               'The bot will respond to commands with a webhook embed if possible.',
           'icon': 'link',
         },
+        {
+          'label': 'URL Embed',
+          'value': 'URLEmbed',
+          'info':
+              'The bot will respond to commands with a URL embed.',
+          'icon': 'link',
+        },
       ],
     },
     {
