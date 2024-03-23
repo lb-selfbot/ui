@@ -112,7 +112,8 @@
       "Typing": true,
       "FakeActivity": true,
       "CatchRate": 100,
-      "Channels": []
+      "Channels": [],
+      "CatchLanguage": "English"
     }
   },
   "UI": {

@@ -138,10 +138,10 @@ class _PoketwoSniperDialogState extends State<PoketwoSniperDialog> {
             info: 'Turn the PokéTwo sniper on or off.',
             defaultValue: poketwoSniper["Enabled"] ?? false,
             onChanged: (value) {
-                poketwoSniper["Enabled"] = value;
+              poketwoSniper["Enabled"] = value;
 
-                getIt<ConfigService>().config = widget.setConfig(
-                    getIt<ConfigService>().config, poketwoSniper);
+              getIt<ConfigService>().config = widget.setConfig(
+                  getIt<ConfigService>().config, poketwoSniper);
             },
           ),
         ),
@@ -154,11 +154,11 @@ class _PoketwoSniperDialogState extends State<PoketwoSniperDialog> {
             defaultValue: (poketwoSniper["Timeout"] ?? 0).toString(),
             numeric: true,
             onChanged: (value) {
-                poketwoSniper["Timeout"] =
-                    int.tryParse(value.isNotEmpty ? value : '0') ?? 0;
+              poketwoSniper["Timeout"] =
+                  int.tryParse(value.isNotEmpty ? value : '0') ?? 0;
 
-                getIt<ConfigService>().config = widget.setConfig(
-                    getIt<ConfigService>().config, poketwoSniper);
+              getIt<ConfigService>().config = widget.setConfig(
+                  getIt<ConfigService>().config, poketwoSniper);
             },
           ),
         ),
@@ -179,11 +179,11 @@ class _PoketwoSniperDialogState extends State<PoketwoSniperDialog> {
             defaultValue: (poketwoSniper["Sleep"] ?? 0).toString(),
             numeric: true,
             onChanged: (value) {
-                poketwoSniper["Sleep"] =
-                    int.tryParse(value.isNotEmpty ? value : '0') ?? 0;
+              poketwoSniper["Sleep"] =
+                  int.tryParse(value.isNotEmpty ? value : '0') ?? 0;
 
-                getIt<ConfigService>().config = widget.setConfig(
-                    getIt<ConfigService>().config, poketwoSniper);
+              getIt<ConfigService>().config = widget.setConfig(
+                  getIt<ConfigService>().config, poketwoSniper);
             },
           ),
         ),
@@ -195,10 +195,10 @@ class _PoketwoSniperDialogState extends State<PoketwoSniperDialog> {
                 'If enabled, the time before catching a Pokémon will be randomized with the maximum sleep time being the value of the sleep field.',
             defaultValue: poketwoSniper["RandomSleep"] ?? false,
             onChanged: (value) {
-                poketwoSniper["RandomSleep"] = value;
+              poketwoSniper["RandomSleep"] = value;
 
-                getIt<ConfigService>().config = widget.setConfig(
-                    getIt<ConfigService>().config, poketwoSniper);
+              getIt<ConfigService>().config = widget.setConfig(
+                  getIt<ConfigService>().config, poketwoSniper);
             },
           ),
         ),
@@ -218,10 +218,10 @@ class _PoketwoSniperDialogState extends State<PoketwoSniperDialog> {
                 'If enabled, the you will be shown as typing before catching a Pokémon.',
             defaultValue: poketwoSniper["Typing"] ?? false,
             onChanged: (value) {
-                poketwoSniper["Typing"] = value;
+              poketwoSniper["Typing"] = value;
 
-                getIt<ConfigService>().config = widget.setConfig(
-                    getIt<ConfigService>().config, poketwoSniper);
+              getIt<ConfigService>().config = widget.setConfig(
+                  getIt<ConfigService>().config, poketwoSniper);
             },
           ),
         ),
@@ -233,10 +233,10 @@ class _PoketwoSniperDialogState extends State<PoketwoSniperDialog> {
                 'If enabled, the sniper will occasionally send random PokéTwo commands in the catching channels',
             defaultValue: poketwoSniper["FakeActivity"] ?? false,
             onChanged: (value) {
-                poketwoSniper["FakeActivity"] = value;
+              poketwoSniper["FakeActivity"] = value;
 
-                getIt<ConfigService>().config = widget.setConfig(
-                    getIt<ConfigService>().config, poketwoSniper);
+              getIt<ConfigService>().config = widget.setConfig(
+                  getIt<ConfigService>().config, poketwoSniper);
             },
           ),
         ),
@@ -297,6 +297,38 @@ class _PoketwoSniperDialogState extends State<PoketwoSniperDialog> {
     );
   }
 
+  Widget buildSwitchesRow5() {
+    return SizedBox(
+      width: 575,
+      height: 70,
+      child: Row(children: [
+        Expanded(
+          child: DropdownConfigCol(
+            name: 'Catch Language',
+            info: "The language to use when catching Pokémon.",
+            options: const [
+              {'label': 'English', 'value': 'English'},
+              {'label': 'Japanese', 'value': 'Japanese'},
+              {
+                'label': 'Japanese (transliterated)',
+                'value': 'JapaneseTransliterated'
+              },
+              {'label': 'German', 'value': 'German'},
+              {'label': 'French', 'value': 'French'},
+            ],
+            defaultValue: poketwoSniper["CatchLanguage"] ?? 'English',
+            onChanged: (value) {
+              poketwoSniper["CatchLanguage"] = value;
+
+              getIt<ConfigService>().config = widget.setConfig(
+                  getIt<ConfigService>().config, poketwoSniper);
+            },
+          ),
+        ),
+      ]),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -310,6 +342,7 @@ class _PoketwoSniperDialogState extends State<PoketwoSniperDialog> {
             buildSwitchesRow2(),
             buildSwitchesRow3(),
             buildSwitchesRow4(),
+            buildSwitchesRow5(),
           ],
         ),
       ),
