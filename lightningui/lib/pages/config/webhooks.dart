@@ -94,6 +94,28 @@ class WebhooksConfigPage extends StatelessWidget {
       'info':
           'The webhook URL to send sessions notifications to. Leave blank to disable.\n\nYou can create a webhook by going to Channel Settings > Integrations > Webhooks > Create Webhook.',
     },
+    {
+      'name': 'Ping Self',
+      'type': 'switch',
+      'jsonQuery': '/Webhooks/PingSelf',
+      'set': (Map<String, dynamic> config, bool value) {
+        config['Webhooks']['PingSelf'] = value;
+        return config;
+      },
+      'info':
+          'If enabled, you will be pinged when a webhook notification is sent.',
+    },
+    {
+      'name': 'Ping Everyone',
+      'type': 'switch',
+      'jsonQuery': '/Webhooks/PingEveryone',
+      'set': (Map<String, dynamic> config, bool value) {
+        config['Webhooks']['PingEveryone'] = value;
+        return config;
+      },
+      'info':
+          'If enabled, @everyone will be pinged when a webhook notification is sent.',
+    },
   ];
 
   @override

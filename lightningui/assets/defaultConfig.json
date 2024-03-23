@@ -129,8 +129,11 @@
     "PingDetection": "",
     "SelfbotDetection": "",
     "StaffDetection": "",
-    "Sessions": ""
+    "Sessions": "",
+    "PingSelf": false,
+    "PingEveryone": false
   },
   "SlashCommandJobs": [],
-  "EventReactions": []
+  "EventReactions": [],
+  "Tags": {}
 }
