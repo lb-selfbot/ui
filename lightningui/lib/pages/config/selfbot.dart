@@ -56,8 +56,7 @@ class SelfbotConfigPage extends StatelessWidget {
         {
           'label': 'URL Embed',
           'value': 'URLEmbed',
-          'info':
-              'The bot will respond to commands with a URL embed.',
+          'info': 'The bot will respond to commands with a URL embed.',
           'icon': 'link',
         },
       ],
@@ -158,6 +157,17 @@ class SelfbotConfigPage extends StatelessWidget {
           'icon': 'link',
         },
       ],
+    },
+    {
+      'name': 'Timezone',
+      'type': 'text',
+      'jsonQuery': '/Selfbot/Timezone',
+      'set': (Map<String, dynamic> config, String value) {
+        config['Selfbot']['Timezone'] = value;
+        return config;
+      },
+      'info':
+          'The timezone that the selfbot will use for console logs, custom activity, and other time-related features.\nThis should be a valid timezone name, such as "America/New_York".',
     },
   ];
 
