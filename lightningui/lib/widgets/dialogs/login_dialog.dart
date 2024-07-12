@@ -322,7 +322,7 @@ class LoginChoice extends StatelessWidget {
   final void Function(LoginStatus) setStatus;
 
   final buttonStyle = const ButtonStyle(
-    fixedSize: MaterialStatePropertyAll(Size(300, 40)),
+    fixedSize: WidgetStatePropertyAll(Size(300, 40)),
   );
 
   @override

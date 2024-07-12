@@ -14,17 +14,24 @@ class ActivityPage extends StatefulWidget {
 
 class _ActivityPageState extends State<ActivityPage> {
   String activityType = 'RPC';
+  String subType = 'Playing';
 
   void onConfigChange() {
     if (!mounted) return;
 
-    if (activityType ==
-        getIt<ConfigService>().config['Activity']['ActivityType']) {
+    final configService = getIt<ConfigService>();
+    final config = configService.config;
+
+    final configChanged = config['Activity']['ActivityType'] != activityType ||
+        config['Activity']['Type'] != subType;
+
+    if (!configChanged) {
       return;
     }
 
     setState(() {
-      activityType = getIt<ConfigService>().config['Activity']['ActivityType'];
+      activityType = config['Activity']['ActivityType'];
+      subType = config['Activity']['Type'];
     });
   }
 
@@ -37,8 +44,12 @@ class _ActivityPageState extends State<ActivityPage> {
   @override
   void initState() {
     super.initState();
-    activityType = getIt<ConfigService>().config['Activity']['ActivityType'];
-    getIt<ConfigService>().addListener(onConfigChange);
+    final configService = getIt<ConfigService>();
+
+    activityType = configService.config['Activity']['ActivityType'];
+    subType = configService.config['Activity']['Type'];
+
+    configService.addListener(onConfigChange);
   }
 
   List<Map<String, Object>> getFields() {
@@ -46,6 +57,7 @@ class _ActivityPageState extends State<ActivityPage> {
 
     final isRPC = config['Activity']['ActivityType'] == 'RPC';
     final isCustom = config['Activity']['ActivityType'] == 'CustomActivity';
+    final isPlaying = config['Activity']['Type'] == 'Playing';
     final isStreaming = config['Activity']['Type'] == 'Streaming';
 
     return [
@@ -93,7 +105,8 @@ class _ActivityPageState extends State<ActivityPage> {
             config['Activity']['Type'] = value;
             return config;
           },
-          'info': 'Playing, listening, watching, streaming or competing.',
+          'info':
+              'Playing, listening, watching, streaming, competing or listening to Spotify.',
           'options': [
             {
               'label': 'Playing',
@@ -125,6 +138,55 @@ class _ActivityPageState extends State<ActivityPage> {
               'info': 'Competing activity',
               'icon': 'code-braces',
             },
+            {
+              'label': 'Spotify',
+              'value': 'Spotify',
+              'info': 'Spotify activity',
+              'icon': 'code-braces',
+            },
+          ],
+        },
+      if (isCustom && isPlaying)
+        {
+          'name': 'Platform',
+          'type': 'dropdown',
+          'jsonQuery': '/Activity/Platform',
+          'set': (Map<String, dynamic> config, String value) {
+            config['Activity']['Platform'] = value;
+            return config;
+          },
+          'info': 'The platform your activity will be shown as.',
+          'options': [
+            {
+              'label': 'Default',
+              'value': 'Default',
+              'info': 'Default platform.',
+              'icon': 'code-braces',
+            },
+            {
+              'label': 'PlayStation 4',
+              'value': 'PS4',
+              'info': 'PlayStation 4 platform.',
+              'icon': 'code-braces',
+            },
+            {
+              'label': 'PlayStation 5',
+              'value': 'PS5',
+              'info': 'PlayStation 5 platform.',
+              'icon': 'code-braces',
+            },
+            {
+              'label': 'Xbox',
+              'value': 'Xbox',
+              'info': 'Xbox platform.',
+              'icon': 'code-braces',
+            },
+            {
+              'label': 'Samsung',
+              'value': 'Samsung',
+              'info': 'Samsung platform.',
+              'icon': 'code-braces',
+            }
           ],
         },
       if (isRPC)

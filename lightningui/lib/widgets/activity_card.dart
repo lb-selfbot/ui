@@ -52,7 +52,7 @@ class _ActivityCardState extends State<ActivityCard> {
             height: 100,
             width: 100,
             decoration: BoxDecoration(
-              color: theme.colorScheme.background.withAlpha(200),
+              color: theme.colorScheme.surface.withAlpha(200),
               shape: BoxShape.circle,
               border: border,
             ),
@@ -114,12 +114,12 @@ class _ActivityCardState extends State<ActivityCard> {
 
   Widget buildRPCButton(String text) {
     const buttonStyle = ButtonStyle(
-      shape: MaterialStatePropertyAll(
+      shape: WidgetStatePropertyAll(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(5)),
         ),
       ),
-      backgroundColor: MaterialStatePropertyAll(Color(0xFF14558d)),
+      backgroundColor: WidgetStatePropertyAll(Color(0xFF14558d)),
     );
 
     return FractionallySizedBox(
@@ -135,9 +135,37 @@ class _ActivityCardState extends State<ActivityCard> {
   List<Widget> buildRPCButtons() {
     final config = getIt<ConfigService>().config;
 
-    if (config["Activity"]["ActivityType"] == "RPC" &&
-        config["Activity"]["Invitable"]) {
+    final isRPC = config["Activity"]["ActivityType"] == "RPC";
+    final isSpotify = !isRPC && config["Activity"]["Type"] == "Spotify";
+    final isPlaying = !isRPC && config["Activity"]["Type"] == "Playing";
+
+    if (isRPC && config["Activity"]["Invitable"]) {
       return [];
+    }
+
+    if (isSpotify) {
+      return [
+        const SizedBox(height: 10),
+        buildRPCButton("Play on Spotify"),
+      ];
+    }
+
+    if (isPlaying) {
+      switch (config["Activity"]["Platform"]) {
+        case "PS4":
+        case "PS5":
+          return [
+            const SizedBox(height: 10),
+            buildRPCButton("Connect PlayStation Network"),
+          ];
+        case "Xbox":
+          return [
+            const SizedBox(height: 10),
+            buildRPCButton("Connect Xbox"),
+          ];
+        case "Samsung":
+          return [];
+      }
     }
 
     List<Widget> buttons = [];
@@ -170,33 +198,28 @@ class _ActivityCardState extends State<ActivityCard> {
       return "PLAYING A GAME";
     }
 
-    if (config["Activity"]["Type"] == "Playing") {
-      return "PLAYING A GAME";
-    }
-
-    if (config["Activity"]["Type"] == "Listening") {
-      return "LISTENING TO $name";
-    }
-
-    if (config["Activity"]["Type"] == "Watching") {
-      return "WATCHING $name";
-    }
-
-    if (config["Activity"]["Type"] == "Competing") {
-      return "COMPETING IN $name";
-    }
-
-    if (config["Activity"]["Type"] == "Streaming") {
-      return "LIVE ON TWITCH";
-    }
-
-    return "PLAYING A GAME";
+    return switch (config["Activity"]["Type"]) {
+      "Playing" => switch (config["Activity"]["Platform"]) {
+          "Default" => "Playing a game",
+          "PS4" => "Playing on PS4",
+          "PS5" => "Playing on PS5",
+          "Xbox" => "Playing on Xbox",
+          "Samsung" => "Playing on Samsung Galaxy",
+          _ => "Playing a game"
+        },
+      "Listening" => "Listening to $name",
+      "Watching" => "Watching $name",
+      "Competing" => "Competing in $name",
+      "Streaming" => "Live on Twitch",
+      "Spotify" => "Listening to Spotify",
+      _ => "Playing a game",
+    };
   }
 
   Widget buildActivity(dynamic activity) {
     final joinButton = [
       const SizedBox(height: 10),
-      buildRPCButton("Ask to Join")
+      buildRPCButton("Ask to Join"),
     ];
 
     final joinable = activity["ActivityType"] == "RPC" && activity["Invitable"];
@@ -226,7 +249,7 @@ class _ActivityCardState extends State<ActivityCard> {
 
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      color: theme.colorScheme.background,
+      color: theme.colorScheme.surface,
       child: Column(
         children: [
           buildHeader(theme),
@@ -234,8 +257,8 @@ class _ActivityCardState extends State<ActivityCard> {
             child: Card(
               clipBehavior: Clip.antiAliasWithSaveLayer,
               margin: const EdgeInsets.all(12),
-              color: theme.colorScheme.background,
-              surfaceTintColor: theme.colorScheme.background,
+              color: theme.colorScheme.surface,
+              surfaceTintColor: theme.colorScheme.surface,
               child: ListView(
                 shrinkWrap: true,
                 padding: const EdgeInsets.all(10),
