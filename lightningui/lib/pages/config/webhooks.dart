@@ -96,25 +96,53 @@ class WebhooksConfigPage extends StatelessWidget {
     },
     {
       'name': 'Ping Self',
-      'type': 'switch',
-      'jsonQuery': '/Webhooks/PingSelf',
-      'set': (Map<String, dynamic> config, bool value) {
-        config['Webhooks']['PingSelf'] = value;
+      'type': 'dropdown',
+      'jsonQuery': '/Webhooks/PingSelfMode',
+      'set': (Map<String, dynamic> config, String value) {
+        config['Webhooks']['PingSelfMode'] = value;
         return config;
       },
       'info':
-          'If enabled, you will be pinged when a webhook notification is sent.',
+          'On Always mode, you will be pinged when a webhook notification is sent. On Important mode, you will be pinged for important notifications only.',
+      'options': [
+        {
+          'label': 'Disabled',
+          'value': 'Disabled',
+        },
+        {
+          'label': 'Always',
+          'value': 'Always',
+        },
+        {
+          'label': 'Important',
+          'value': 'Important',
+        }
+      ],
     },
     {
       'name': 'Ping Everyone',
-      'type': 'switch',
-      'jsonQuery': '/Webhooks/PingEveryone',
-      'set': (Map<String, dynamic> config, bool value) {
-        config['Webhooks']['PingEveryone'] = value;
+      'type': 'dropdown',
+      'jsonQuery': '/Webhooks/PingEveryoneMode',
+      'set': (Map<String, dynamic> config, String value) {
+        config['Webhooks']['PingEveryoneMode'] = value;
         return config;
       },
       'info':
-          'If enabled, @everyone will be pinged when a webhook notification is sent.',
+          'On Always mode, @everyone will be pinged when a webhook notification is sent. On Important mode, @everyone will be pinged for important notifications only.',
+      'options': [
+        {
+          'label': 'Disabled',
+          'value': 'Disabled',
+        },
+        {
+          'label': 'Always',
+          'value': 'Always',
+        },
+        {
+          'label': 'Important',
+          'value': 'Important',
+        }
+      ],
     },
   ];
 
