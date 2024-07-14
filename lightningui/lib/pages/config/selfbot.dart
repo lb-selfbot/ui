@@ -145,6 +145,12 @@ class SelfbotConfigPage extends StatelessWidget {
           'info': 'The mobile client.',
           'icon': 'link',
         },
+        {
+          'label': 'Console',
+          'value': 'Console',
+          'info': 'The console client.',
+          'icon': 'link',
+        },
       ],
     },
     {
