@@ -55,6 +55,7 @@
   },
   "Activity": {
     "Enabled": false,
+    "PauseForOtherActivity": false,
     "ActivityType": "CustomActivity",
     "Type": "Playing",
     "Platform": "Default",
@@ -81,7 +82,6 @@
     "DeleteResponses": true,
     "DeleteResponsesDelay": 300,
     "Footer": "LightningBot $VERSION",
-    "MobileFriendly": false,
     "Title": "LightningBot",
     "Client": "Desktop",
     "Timezone": "Local",

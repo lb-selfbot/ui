@@ -72,6 +72,16 @@ class _ActivityPageState extends State<ActivityPage> {
         'info': 'Turn Discord activity on or off.',
       },
       {
+        'name': 'Pause for other Activity',
+        'type': 'switch',
+        'jsonQuery': '/Activity/PauseForOtherActivity',
+        'set': (Map<String, dynamic> config, bool value) {
+          config['Activity']['PauseForOtherActivity'] = value;
+          return config;
+        },
+        'info': 'If enabled, Custom Activity will be paused when another activity is detected on your Discord account.',
+      },
+      {
         'name': 'Activity Type',
         'type': 'dropdown',
         'jsonQuery': '/Activity/ActivityType',

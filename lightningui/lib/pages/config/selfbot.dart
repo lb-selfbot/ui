@@ -117,17 +117,6 @@ class SelfbotConfigPage extends StatelessWidget {
           'If enabled, the bot will delete the message that invoked the command.',
     },
     {
-      'name': 'Mobile Friendly',
-      'type': 'switch',
-      'jsonQuery': '/Selfbot/MobileFriendly',
-      'set': (Map<String, dynamic> config, bool value) {
-        config['Selfbot']['MobileFriendly'] = value;
-        return config;
-      },
-      'info':
-          'If enabled, the bot will not use colored codeblocks to improve readability on mobile.',
-    },
-    {
       'name': 'Client Spoof',
       'type': 'dropdown',
       'jsonQuery': '/Selfbot/Client',
