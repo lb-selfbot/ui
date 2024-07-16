@@ -164,6 +164,40 @@ class SelfbotConfigPage extends StatelessWidget {
       'info':
           'The timezone that the selfbot will use for console logs, custom activity, and other time-related features.\nThis should be a valid timezone name, such as "America/New_York".',
     },
+    {
+      'name': 'Embed Color (for URL Embeds)',
+      'type': 'text',
+      'jsonQuery': '/Selfbot/EmbedColor',
+      'set': (Map<String, dynamic> config, String value) {
+        config['Selfbot']['EmbedColor'] = value;
+        return config;
+      },
+      'info':
+          'The color (in hex format, e.g. #FF0000) that the bot will use for the embeds in URL embed mode.',
+    },
+    {
+      'name': 'Embed Image URL (for URL Embeds)',
+      'type': 'text',
+      'jsonQuery': '/Selfbot/EmbedImage',
+      'set': (Map<String, dynamic> config, String value) {
+        config['Selfbot']['EmbedImage'] = value;
+        return config;
+      },
+      'info':
+          'The URL of the image that the bot will use for the embeds in URL embed mode.',
+    },
+    
+    {
+      'name': 'Embed URL (for URL Embeds)',
+      'type': 'text',
+      'jsonQuery': '/Selfbot/EmbedURL',
+      'set': (Map<String, dynamic> config, String value) {
+        config['Selfbot']['EmbedURL'] = value;
+        return config;
+      },
+      'info':
+          'The redirect URL that the bot will use for the embeds in URL embed mode. This is the URL that will be opened when the embed title is pressed.',
+    },
   ];
 
   @override
