@@ -3,13 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 class SnackBarContent extends StatelessWidget {
   const SnackBarContent({
-    Key? key,
+    super.key,
     required this.title,
     required this.message,
     required this.color,
     required this.icon,
     required this.size,
-  }) : super(key: key);
+  });
 
   final String title;
   final String message;
@@ -79,12 +79,11 @@ class SnackBarContent extends StatelessWidget {
 
 class ErrorSnackBar extends SnackBar {
   ErrorSnackBar({
-    Key? key,
+    super.key,
     required this.message,
     required this.theme,
     required this.size,
   }) : super(
-          key: key,
           behavior: SnackBarBehavior.floating,
           backgroundColor: Colors.transparent,
           content: SnackBarContent(
@@ -103,12 +102,11 @@ class ErrorSnackBar extends SnackBar {
 
 class WarningSnackBar extends SnackBar {
   WarningSnackBar({
-    Key? key,
+    super.key,
     required this.message,
     required this.theme,
     required this.size,
   }) : super(
-          key: key,
           behavior: SnackBarBehavior.floating,
           backgroundColor: Colors.transparent,
           content: SnackBarContent(
@@ -127,12 +125,11 @@ class WarningSnackBar extends SnackBar {
 
 class SuccessSnackBar extends SnackBar {
   SuccessSnackBar({
-    Key? key,
+    super.key,
     required this.message,
     required this.theme,
     required this.size,
   }) : super(
-          key: key,
           behavior: SnackBarBehavior.floating,
           backgroundColor: Colors.transparent,
           content: SnackBarContent(

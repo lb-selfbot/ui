@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lightningui/widgets/config_editor.dart';
 
 class SelfbotConfigPage extends StatelessWidget {
-  const SelfbotConfigPage({Key? key}) : super(key: key);
+  const SelfbotConfigPage({super.key});
 
   static var fields = [
     {
@@ -197,6 +197,17 @@ class SelfbotConfigPage extends StatelessWidget {
       },
       'info':
           'The redirect URL that the bot will use for the embeds in URL embed mode. This is the URL that will be opened when the embed title is pressed.',
+    },
+    {
+      'name': 'Force Subscribed Servers',
+      'type': 'server_selection_dialog',
+      'jsonQuery': '/Selfbot/ForceSubscribedServers',
+      'set': (Map<String, dynamic> config, List<dynamic> value) {
+        config['Selfbot']['ForceSubscribedServers'] = value;
+        return config;
+      },
+      'info':
+          'A list of server IDs that the bot will subscribe to, making it receive all events that happen in the server. If the bot is not responding to commands in servers with more than 50.000 members, you should add the server ID to this list. Changes will take effect after a restart of the selfbot.',
     },
   ];
 

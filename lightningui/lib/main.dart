@@ -1,31 +1,33 @@
 import 'dart:io';
+import 'dart:ui';
+
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_platform_alert/flutter_platform_alert.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:launch_at_startup/launch_at_startup.dart';
-import 'package:lightningui/services/startup_service.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:flutter_platform_alert/flutter_platform_alert.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:bitsdojo_window/bitsdojo_window.dart';
-import 'package:path/path.dart' as path;
-
-import 'package:lightningui/paths.dart';
-import 'package:lightningui/services/system_tray_service.dart';
-import 'package:lightningui/services/theme_service.dart';
 import 'package:lightningui/api.dart';
-import 'package:lightningui/services/config_service.dart';
 import 'package:lightningui/ipc.dart';
 import 'package:lightningui/launching.dart';
+import 'package:lightningui/pages/activity.dart';
 import 'package:lightningui/pages/config.dart';
 import 'package:lightningui/pages/console.dart';
 import 'package:lightningui/pages/home.dart';
 import 'package:lightningui/pages/login.dart';
-import 'package:lightningui/pages/activity.dart';
-import 'package:lightningui/widgets/titlebar.dart';
+import 'package:lightningui/paths.dart';
+import 'package:lightningui/services/config_service.dart';
+import 'package:lightningui/services/startup_service.dart';
+import 'package:lightningui/services/system_tray_service.dart';
+import 'package:lightningui/services/theme_service.dart';
 import 'package:lightningui/widgets/left_nav.dart';
+import 'package:lightningui/widgets/titlebar.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:path/path.dart' as path;
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 const sentryDSN =
     'https://3cbd94268f7241f3a7bf986ec98f1088@o4504927797379072.ingest.sentry.io/4504927807537152';
@@ -228,8 +230,18 @@ const views = [
   },
 ];
 
+class DesktopScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+        PointerDeviceKind.stylus,
+        PointerDeviceKind.trackpad,
+      };
+}
+
 class App extends StatelessWidget with GetItMixin {
-  App({Key? key}) : super(key: key);
+  App({super.key});
 
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -240,6 +252,7 @@ class App extends StatelessWidget with GetItMixin {
     return ProviderScope(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        scrollBehavior: DesktopScrollBehavior(),
         theme: themeData,
         home: AppBody(navigatorKey: navigatorKey),
       ),
@@ -248,7 +261,7 @@ class App extends StatelessWidget with GetItMixin {
 }
 
 class AppNavigator extends ConsumerWidget {
-  const AppNavigator({Key? key, required this.navigatorKey}) : super(key: key);
+  const AppNavigator({super.key, required this.navigatorKey});
 
   final GlobalKey<NavigatorState> navigatorKey;
 
@@ -275,7 +288,10 @@ class AppNavigator extends ConsumerWidget {
             }
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(opacity: animation, child: child);
+            return FadeTransition(
+                opacity:
+                    CurveTween(curve: Curves.easeInOutExpo).animate(animation),
+                child: child);
           },
         );
       },
@@ -285,7 +301,7 @@ class AppNavigator extends ConsumerWidget {
 }
 
 class AppBody extends ConsumerStatefulWidget {
-  const AppBody({Key? key, required this.navigatorKey}) : super(key: key);
+  const AppBody({super.key, required this.navigatorKey});
 
   final GlobalKey<NavigatorState> navigatorKey;
 
@@ -345,7 +361,7 @@ class _AppBodyState extends ConsumerState<AppBody> {
 
     if (shouldLogin || tryingToAuth) {
       return Scaffold(
-        backgroundColor: theme.colorScheme.background,
+        backgroundColor: theme.colorScheme.surface,
         body: Center(
           child: ListView(
             children: [
@@ -367,7 +383,7 @@ class _AppBodyState extends ConsumerState<AppBody> {
     }
 
     return Scaffold(
-      backgroundColor: theme.colorScheme.background,
+      backgroundColor: theme.colorScheme.surface,
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lightningui/widgets/config_editor.dart';
 
 class UIConfigPage extends StatelessWidget {
-  const UIConfigPage({Key? key}) : super(key: key);
+  const UIConfigPage({super.key});
 
   static var fields = [
     {

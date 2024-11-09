@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lightningui/widgets/config_editor.dart';
 
 class SnipersConfigPage extends StatelessWidget {
-  const SnipersConfigPage({Key? key}) : super(key: key);
+  const SnipersConfigPage({super.key});
 
   static var fields = [
     {

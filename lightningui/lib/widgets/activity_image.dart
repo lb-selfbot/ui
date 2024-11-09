@@ -6,11 +6,11 @@ import 'package:http/http.dart' as http;
 
 class ActivityImage extends StatelessWidget {
   const ActivityImage({
-    Key? key,
+    super.key,
     required this.activityType,
     required this.clientId,
     required this.image,
-  }) : super(key: key);
+  });
 
   final String activityType;
   final String clientId;

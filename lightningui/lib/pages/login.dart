@@ -8,11 +8,11 @@ import 'package:lightningui/widgets/snackbar.dart';
 
 class LoginContainer extends StatelessWidget {
   const LoginContainer({
-    Key? key,
+    super.key,
     required this.size,
     required this.color,
     required this.child,
-  }) : super(key: key);
+  });
 
   final Size size;
   final Color color;
@@ -38,10 +38,10 @@ class LoginContainer extends StatelessWidget {
 
 class LoginPage extends StatelessWidget {
   LoginPage({
-    Key? key,
+    super.key,
     required this.onLogin,
     required this.tryingToAuth,
-  }) : super(key: key);
+  });
 
   final void Function() onLogin;
   final bool tryingToAuth;

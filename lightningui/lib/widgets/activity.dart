@@ -4,7 +4,7 @@ import 'package:lightningui/main.dart';
 import 'package:lightningui/widgets/activity_image.dart';
 
 class Activity extends StatefulWidget {
-  const Activity({Key? key}) : super(key: key);
+  const Activity({super.key});
 
   @override
   State<Activity> createState() => _ActivityState();

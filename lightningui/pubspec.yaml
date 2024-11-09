@@ -32,14 +32,14 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.2
+  cupertino_icons:
 
   window_size:
     git:
       url: https://github.com/google/flutter-desktop-embedding.git
       path: plugins/window_size
 
-  window_manager: ^0.3.0
+  window_manager:
 
   bitsdojo_window:
 
@@ -47,7 +47,7 @@ dependencies:
 
   responsive_grid:
 
-  flutter_riverpod: ^2.0.0-dev.9
+  flutter_riverpod:
 
   path_provider:
 
@@ -59,39 +59,39 @@ dependencies:
 
   http:
 
-  dio: ^5.1.2
+  dio:
 
-  path: ^1.8.2
+  path:
 
-  system_info2: ^2.0.4
+  system_info2:
 
-  package_info_plus: ^3.1.2
+  package_info_plus:
 
-  flutter_platform_alert: ^0.4.0
+  flutter_platform_alert:
 
-  system_tray: ^2.0.2
+  system_tray:
 
   # Get It
-  get_it: ^7.2.0
-  get_it_mixin: ^4.1.1
+  get_it:
+  get_it_mixin:
 
-  provider: ^6.0.5
+  provider:
 
-  flex_seed_scheme: ^1.2.3
+  flex_seed_scheme:
 
-  sentry_flutter: ^7.9.0
+  sentry_flutter:
   
-  launch_at_startup: ^0.2.2
+  launch_at_startup:
 
-  flutter_html: ^3.0.0-beta.2
+  flutter_html: 3.0.0-beta.2
 
-  lottie: ^2.6.0
+  lottie:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.0
+  flutter_lints:
 
 flutter:
   uses-material-design: true

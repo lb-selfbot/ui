@@ -5,14 +5,14 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   bitsdojo_window_windows
   flutter_platform_alert
-  screen_retriever
-  sentry_flutter
+  screen_retriever_windows
   system_tray
   window_manager
   window_size
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
+  sentry_flutter
 )
 
 set(PLUGIN_BUNDLED_LIBRARIES)

@@ -15,7 +15,7 @@ import 'package:lightningui/launching.dart';
 import 'package:lightningui/widgets/info_card.dart';
 
 class Console extends StatelessWidget {
-  const Console({Key? key, required this.consoleText}) : super(key: key);
+  const Console({super.key, required this.consoleText});
 
   final String consoleText;
 
@@ -41,11 +41,11 @@ class Console extends StatelessWidget {
 
 class ConsoleButton extends StatelessWidget {
   const ConsoleButton({
-    Key? key,
+    super.key,
     required this.onPressed,
     required this.text,
     this.loading = false,
-  }) : super(key: key);
+  });
 
   final VoidCallback onPressed;
   final String text;
@@ -63,7 +63,7 @@ class ConsoleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final buttonStyle = ButtonStyle(
-      backgroundColor: MaterialStateProperty.all(
+      backgroundColor: WidgetStateProperty.all(
         Theme.of(context).colorScheme.inversePrimary,
       ),
     );
@@ -85,7 +85,7 @@ class ConsoleButton extends StatelessWidget {
 }
 
 class ConsolePage extends StatefulWidget {
-  const ConsolePage({Key? key}) : super(key: key);
+  const ConsolePage({super.key});
 
   @override
   State<ConsolePage> createState() => _ConsolePageState();

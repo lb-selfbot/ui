@@ -8,13 +8,13 @@ import 'package:lightningui/widgets/dialogs/user_selection.dart';
 
 class TriggerListConfig extends StatefulWidget {
   const TriggerListConfig({
-    Key? key,
+    super.key,
     required this.triggerList,
     required this.jsonQuery,
     required this.name,
     required this.info,
     required this.setConfig,
-  }) : super(key: key);
+  });
 
   final Map<String, dynamic> triggerList;
   final String jsonQuery;
@@ -80,12 +80,12 @@ class _TriggerListConfigState extends State<TriggerListConfig> {
 
 class TriggerListDialog extends StatefulWidget {
   const TriggerListDialog({
-    Key? key,
+    super.key,
     required this.name,
     required this.triggerList,
     required this.onUpdate,
     required this.setConfig,
-  }) : super(key: key);
+  });
 
   final String name;
   final Map<String, dynamic> triggerList;
@@ -109,7 +109,7 @@ class _TriggerListDialogState extends State<TriggerListDialog> {
   List<Widget> getDialogContent() {
     List<Widget> typeConfig = [
       SizedBox(
-        height: 70,
+        height: 60,
         width: 400,
         child: DropdownConfigCol(
           name: "Trigger List Type",
@@ -156,7 +156,7 @@ class _TriggerListDialogState extends State<TriggerListDialog> {
         return [
           ...typeConfig,
           SizedBox(
-            height: 70,
+            height: 60,
             width: 400,
             child: UserSelectionConfig(
               selectedUsers: triggerList["Users"],
@@ -171,7 +171,7 @@ class _TriggerListDialogState extends State<TriggerListDialog> {
           ),
           const SizedBox(height: 20),
           SizedBox(
-            height: 70,
+            height: 60,
             width: 400,
             child: ServerSelectionConfig(
               selectedServers: triggerList["Servers"],
@@ -189,7 +189,7 @@ class _TriggerListDialogState extends State<TriggerListDialog> {
         return [
           ...typeConfig,
           SizedBox(
-            height: 70,
+            height: 60,
             width: 400,
             child: UserSelectionConfig(
               selectedUsers: triggerList["Users"],
@@ -204,7 +204,7 @@ class _TriggerListDialogState extends State<TriggerListDialog> {
           ),
           const SizedBox(height: 20),
           SizedBox(
-            height: 70,
+            height: 60,
             width: 400,
             child: ServerSelectionConfig(
               selectedServers: triggerList["Servers"],

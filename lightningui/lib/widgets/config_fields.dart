@@ -6,9 +6,9 @@ import 'package:searchfield/searchfield.dart';
 
 class InfoIconButton extends StatelessWidget {
   const InfoIconButton({
-    Key? key,
+    super.key,
     required this.info,
-  }) : super(key: key);
+  });
 
   final String info;
 
@@ -32,7 +32,7 @@ class InfoIconButton extends StatelessWidget {
 }
 
 class LoginIconButton extends StatelessWidget {
-  const LoginIconButton({Key? key}) : super(key: key);
+  const LoginIconButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -54,14 +54,14 @@ class LoginIconButton extends StatelessWidget {
 
 class TextFieldConfigCol extends StatelessWidget {
   const TextFieldConfigCol({
-    Key? key,
+    super.key,
     required this.name,
     required this.info,
     required this.defaultValue,
     this.numeric = false,
     this.obscure = false,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   final String name;
   final String info;
@@ -88,14 +88,14 @@ class TextFieldConfigCol extends StatelessWidget {
 
 class TokenConfigCol extends StatelessWidget {
   const TokenConfigCol({
-    Key? key,
+    super.key,
     required this.name,
     required this.info,
     required this.defaultValue,
     this.numeric = false,
     this.obscure = false,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   final String name;
   final String info;
@@ -129,13 +129,13 @@ class TokenConfigCol extends StatelessWidget {
 
 class TextFieldAutoCompleteConfigCol extends StatelessWidget {
   const TextFieldAutoCompleteConfigCol({
-    Key? key,
+    super.key,
     required this.name,
     required this.info,
     required this.defaultValue,
     required this.options,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   final String name;
   final String info;
@@ -154,7 +154,7 @@ class TextFieldAutoCompleteConfigCol extends StatelessWidget {
     return SearchField<String>(
       suggestions: options.map(optionMapper).toList(),
       controller: controller,
-      searchInputDecoration: InputDecoration(
+      searchInputDecoration: SearchInputDecoration(
         labelText: name,
         labelStyle: const TextStyle(height: 3),
         suffix: InfoIconButton(info: info),
@@ -171,12 +171,12 @@ class TextFieldAutoCompleteConfigCol extends StatelessWidget {
 
 class SwitchConfigCol extends StatefulWidget {
   const SwitchConfigCol({
-    Key? key,
+    super.key,
     required this.name,
     required this.info,
     required this.defaultValue,
     required this.onChanged,
-  }) : super(key: key);
+  });
   final String name;
   final String info;
   final bool defaultValue;
@@ -225,13 +225,13 @@ class _SwitchConfigColState extends State<SwitchConfigCol> {
 
 class DropdownConfigCol extends StatefulWidget {
   const DropdownConfigCol({
-    Key? key,
+    super.key,
     required this.name,
     required this.info,
     required this.options,
     required this.defaultValue,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   final String name;
   final String info;

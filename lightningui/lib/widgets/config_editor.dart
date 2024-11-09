@@ -16,10 +16,10 @@ import 'config_fields.dart';
 
 class ConfigEditor extends StatelessWidget {
   const ConfigEditor({
-    Key? key,
+    super.key,
     required this.fields,
     this.fullWidthElements = false,
-  }) : super(key: key);
+  });
 
   final List<Map<String, dynamic>> fields;
   final bool fullWidthElements;
@@ -314,7 +314,7 @@ class ConfigEditor extends StatelessWidget {
       xs: 12,
       md: fullWidthElements ? 12 : 6,
       child: Container(
-        height: 74,
+        height: 65,
         alignment: const Alignment(0, 0),
         padding: const EdgeInsets.all(5),
         child: widget,

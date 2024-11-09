@@ -6,13 +6,13 @@ import 'package:lightningui/widgets/config_fields.dart';
 
 class UserSelectionConfig extends StatefulWidget {
   const UserSelectionConfig({
-    Key? key,
+    super.key,
     required this.selectedUsers,
     required this.jsonQuery,
     required this.name,
     required this.info,
     required this.setConfig,
-  }) : super(key: key);
+  });
 
   final List<dynamic> selectedUsers;
   final String jsonQuery;
@@ -82,12 +82,12 @@ class _UserSelectionConfigState extends State<UserSelectionConfig> {
 
 class UserSelectionDialog extends StatefulWidget {
   const UserSelectionDialog({
-    Key? key,
+    super.key,
     required this.name,
     required this.selectedUsers,
     required this.onUpdate,
     required this.setConfig,
-  }) : super(key: key);
+  });
 
   final String name;
   final List<dynamic> selectedUsers;

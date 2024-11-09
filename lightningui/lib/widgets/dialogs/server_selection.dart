@@ -6,13 +6,13 @@ import 'package:lightningui/widgets/config_fields.dart';
 
 class ServerSelectionConfig extends StatefulWidget {
   const ServerSelectionConfig({
-    Key? key,
+    super.key,
     required this.selectedServers,
     required this.jsonQuery,
     required this.name,
     required this.info,
     required this.setConfig,
-  }) : super(key: key);
+  });
 
   final List<dynamic> selectedServers;
   final String jsonQuery;
@@ -82,12 +82,12 @@ class _ServerSelectionConfigState extends State<ServerSelectionConfig> {
 
 class ServerSelectionDialog extends StatefulWidget {
   const ServerSelectionDialog({
-    Key? key,
+    super.key,
     required this.name,
     required this.selectedServers,
     required this.onUpdate,
     required this.setConfig,
-  }) : super(key: key);
+  });
 
   final String name;
   final List<dynamic> selectedServers;

@@ -6,7 +6,7 @@ import 'package:lightningui/widgets/config_editor.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 
 class ActivityPage extends StatefulWidget {
-  const ActivityPage({Key? key}) : super(key: key);
+  const ActivityPage({super.key});
 
   @override
   State<ActivityPage> createState() => _ActivityPageState();

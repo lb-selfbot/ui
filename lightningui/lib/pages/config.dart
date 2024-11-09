@@ -26,7 +26,7 @@ const tabs = [
 ];
 
 class ConfigPage extends StatefulWidget {
-  const ConfigPage({Key? key}) : super(key: key);
+  const ConfigPage({super.key});
 
   @override
   State<ConfigPage> createState() => _ConfigPageState();
@@ -73,6 +73,7 @@ class _ConfigPageState extends State<ConfigPage> {
               splashBorderRadius: BorderRadius.circular(12),
               indicatorSize: TabBarIndicatorSize.label,
               indicatorColor: Theme.of(context).colorScheme.primary,
+              dividerColor: Colors.transparent,
               tabs: tabs,
             ),
           ),

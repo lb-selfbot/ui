@@ -6,13 +6,13 @@ import 'package:lightningui/widgets/config_fields.dart';
 
 class PoketwoSniperConfig extends StatefulWidget {
   const PoketwoSniperConfig({
-    Key? key,
+    super.key,
     required this.poketwoSniper,
     required this.jsonQuery,
     required this.name,
     required this.info,
     required this.setConfig,
-  }) : super(key: key);
+  });
 
   final dynamic poketwoSniper;
   final String jsonQuery;
@@ -88,12 +88,12 @@ class _PoketwoSniperConfigState extends State<PoketwoSniperConfig> {
 
 class PoketwoSniperDialog extends StatefulWidget {
   const PoketwoSniperDialog({
-    Key? key,
+    super.key,
     required this.name,
     required this.poketwoSniper,
     required this.onUpdate,
     required this.setConfig,
-  }) : super(key: key);
+  });
 
   final String name;
   final dynamic poketwoSniper;
@@ -130,7 +130,7 @@ class _PoketwoSniperDialogState extends State<PoketwoSniperDialog> {
   Widget buildSwitchesRow1() {
     return SizedBox(
       width: 575,
-      height: 70,
+      height: 50,
       child: Row(children: [
         Expanded(
           child: SwitchConfigCol(
@@ -169,7 +169,7 @@ class _PoketwoSniperDialogState extends State<PoketwoSniperDialog> {
   Widget buildSwitchesRow2() {
     return SizedBox(
       width: 575,
-      height: 70,
+      height: 50,
       child: Row(children: [
         Expanded(
           child: TextFieldConfigCol(
@@ -209,7 +209,7 @@ class _PoketwoSniperDialogState extends State<PoketwoSniperDialog> {
   Widget buildSwitchesRow3() {
     return SizedBox(
       width: 575,
-      height: 70,
+      height: 50,
       child: Row(children: [
         Expanded(
           child: SwitchConfigCol(
@@ -250,7 +250,7 @@ class _PoketwoSniperDialogState extends State<PoketwoSniperDialog> {
 
     return SizedBox(
       width: 575,
-      height: 70,
+      height: 50,
       child: Row(children: [
         Expanded(
           child: TextFieldConfigCol(
@@ -300,7 +300,7 @@ class _PoketwoSniperDialogState extends State<PoketwoSniperDialog> {
   Widget buildSwitchesRow5() {
     return SizedBox(
       width: 575,
-      height: 70,
+      height: 50,
       child: Row(children: [
         Expanded(
           child: DropdownConfigCol(
@@ -339,9 +339,13 @@ class _PoketwoSniperDialogState extends State<PoketwoSniperDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             buildSwitchesRow1(),
+            const SizedBox(height: 16),
             buildSwitchesRow2(),
+            const SizedBox(height: 16),
             buildSwitchesRow3(),
+            const SizedBox(height: 16),
             buildSwitchesRow4(),
+            const SizedBox(height: 16),
             buildSwitchesRow5(),
           ],
         ),
@@ -359,12 +363,12 @@ class _PoketwoSniperDialogState extends State<PoketwoSniperDialog> {
 
 class PoketwoSniperChannelsDialog extends StatefulWidget {
   const PoketwoSniperChannelsDialog({
-    Key? key,
+    super.key,
     required this.name,
     required this.poketwoSniper,
     required this.onUpdate,
     required this.setConfig,
-  }) : super(key: key);
+  });
 
   final String name;
   final dynamic poketwoSniper;
@@ -459,7 +463,7 @@ class _PoketwoSniperChannelsDialogState
             Wrap(spacing: 5, runSpacing: 5, children: textListItems()),
             const Divider(height: 50),
             SizedBox(
-              height: 60,
+              height: 50,
               width: 400,
               child: TextField(
                 decoration: InputDecoration(

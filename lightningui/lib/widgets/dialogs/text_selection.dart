@@ -6,13 +6,13 @@ import 'package:lightningui/widgets/config_fields.dart';
 
 class TextSelectionConfig extends StatefulWidget {
   const TextSelectionConfig({
-    Key? key,
+    super.key,
     required this.selectedTexts,
     required this.jsonQuery,
     required this.name,
     required this.info,
     required this.setConfig,
-  }) : super(key: key);
+  });
 
   final List<dynamic> selectedTexts;
   final String jsonQuery;
@@ -82,12 +82,12 @@ class _TextSelectionConfigState extends State<TextSelectionConfig> {
 
 class TextSelectionDialog extends StatefulWidget {
   const TextSelectionDialog({
-    Key? key,
+    super.key,
     required this.name,
     required this.selectedTexts,
     required this.onUpdate,
     required this.setConfig,
-  }) : super(key: key);
+  });
 
   final String name;
   final List<dynamic> selectedTexts;

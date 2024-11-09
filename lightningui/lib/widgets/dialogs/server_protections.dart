@@ -6,13 +6,13 @@ import 'package:lightningui/widgets/config_fields.dart';
 
 class ServerProtectionsConfig extends StatefulWidget {
   const ServerProtectionsConfig({
-    Key? key,
+    super.key,
     required this.antiDelete,
     required this.antiInvite,
     required this.antiSpam,
     required this.antiUpper,
     required this.protectedServers,
-  }) : super(key: key);
+  });
 
   final dynamic antiDelete;
   final dynamic antiInvite;
@@ -102,14 +102,14 @@ class _ServerProtectionsConfigState extends State<ServerProtectionsConfig> {
 
 class ServerProtectionsDialog extends StatefulWidget {
   const ServerProtectionsDialog({
-    Key? key,
+    super.key,
     required this.antiDelete,
     required this.antiInvite,
     required this.antiSpam,
     required this.antiUpper,
     required this.protectedServers,
     required this.onUpdate,
-  }) : super(key: key);
+  });
 
   final dynamic antiDelete;
   final dynamic antiInvite;

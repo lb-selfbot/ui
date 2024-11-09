@@ -31,7 +31,7 @@ class UserData {
 }
 
 class UserWidget extends StatelessWidget {
-  UserWidget({Key? key, required this.userData}) : super(key: key);
+  UserWidget({super.key, required this.userData});
 
   final UserData userData;
 
@@ -70,7 +70,7 @@ class UserWidget extends StatelessWidget {
 }
 
 class LoginBrowser extends StatefulWidget {
-  const LoginBrowser({Key? key, required this.setToken}) : super(key: key);
+  const LoginBrowser({super.key, required this.setToken});
 
   final void Function(String) setToken;
 
@@ -171,7 +171,7 @@ class _LoginBrowserState extends State<LoginBrowser> {
 }
 
 class LoginSaved extends StatefulWidget {
-  const LoginSaved({Key? key, required this.setToken}) : super(key: key);
+  const LoginSaved({super.key, required this.setToken});
 
   final void Function(String) setToken;
 
@@ -317,7 +317,7 @@ class _LoginSavedState extends State<LoginSaved> {
 }
 
 class LoginChoice extends StatelessWidget {
-  const LoginChoice({Key? key, required this.setStatus}) : super(key: key);
+  const LoginChoice({super.key, required this.setStatus});
 
   final void Function(LoginStatus) setStatus;
 
@@ -349,7 +349,7 @@ class LoginChoice extends StatelessWidget {
 }
 
 class LoginDialog extends StatefulWidget {
-  const LoginDialog({Key? key}) : super(key: key);
+  const LoginDialog({super.key});
 
   @override
   State<LoginDialog> createState() => _LoginDialogState();

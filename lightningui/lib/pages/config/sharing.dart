@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lightningui/widgets/config_editor.dart';
 
 class SharingConfigPage extends StatelessWidget {
-  const SharingConfigPage({Key? key}) : super(key: key);
+  const SharingConfigPage({super.key});
 
   static var fields = [
     {

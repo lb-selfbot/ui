@@ -4,7 +4,7 @@ import 'package:lightningui/main.dart';
 import 'package:lightningui/widgets/activity.dart';
 
 class ActivityCard extends StatefulWidget {
-  const ActivityCard({Key? key}) : super(key: key);
+  const ActivityCard({super.key});
 
   @override
   State<ActivityCard> createState() => _ActivityCardState();

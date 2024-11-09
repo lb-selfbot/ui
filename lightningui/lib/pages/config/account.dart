@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lightningui/widgets/config_editor.dart';
 
 class AccountConfigPage extends StatelessWidget {
-  const AccountConfigPage({Key? key, required this.x}) : super(key: key);
+  const AccountConfigPage({super.key, required this.x});
 
   final int x;
 

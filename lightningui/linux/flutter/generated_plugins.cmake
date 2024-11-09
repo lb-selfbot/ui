@@ -5,7 +5,7 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   bitsdojo_window_linux
   flutter_platform_alert
-  screen_retriever
+  screen_retriever_linux
   sentry_flutter
   system_tray
   window_manager

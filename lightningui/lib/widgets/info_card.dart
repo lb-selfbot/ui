@@ -3,11 +3,11 @@ import 'package:responsive_grid/responsive_grid.dart';
 
 class InfoCard extends StatelessWidget {
   const InfoCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.subtitle,
     required this.icon,
-  }) : super(key: key);
+  });
 
   final String title;
   final String subtitle;
@@ -32,11 +32,10 @@ class InfoCard extends StatelessWidget {
 
 class InfoCardCol extends ResponsiveGridCol {
   InfoCardCol({
-    Key? key,
+    super.key,
     int cardAmount = 6,
     required this.card,
   }) : super(
-          key: key,
           xs: _getXs(cardAmount),
           md: _getMd(cardAmount),
           lg: _getLg(cardAmount),

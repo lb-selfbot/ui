@@ -8,13 +8,13 @@ import 'package:searchfield/searchfield.dart';
 
 class CommandSelectionConfig extends StatefulWidget {
   const CommandSelectionConfig({
-    Key? key,
+    super.key,
     required this.selectedCommands,
     required this.jsonQuery,
     required this.name,
     required this.info,
     required this.setConfig,
-  }) : super(key: key);
+  });
 
   final List<dynamic> selectedCommands;
   final String jsonQuery;
@@ -85,12 +85,12 @@ class _CommandSelectionConfigState extends State<CommandSelectionConfig> {
 
 class CommandSelectionDialog extends StatefulWidget {
   const CommandSelectionDialog({
-    Key? key,
+    super.key,
     required this.name,
     required this.selectedCommands,
     required this.onUpdate,
     required this.setConfig,
-  }) : super(key: key);
+  });
 
   final String name;
   final List<dynamic> selectedCommands;
@@ -188,7 +188,7 @@ class _CommandSelectionDialogState extends State<CommandSelectionDialog> {
                         item: e, child: Text("  $e")))
                     .toList(),
                 controller: controller,
-                searchInputDecoration: InputDecoration(
+                searchInputDecoration: SearchInputDecoration(
                   labelText: "Command",
                   suffix: addCommandButton(context, controller),
                   isDense: true,

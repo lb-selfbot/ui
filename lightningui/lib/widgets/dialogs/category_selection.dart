@@ -8,13 +8,13 @@ import 'package:searchfield/searchfield.dart';
 
 class CategorySelectionConfig extends StatefulWidget {
   const CategorySelectionConfig({
-    Key? key,
+    super.key,
     required this.selectedCategories,
     required this.jsonQuery,
     required this.name,
     required this.info,
     required this.setConfig,
-  }) : super(key: key);
+  });
 
   final List<dynamic> selectedCategories;
   final String jsonQuery;
@@ -87,12 +87,12 @@ class _CategorySelectionConfigState extends State<CategorySelectionConfig> {
 
 class CategorySelectionDialog extends StatefulWidget {
   const CategorySelectionDialog({
-    Key? key,
+    super.key,
     required this.name,
     required this.selectedCategories,
     required this.onUpdate,
     required this.setConfig,
-  }) : super(key: key);
+  });
 
   final String name;
   final List<dynamic> selectedCategories;
@@ -193,7 +193,7 @@ class _CategorySelectionDialogState extends State<CategorySelectionDialog> {
                         item: e, child: Text("  $e")))
                     .toList(),
                 controller: controller,
-                searchInputDecoration: InputDecoration(
+                searchInputDecoration: SearchInputDecoration(
                   labelText: "Category",
                   suffix: addCategoryButton(context, controller),
                   isDense: true,

@@ -15,7 +15,7 @@ class Paths {
 
   static String executablePath = "";
 
-  static String architecture = SysInfo.kernelArchitecture.toLowerCase();
+  static String architecture = SysInfo.rawKernelArchitecture.toLowerCase();
 
   static Future<void> init() async {
     mainFolder = Utils.getMainFolder().path;

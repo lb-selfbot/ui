@@ -9,7 +9,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:window_manager/window_manager.dart';
 
 class LeftNavImage extends StatelessWidget {
-  const LeftNavImage({Key? key}) : super(key: key);
+  const LeftNavImage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class LeftNavImage extends StatelessWidget {
 }
 
 class LeftNavContainer extends StatelessWidget {
-  const LeftNavContainer({Key? key, this.child}) : super(key: key);
+  const LeftNavContainer({super.key, this.child});
 
   final Widget? child;
 
@@ -51,8 +51,7 @@ class LeftNavContainer extends StatelessWidget {
 }
 
 class LeftNavButtons extends ConsumerWidget {
-  const LeftNavButtons({Key? key, this.child, required this.navigatorKey})
-      : super(key: key);
+  const LeftNavButtons({super.key, this.child, required this.navigatorKey});
 
   final Widget? child;
   final GlobalKey<NavigatorState> navigatorKey;
@@ -67,8 +66,8 @@ class LeftNavButtons extends ConsumerWidget {
         for (final view in views)
           TextButton(
             style: ButtonStyle(
-              minimumSize: MaterialStateProperty.all(const Size(0, 60)),
-              foregroundColor: MaterialStateProperty.all(
+              minimumSize: WidgetStateProperty.all(const Size(0, 60)),
+              foregroundColor: WidgetStateProperty.all(
                 _getNavButtonColor(
                   theme,
                   currentRoute == view['route'] as String,
@@ -117,7 +116,7 @@ class LeftNavButtons extends ConsumerWidget {
 }
 
 class LeftNav extends StatefulWidget {
-  const LeftNav({Key? key, required this.navigatorKey}) : super(key: key);
+  const LeftNav({super.key, required this.navigatorKey});
 
   final GlobalKey<NavigatorState> navigatorKey;
 

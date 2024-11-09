@@ -8,9 +8,9 @@ import 'package:lightningui/services/system_tray_service.dart';
 
 class WindowTitleBar extends StatelessWidget {
   const WindowTitleBar({
-    Key? key,
+    super.key,
     this.fullWidth = false,
-  }) : super(key: key);
+  });
 
   final bool fullWidth;
 
